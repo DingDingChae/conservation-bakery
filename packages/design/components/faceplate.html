@@ -1,0 +1,136 @@
+<!-- @dsCard group="Faceplate" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Faceplate shell — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="label-strip.css" />
+  <link rel="stylesheet" href="annunciator-tile.css" />
+  <link rel="stylesheet" href="mode-selector.css" />
+  <link rel="stylesheet" href="setpoint-readout.css" />
+  <link rel="stylesheet" href="numeric-entry.css" />
+  <link rel="stylesheet" href="faceplate.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Faceplate shell</h1>
+    <p class="cb-preview-lede">
+      One machine's full operator screen, composed entirely from the other
+      components on this page: a panel frame, an engraved label strip, a
+      row of annunciator tiles, a mode selector, a setpoint/process-value
+      readout, and a numeric entry. Nothing here is a new component — it is
+      the same markup and the same stylesheets, arranged.
+    </p>
+
+    <div class="cb-preview-example">
+      <section class="cb-panel-frame" aria-labelledby="faceplate-title">
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--tl" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--tr" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--bl" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--br" aria-hidden="true"></span>
+
+        <div class="cb-faceplate__header">
+          <div class="cb-label-strip">
+            <span id="faceplate-title" class="cb-label-strip__text">Deck oven — zone 1</span>
+          </div>
+        </div>
+
+        <div class="cb-faceplate__section">
+          <p class="cb-faceplate__section-title">Alarms</p>
+          <div class="cb-faceplate__row">
+            <div class="cb-annunciator-tile" data-state="normal" aria-label="Element burnout: normal">
+              <span class="cb-annunciator-tile__icon" aria-hidden="true">○</span>
+              <span class="cb-annunciator-tile__label">Element burnout</span>
+              <span class="cb-annunciator-tile__state">Normal</span>
+            </div>
+            <div class="cb-annunciator-tile" data-state="active-acknowledged" aria-label="Deviation: active, acknowledged">
+              <span class="cb-annunciator-tile__icon" aria-hidden="true">■</span>
+              <span class="cb-annunciator-tile__label">Deviation</span>
+              <span class="cb-annunciator-tile__state">Active — acknowledged</span>
+            </div>
+            <div class="cb-annunciator-tile" data-state="normal" aria-label="Door interlock refusal: normal">
+              <span class="cb-annunciator-tile__icon" aria-hidden="true">○</span>
+              <span class="cb-annunciator-tile__label">Door interlock refusal</span>
+              <span class="cb-annunciator-tile__state">Normal</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="cb-faceplate__section cb-faceplate__row">
+          <div>
+            <p class="cb-faceplate__section-title">Mode</p>
+            <fieldset class="cb-mode-selector">
+              <legend class="cb-mode-selector__legend">Zone 1 mode</legend>
+              <div class="cb-mode-selector__track">
+                <label class="cb-mode-selector__option">
+                  <input type="radio" name="faceplate-mode" value="off" />
+                  <span>Off</span>
+                </label>
+                <label class="cb-mode-selector__option">
+                  <input type="radio" name="faceplate-mode" value="manual" />
+                  <span>Manual</span>
+                </label>
+                <label class="cb-mode-selector__option">
+                  <input type="radio" name="faceplate-mode" value="auto" checked />
+                  <span>Auto</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="cb-spv" role="group" aria-labelledby="faceplate-spv-title">
+            <span id="faceplate-spv-title" class="cb-visually-hidden">Zone 1 temperature</span>
+            <dl class="cb-spv__values">
+              <div>
+                <dt>SP</dt>
+                <dd>176.0<small>&deg;C</small></dd>
+              </div>
+              <div>
+                <dt>PV</dt>
+                <dd>175.3<small>&deg;C</small></dd>
+              </div>
+            </dl>
+            <div class="cb-spv__bar" aria-hidden="true">
+              <span class="cb-spv__bar-marker" style="left: 44%"></span>
+            </div>
+            <p class="cb-spv__status">Within tolerance</p>
+          </div>
+        </div>
+
+        <div class="cb-faceplate__section">
+          <p class="cb-faceplate__section-title">Setpoint entry</p>
+          <div class="cb-numeric-entry" data-invalid="false">
+            <label class="cb-numeric-entry__label" for="faceplate-setpoint">Target temperature</label>
+            <div class="cb-numeric-entry__field">
+              <input type="number" id="faceplate-setpoint" min="140" max="220" step="0.5" value="176" aria-describedby="faceplate-setpoint-hint" />
+              <span class="cb-numeric-entry__unit" aria-hidden="true">&deg;C</span>
+            </div>
+            <p id="faceplate-setpoint-hint" class="cb-numeric-entry__hint">Range 140.0&ndash;220.0 &deg;C</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!-- @dsCard group="Alarms" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Annunciator tile — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="annunciator-tile.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Annunciator tile</h1>
+    <p class="cb-preview-lede">
+      A latching alarm indicator: it flashes until an operator acknowledges
+      it, stays lit steady while the condition remains active, and — once
+      the condition clears — stays lit in a distinct colour until the
+      operator presses reset. Every state has its own icon glyph and its
+      own text label, so the state reads the same with the colour removed.
+    </p>
+
+    <h2 style="font-size: var(--cb-font-size-lg)">All four states</h2>
+    <div class="cb-annunciator-gallery cb-preview-example">
+      <div
+        class="cb-annunciator-tile"
+        data-state="normal"
+        aria-label="Oven zone 1 deviation: normal"
+      >
+        <span class="cb-annunciator-tile__icon" aria-hidden="true">○</span>
+        <span class="cb-annunciator-tile__label">Oven zone 1 deviation</span>
+        <span class="cb-annunciator-tile__state">Normal</span>
+      </div>
+      <div
+        class="cb-annunciator-tile"
+        data-state="active-unacknowledged"
+        aria-label="Oven zone 1 deviation: active, unacknowledged"
+      >
+        <span class="cb-annunciator-tile__icon" aria-hidden="true">▲</span>
+        <span class="cb-annunciator-tile__label">Oven zone 1 deviation</span>
+        <span class="cb-annunciator-tile__state">Active — unacknowledged</span>
+      </div>
+      <div
+        class="cb-annunciator-tile"
+        data-state="active-acknowledged"
+        aria-label="Oven zone 1 deviation: active, acknowledged"
+      >
+        <span class="cb-annunciator-tile__icon" aria-hidden="true">■</span>
+        <span class="cb-annunciator-tile__label">Oven zone 1 deviation</span>
+        <span class="cb-annunciator-tile__state">Active — acknowledged</span>
+      </div>
+      <div
+        class="cb-annunciator-tile"
+        data-state="cleared"
+        aria-label="Oven zone 1 deviation: cleared, press reset"
+      >
+        <span class="cb-annunciator-tile__icon" aria-hidden="true">◆</span>
+        <span class="cb-annunciator-tile__label">Oven zone 1 deviation</span>
+        <span class="cb-annunciator-tile__state">Cleared — press reset</span>
+      </div>
+    </div>
+    <p class="cb-preview-example__caption">
+      With <code>prefers-reduced-motion: reduce</code> set in your OS, the
+      active-unacknowledged tile above stops flashing and shows a steady red
+      fill with a bold dashed border and the same filled-triangle icon — try
+      it in your browser or OS accessibility settings.
+    </p>
+
+    <h2 style="font-size: var(--cb-font-size-lg); margin-top: var(--cb-space-7)">
+      Interactive: acknowledge and reset
+    </h2>
+    <p class="cb-preview-lede">
+      Operable entirely by keyboard (tab to each button, press Enter or
+      Space). The live region below is visually hidden but announces every
+      transition to a screen reader — the same sentence a sighted operator
+      reads off the tile's text label.
+    </p>
+    <div class="cb-preview-example">
+      <div
+        id="demo-tile"
+        class="cb-annunciator-tile"
+        data-state="normal"
+        aria-label="Mixer overload: normal"
+      >
+        <span class="cb-annunciator-tile__icon" aria-hidden="true">○</span>
+        <span class="cb-annunciator-tile__label">Mixer overload</span>
+        <span class="cb-annunciator-tile__state">Normal</span>
+      </div>
+      <div id="demo-live" class="cb-visually-hidden" role="status" aria-live="polite"></div>
+      <div class="cb-demo-controls">
+        <button type="button" id="demo-simulate" class="cb-button">Simulate condition</button>
+        <button type="button" id="demo-ack" class="cb-button" disabled>Acknowledge</button>
+        <button type="button" id="demo-clear" class="cb-button" disabled>Condition clears</button>
+        <button type="button" id="demo-reset" class="cb-button" disabled>Reset</button>
+      </div>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+  <script src="annunciator-tile.js"></script>
+</body>
+</html>

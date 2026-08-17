@@ -1,0 +1,17 @@
+/*
+ * Conservation Bakery design tokens — entry point.
+ *
+ * A consumer links only this file to get the whole base token set in the
+ * correct cascade order. Kid mode (tokens/kid.css) is deliberately NOT
+ * imported here: it is an opt-in overlay a page adds only when Kid mode is
+ * active (see that file's header and the package README), never a default.
+ */
+
+@import './color-light.css';
+@import './color-dark.css';
+@import './typography.css';
+@import './spacing.css';
+@import './radius.css';
+@import './elevation.css';
+@import './borders.css';
+@import './motion.css';

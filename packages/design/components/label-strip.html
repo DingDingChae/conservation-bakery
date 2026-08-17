@@ -1,0 +1,84 @@
+<!-- @dsCard group="Panels" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Label strip — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="label-strip.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Engraved label strip</h1>
+    <p class="cb-preview-lede">
+      Identifies a control or a group of controls, the way a real machined
+      nameplate does. A label strip is never decorative-only text: its
+      <code>id</code> is the target of an <code>aria-labelledby</code> on
+      the control it names, so the visual label and the accessible name are
+      the same string, spoken the same way a operator reads it off the panel.
+    </p>
+
+    <div class="cb-preview-example">
+      <section class="cb-panel-frame" aria-label="Label strip usage examples">
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--tl" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--tr" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--bl" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--br" aria-hidden="true"></span>
+
+        <div class="cb-preview-row">
+          <div class="cb-label-strip">
+            <span class="cb-label-strip__text">Mixer drive</span>
+          </div>
+          <div class="cb-label-strip">
+            <span class="cb-label-strip__text">Oven zone 1</span>
+          </div>
+          <div class="cb-label-strip">
+            <span class="cb-label-strip__text">Deviation trip</span>
+          </div>
+        </div>
+
+        <p style="margin-top: var(--cb-space-5); color: var(--cb-color-text-secondary); font-size: var(--cb-font-size-sm)">
+          Labelling a real control:
+        </p>
+        <div class="cb-label-strip" style="margin-bottom: var(--cb-space-2)">
+          <span id="label-strip-cooler-speed" class="cb-label-strip__text">Cooler belt speed</span>
+        </div>
+        <input
+          type="range"
+          min="0"
+          max="100"
+          value="60"
+          aria-labelledby="label-strip-cooler-speed"
+          style="display: block; width: 16rem; min-height: var(--cb-hit-target-min)"
+        />
+      </section>
+      <p class="cb-preview-example__caption">
+        Uses <code>--cb-color-label-bg</code>, <code>--cb-color-label-text</code>
+        and <code>--cb-letter-spacing-label</code>. The label/background pair is
+        13.28:1 in the light scheme and 16.02:1 in the dark scheme — see
+        <code>src/contrast.spec.ts</code>.
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+</body>
+</html>

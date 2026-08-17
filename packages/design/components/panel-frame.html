@@ -1,0 +1,65 @@
+<!-- @dsCard group="Panels" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Panel frame — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Panel frame</h1>
+    <p class="cb-preview-lede">
+      The enclosure every other control-room component is mounted inside: a
+      brushed steel frame with a visible fastener at each corner. Kid mode
+      keeps the same four-fastener structure, just with softer shadows and a
+      warmer, rounder frame.
+    </p>
+
+    <div class="cb-preview-example">
+      <section class="cb-panel-frame" aria-labelledby="panel-title">
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--tl" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--tr" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--bl" aria-hidden="true"></span>
+        <span class="cb-panel-frame__fastener cb-panel-frame__fastener--br" aria-hidden="true"></span>
+        <h2 id="panel-title" class="cb-panel-frame__title">Mixer line 2</h2>
+        <div class="cb-panel-frame__body">
+          <p>
+            A panel frame carries no meaning of its own — it is a plain
+            <code>&lt;section&gt;</code> (or any container) with
+            <code>aria-labelledby</code> pointing at a real heading, so a
+            screen reader announces the panel by its name, not by the fact
+            that it happens to look like steel.
+          </p>
+        </div>
+      </section>
+      <p class="cb-preview-example__caption">
+        Uses <code>--cb-color-surface-panel</code>, <code>--cb-color-border</code>,
+        <code>--cb-elevation-raised-2</code> and <code>--cb-radius-lg</code>. Try
+        the Kid mode toggle above — the same markup, larger radius, softer
+        shadow, warmer fill.
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+</body>
+</html>

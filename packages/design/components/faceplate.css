@@ -1,0 +1,36 @@
+/*
+ * Faceplate shell — the composed operator screen for one machine. This
+ * file only lays the pieces out; every visual rule for the pieces
+ * themselves lives in their own component stylesheet (panel-frame.css,
+ * label-strip.css, annunciator-tile.css, mode-selector.css,
+ * setpoint-readout.css, numeric-entry.css) — the faceplate is proof those
+ * components compose, not a new visual language of its own.
+ */
+
+.cb-faceplate__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--cb-space-3);
+  margin-bottom: var(--cb-space-5);
+}
+
+.cb-faceplate__section {
+  margin-bottom: var(--cb-space-6);
+}
+
+.cb-faceplate__section-title {
+  font-size: var(--cb-font-size-xs);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+  margin: 0 0 var(--cb-space-3);
+}
+
+.cb-faceplate__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-4);
+  align-items: flex-start;
+}

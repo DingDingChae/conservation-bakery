@@ -1,0 +1,123 @@
+/*
+ * Annunciator tile — a latching alarm indicator, styled after a real
+ * ISA-style plant annunciator window: it flashes until acknowledged, then
+ * stays lit steady, and — when the underlying condition clears — stays lit
+ * in a distinct "cleared, awaiting reset" state until an operator presses
+ * reset, rather than silently switching itself off.
+ *
+ * Four states, selected by [data-state] on the tile:
+ *   normal                  — dim, hollow icon, no fill.
+ *   active-unacknowledged   — safety-red fill, flashes, filled triangle icon.
+ *   active-acknowledged     — safety-red fill, steady, filled square icon.
+ *   cleared                 — accent-amber fill, steady, filled diamond icon,
+ *                             stays lit until reset.
+ *
+ * Every state carries its own icon glyph AND its own text label, so colour
+ * is never the only channel — a colour-blind operator, or a screen-reader
+ * user, reads the same state a sighted operator sees by colour alone.
+ *
+ * Reduced motion: the flashing @keyframes rule for
+ * active-unacknowledged is defined ONLY inside
+ * `@media (prefers-reduced-motion: no-preference)`, below. Outside that
+ * query, active-unacknowledged already renders as a steady red fill with a
+ * bold dashed border and the filled-triangle icon — see
+ * ".cb-annunciator-tile[data-state='active-unacknowledged']" — so a
+ * reduced-motion user gets a real, static, still-distinguishable state
+ * rather than a zero-duration animation that could still paint one flicker.
+ */
+
+.cb-annunciator-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cb-space-1);
+  min-width: 8rem;
+  min-height: var(--cb-hit-target-min);
+  padding: var(--cb-space-3) var(--cb-space-2);
+  background: var(--cb-color-surface-recess);
+  color: var(--cb-color-text-secondary);
+  font-family: var(--cb-font-family-ui);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-elevation-recessed);
+  cursor: pointer;
+}
+
+.cb-annunciator-tile__icon {
+  font-size: var(--cb-font-size-xl);
+  line-height: 1;
+}
+
+.cb-annunciator-tile__label {
+  font-size: var(--cb-font-size-xs);
+  font-weight: var(--cb-font-weight-bold);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.cb-annunciator-tile__state {
+  font-size: var(--cb-font-size-xs);
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* normal: dim, hollow icon — the default resting state. */
+.cb-annunciator-tile[data-state='normal'] {
+  background: var(--cb-color-surface-recess);
+  color: var(--cb-color-text-secondary);
+  border-style: dashed;
+}
+
+/* active-unacknowledged: steady red base (the reduced-motion-safe state),
+   optionally animated below when motion is allowed. */
+.cb-annunciator-tile[data-state='active-unacknowledged'] {
+  background: var(--cb-color-safety-red);
+  color: var(--cb-color-on-safety);
+  border-style: dashed;
+  border-width: var(--cb-border-width-thick);
+}
+
+/* active-acknowledged: steady, solid border — the "seen, still active" state. */
+.cb-annunciator-tile[data-state='active-acknowledged'] {
+  background: var(--cb-color-safety-red);
+  color: var(--cb-color-on-safety);
+  border-style: solid;
+}
+
+/* cleared: amber, steady, solid border — stays lit until reset. */
+.cb-annunciator-tile[data-state='cleared'] {
+  background: var(--cb-color-accent-amber);
+  color: var(--cb-color-on-accent-amber);
+  border-style: solid;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cb-annunciator-tile[data-state='active-unacknowledged'] {
+    animation: cb-annunciator-flash var(--cb-motion-flash-duration) steps(1, end)
+      var(--cb-motion-flash-iteration);
+  }
+
+  @keyframes cb-annunciator-flash {
+    0%,
+    49% {
+      background: var(--cb-color-safety-red);
+      color: var(--cb-color-on-safety);
+      border-color: var(--cb-color-on-safety);
+    }
+    50%,
+    100% {
+      background: var(--cb-color-surface-recess);
+      color: var(--cb-color-text-secondary);
+      border-color: var(--cb-color-border);
+    }
+  }
+}
+
+.cb-annunciator-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-4);
+}

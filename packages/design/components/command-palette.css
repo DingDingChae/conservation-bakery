@@ -1,0 +1,105 @@
+/*
+ * Command palette — Ctrl+Shift+F, with an anchored regex builder over a
+ * fixed command list. Built on the native <dialog> element specifically so
+ * focus trapping, Escape-to-close, and inert-background behaviour come
+ * from the platform (`showModal()`) rather than being hand re-implemented.
+ */
+
+.cb-command-palette {
+  width: min(34rem, 92vw);
+  padding: 0;
+  background: var(--cb-color-surface-panel);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thick) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-lg);
+  box-shadow: var(--cb-elevation-raised-2);
+}
+
+.cb-command-palette::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cb-command-palette__header {
+  padding: var(--cb-space-4) var(--cb-space-4) var(--cb-space-3);
+  border-bottom: var(--cb-border-width-hairline) solid var(--cb-color-border);
+}
+
+.cb-command-palette__title {
+  margin: 0 0 var(--cb-space-2);
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__input {
+  width: 100%;
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-3);
+  background: var(--cb-color-surface-recess);
+  color: var(--cb-color-text-primary);
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-md);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-command-palette__toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-3);
+  margin-top: var(--cb-space-3);
+  font-size: var(--cb-font-size-xs);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__toggles label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-1);
+}
+
+.cb-command-palette__status {
+  margin-top: var(--cb-space-2);
+  font-size: var(--cb-font-size-xs);
+  color: var(--cb-color-text-secondary);
+  min-height: 1.2em;
+}
+
+.cb-command-palette__status[data-error='true'] {
+  color: var(--cb-color-text-danger);
+}
+
+.cb-command-palette__list {
+  list-style: none;
+  margin: 0;
+  padding: var(--cb-space-2);
+  max-height: 16rem;
+  overflow-y: auto;
+}
+
+.cb-command-palette__option {
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border-radius: var(--cb-radius-sm);
+  font-size: var(--cb-font-size-sm);
+  cursor: pointer;
+}
+
+.cb-command-palette__option[aria-selected='true'] {
+  background: var(--cb-color-accent-amber);
+  color: var(--cb-color-on-accent-amber);
+}
+
+.cb-command-palette__empty {
+  padding: var(--cb-space-3);
+  font-size: var(--cb-font-size-sm);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--cb-space-3) var(--cb-space-4);
+  border-top: var(--cb-border-width-hairline) solid var(--cb-color-border);
+}

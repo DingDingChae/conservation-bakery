@@ -1,0 +1,76 @@
+/*
+ * Numeric entry — a value with engineering units and a stated range. The
+ * unit is always visible text next to the field (never a placeholder,
+ * which disappears the moment the field has a value and is not reliably
+ * exposed to assistive tech), and the range is a real, permanently visible
+ * hint tied to the field with aria-describedby, not a tooltip.
+ */
+
+.cb-numeric-entry {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--cb-space-1);
+}
+
+.cb-numeric-entry__label {
+  font-family: var(--cb-font-family-ui);
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-numeric-entry__field {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  background: var(--cb-color-surface-recess);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-elevation-recessed);
+  padding: 0 var(--cb-space-3);
+  min-height: var(--cb-hit-target-min);
+}
+
+.cb-numeric-entry__field input {
+  width: 6ch;
+  border: 0;
+  background: transparent;
+  color: var(--cb-color-text-primary);
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-xl);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.cb-numeric-entry__field input:focus-visible {
+  outline: none; /* the field's own focus ring below is more specific to the control */
+}
+
+.cb-numeric-entry__field:focus-within {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.cb-numeric-entry__unit {
+  font-family: var(--cb-font-family-ui);
+  font-size: var(--cb-font-size-md);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-numeric-entry__hint {
+  margin: 0;
+  font-size: var(--cb-font-size-xs);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-numeric-entry__error {
+  margin: 0;
+  font-size: var(--cb-font-size-xs);
+  font-weight: var(--cb-font-weight-bold);
+  color: var(--cb-color-text-danger);
+}
+
+.cb-numeric-entry[data-invalid='true'] .cb-numeric-entry__field {
+  border-color: var(--cb-color-safety-red);
+  border-width: var(--cb-border-width-thick);
+}

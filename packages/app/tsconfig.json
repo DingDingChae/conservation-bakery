@@ -1,0 +1,20 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "tsBuildInfoFile": "./dist/.tsbuildinfo",
+    // NodeNext rather than the repository default, because this is the one package that
+    // must emit two module systems at once: ESM for the main process and the renderer,
+    // and a real CommonJS `preload.cjs`, because a sandboxed preload cannot be ESM.
+    // Only NodeNext honours the per-file `.cts` distinction that makes that possible.
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    // The renderer touches the DOM; the simulation never does. That asymmetry is the
+    // seam, and it is enforced by the sim package simply not listing DOM here.
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.cts"],
+  "exclude": ["src/**/*.spec.ts"],
+  "references": [{ "path": "../sim" }, { "path": "../design" }]
+}

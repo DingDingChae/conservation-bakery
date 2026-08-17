@@ -1,0 +1,81 @@
+/*
+ * Conservation Bakery design tokens — colour, dark scheme.
+ *
+ * "Dark scheme" is the night-shift control room: the same brushed steel and
+ * bakery-warm accents, now against deep charcoal rather than flour white.
+ * Token names are identical to color-light.css by design — a component
+ * never branches on scheme, it only reads a variable that resolves
+ * differently depending on which scheme is active.
+ *
+ * Applies when an ancestor carries [data-theme="dark"], or — with no
+ * explicit choice made — when the platform reports prefers-color-scheme:
+ * dark. Both blocks below must be kept numerically identical; the second
+ * exists only so a user who has not made an explicit choice still gets a
+ * scheme that matches their OS.
+ *
+ * Ratios are computed the same way as color-light.css and re-verified by
+ * packages/design/src/contrast.spec.ts.
+ */
+
+[data-theme='dark'] {
+  --cb-color-bg: #1b1d1f;
+  --cb-color-surface-panel: #2b2e33;
+  --cb-color-surface-recess: #202225;
+
+  --cb-color-text-primary: #f1ecde; /* vs bg 14.32:1, vs panel 11.54:1, vs recess 13.51:1 */
+  --cb-color-text-secondary: #c8c0ac; /* vs panel 7.52:1 */
+  --cb-color-text-inverse: #1b1d1f;
+
+  --cb-color-border: #7a828c; /* vs panel 3.50:1, vs bg 4.35:1, vs recess 4.10:1 (non-text >=3:1) */
+  --cb-color-fastener: #7a828c;
+
+  --cb-color-label-bg: #101112;
+  --cb-color-label-text: #f1ecde; /* 16.02:1 */
+
+  --cb-color-accent-amber: #ffa733; /* fill */
+  --cb-color-on-accent-amber: #1b1d1f; /* ink for text/icons placed on the amber fill: 8.72:1 */
+  --cb-color-text-amber: #ffa733; /* amber ink on bg/panel: 8.72:1 / 7.02:1 */
+
+  --cb-color-focus-ring: #ffb300; /* vs panel 7.59:1, vs bg 9.42:1 (non-text >=3:1) */
+
+  /* Base-scheme red/green are too dark to read as a fill against a near-black
+     panel, so the dark scheme uses brighter variants of the same hues, with
+     dark ink on top instead of light ink — this is the one place the two
+     schemes diverge in more than lightness, and it is exactly because "hard
+     safety red/green" must stay legible, not decorative. */
+  --cb-color-safety-red: #ff5347; /* vs bg 5.30:1, vs panel 4.27:1 (non-text >=3:1) */
+  --cb-color-safety-green: #1fa351; /* vs bg 5.17:1, vs panel 4.16:1 (non-text >=3:1) */
+  --cb-color-on-safety: #1b1d1f; /* text on red 5.30:1, on green 5.17:1 */
+
+  /* See color-light.css for why this ink is distinct from --cb-color-safety-red. */
+  --cb-color-text-danger: #ff8a80; /* vs bg 7.41:1, vs panel 5.97:1, vs recess 6.99:1 */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --cb-color-bg: #1b1d1f;
+    --cb-color-surface-panel: #2b2e33;
+    --cb-color-surface-recess: #202225;
+
+    --cb-color-text-primary: #f1ecde;
+    --cb-color-text-secondary: #c8c0ac;
+    --cb-color-text-inverse: #1b1d1f;
+
+    --cb-color-border: #7a828c;
+    --cb-color-fastener: #7a828c;
+
+    --cb-color-label-bg: #101112;
+    --cb-color-label-text: #f1ecde;
+
+    --cb-color-accent-amber: #ffa733;
+    --cb-color-on-accent-amber: #1b1d1f;
+    --cb-color-text-amber: #ffa733;
+
+    --cb-color-focus-ring: #ffb300;
+
+    --cb-color-safety-red: #ff5347;
+    --cb-color-safety-green: #1fa351;
+    --cb-color-on-safety: #1b1d1f;
+    --cb-color-text-danger: #ff8a80;
+  }
+}

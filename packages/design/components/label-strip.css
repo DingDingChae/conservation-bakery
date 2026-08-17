@@ -1,0 +1,30 @@
+/*
+ * Engraved label strip — the phenolic nameplate that identifies a control
+ * or a group of controls. Dark face, light engraved fill, tracked small
+ * caps: the one place in this system that intentionally looks machined
+ * rather than drawn.
+ */
+
+.cb-label-strip {
+  display: inline-block;
+  background: var(--cb-color-label-bg);
+  color: var(--cb-color-label-text);
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border-radius: var(--cb-radius-sm);
+  box-shadow: var(--cb-elevation-recessed);
+}
+
+.cb-label-strip__text {
+  display: block;
+  font-family: var(--cb-font-family-ui);
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.cb-label-strip--block {
+  display: block;
+  width: 100%;
+}

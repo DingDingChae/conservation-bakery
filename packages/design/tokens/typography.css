@@ -1,0 +1,44 @@
+/*
+ * Conservation Bakery design tokens — typography.
+ *
+ * Two families only: a plain, highly legible UI sans for running text and
+ * labels, and a tabular monospace for numeric process values (setpoints,
+ * process values, trend axes) so digits do not jitter in width as they
+ * change. Both are system font stacks — no webfont, no new dependency, no
+ * network fetch at load time.
+ *
+ * The scale is a control-room scale, not a marketing scale: it exists to
+ * make a setpoint readable from arm's length, not to look elegant on a
+ * poster. `--cb-font-size-lg` and above satisfy WCAG's "large text"
+ * definition (>=24px, or >=19px at --cb-font-weight-bold) — see
+ * tokens/color-*.css for which colour pairs rely on that.
+ */
+
+:root {
+  --cb-font-family-ui:
+    -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --cb-font-family-mono:
+    ui-monospace, 'Cascadia Mono', 'Consolas', 'SFMono-Regular', Menlo, monospace;
+
+  --cb-font-size-xs: 0.75rem; /* 12px — fine print: units, ranges, run hours */
+  --cb-font-size-sm: 0.875rem; /* 14px — secondary labels */
+  --cb-font-size-md: 1rem; /* 16px — body */
+  --cb-font-size-lg: 1.25rem; /* 20px — tile labels, control captions */
+  --cb-font-size-xl: 1.5rem; /* 24px — WCAG large-text threshold */
+  --cb-font-size-xxl: 2rem; /* 32px — setpoint/process-value readouts */
+  --cb-font-size-display: 3rem; /* 48px — hero readout on a faceplate */
+
+  --cb-line-height-tight: 1.15;
+  --cb-line-height-normal: 1.4;
+  --cb-line-height-relaxed: 1.6;
+
+  --cb-font-weight-regular: 400;
+  --cb-font-weight-medium: 600;
+  --cb-font-weight-bold: 700;
+
+  /* Engraved-label tracking: phenolic nameplates are set in wide-tracked
+     small caps — this is the one deliberately "designed" typographic move
+     in an otherwise utilitarian scale. */
+  --cb-letter-spacing-label: 0.08em;
+  --cb-letter-spacing-normal: normal;
+}

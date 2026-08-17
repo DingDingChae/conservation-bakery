@@ -1,8 +1,8 @@
 {
-  "name": "@conservation-bakery/sim",
+  "name": "@conservation-bakery/design",
   "version": "0.0.0",
   "private": true,
-  "description": "Deterministic, exactly-conserved simulation core. No DOM, no Electron, no I/O.",
+  "description": "Design tokens and diegetic control-room components for Conservation Bakery. No DOM framework, no build step for the component previews.",
   "license": "Apache-2.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -11,7 +11,9 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./components/*": "./components/*",
+    "./tokens/*": "./tokens/*"
   },
   "scripts": {
     "build": "tsc --build",

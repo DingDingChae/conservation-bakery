@@ -1,0 +1,16 @@
+/*
+ * Conservation Bakery design tokens — corner radius.
+ *
+ * Real fabricated steel panels are mostly square with a small break-edge
+ * radius, not soft app-UI rounding. Kid mode overrides every step here to
+ * something noticeably larger and friendlier — see tokens/kid.css — while
+ * every component keeps referencing the same token names.
+ */
+
+:root {
+  --cb-radius-none: 0;
+  --cb-radius-sm: 0.125rem; /* 2px — break-edge on a stamped bezel */
+  --cb-radius-md: 0.25rem; /* 4px — panel and tile corners */
+  --cb-radius-lg: 0.5rem; /* 8px — larger housings, the faceplate shell */
+  --cb-radius-pill: 999px; /* rotary selector knob, toggle */
+}

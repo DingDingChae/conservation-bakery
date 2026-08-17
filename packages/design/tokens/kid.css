@@ -1,0 +1,91 @@
+/*
+ * Conservation Bakery design tokens — Kid mode overlay.
+ *
+ * Kid mode is a TOKEN SWAP, never a different component tree. Every
+ * variable name below already exists in the base scheme files; this file
+ * only redefines their values under [data-mode="kid"]. No component's
+ * markup, class names, or CSS changes between modes — a `<annunciator-tile>`
+ * preview and a Kid-mode `<annunciator-tile>` preview render with the exact
+ * same HTML and the exact same selectors, reading different custom
+ * property values.
+ *
+ * Apply Kid mode by adding `data-mode="kid"` to the same element that
+ * carries `data-theme` (typically <html> or <body>) — see the package
+ * README's "How Kid mode overlays the base tokens" section.
+ *
+ * Kid mode deliberately overrides colour to ONE warm, bright palette
+ * regardless of which colour scheme (light/dark) is otherwise selected: the
+ * brief calls for "warmer and brighter surfaces", and a dim Kid mode would
+ * contradict that, so [data-mode="kid"] wins over [data-theme="dark"] here.
+ * A child using Kid mode still gets reduced motion and full keyboard/screen
+ * reader support — those are not scheme-dependent.
+ *
+ * Ratios are computed the same way as the base colour files and re-verified
+ * by packages/design/src/contrast.spec.ts.
+ */
+
+[data-mode='kid'] {
+  /* ---- Colour: one bright, warm palette ------------------------------- */
+  --cb-color-bg: #fff6e4;
+  --cb-color-surface-panel: #ffe9be;
+  --cb-color-surface-recess: #ffd98f;
+
+  --cb-color-text-primary: #3a2e1f; /* vs bg 12.29:1, vs panel 11.10:1, vs recess 9.79:1 */
+  --cb-color-text-secondary: #6b5636; /* vs panel 5.87:1 */
+  --cb-color-text-inverse: #fff6e4;
+
+  --cb-color-border: #8a6a34; /* vs panel 4.21:1, vs bg 4.66:1, vs recess 3.72:1 (non-text >=3:1) */
+  --cb-color-fastener: #8a6a34;
+
+  --cb-color-label-bg: #3a2e1f;
+  --cb-color-label-text: #fff6e4; /* 12.29:1 */
+
+  /* Decorative glow fill only — always paired with a border and an icon or
+     label in every component that uses it, so it does not need to clear
+     the 3:1 non-text threshold on its own (it never is the only cue). */
+  --cb-color-accent-amber: #ff9f1c;
+  --cb-color-on-accent-amber: #3a2e1f; /* ink for text/icons placed on the amber fill: 6.43:1 */
+  --cb-color-text-amber: #8c4614; /* vs bg 6.52:1, vs panel 5.88:1 */
+
+  --cb-color-focus-ring: #b5581b; /* vs panel 4.03:1, vs bg 4.47:1 (non-text >=3:1) */
+
+  --cb-color-safety-red: #d62839; /* vs bg 4.63:1 (non-text >=3:1) */
+  --cb-color-safety-green: #157a3e; /* vs bg 5.03:1 (non-text >=3:1) */
+  --cb-color-on-safety: #ffffff; /* text on red 4.97:1, on green 5.41:1 */
+  --cb-color-text-danger: #8f0f19; /* vs bg 7.06:1, vs panel 6.37:1, vs recess 6.92:1 */
+
+  /* ---- Type: one step up, every step ----------------------------------- */
+  --cb-font-size-xs: 0.875rem; /* 14px */
+  --cb-font-size-sm: 1rem; /* 16px */
+  --cb-font-size-md: 1.125rem; /* 18px */
+  --cb-font-size-lg: 1.5rem; /* 24px */
+  --cb-font-size-xl: 1.875rem; /* 30px */
+  --cb-font-size-xxl: 2.5rem; /* 40px */
+  --cb-font-size-display: 3.5rem; /* 56px */
+  --cb-line-height-normal: 1.5;
+
+  /* ---- Space and hit targets: bigger, easier to land on ---------------- */
+  --cb-space-1: 0.375rem; /* 6px */
+  --cb-space-2: 0.75rem; /* 12px */
+  --cb-space-3: 1rem; /* 16px */
+  --cb-space-4: 1.5rem; /* 24px */
+  --cb-space-5: 2rem; /* 32px */
+  --cb-space-6: 3rem; /* 48px */
+  --cb-hit-target-min: 3.5rem; /* 56px, up from 44px */
+
+  /* ---- Radius: rounder, friendlier -------------------------------------- */
+  --cb-radius-sm: 0.375rem; /* 6px */
+  --cb-radius-md: 0.75rem; /* 12px */
+  --cb-radius-lg: 1.25rem; /* 20px */
+
+  /* ---- Elevation: softer, lower-contrast shadows ------------------------ */
+  --cb-elevation-recessed:
+    inset 0 2px 5px rgba(120, 84, 30, 0.18),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+  --cb-elevation-raised-1:
+    0 2px 5px rgba(120, 84, 30, 0.18),
+    inset 0 0 0 1px rgba(120, 84, 30, 0.12);
+  --cb-elevation-raised-2:
+    0 6px 16px rgba(120, 84, 30, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}

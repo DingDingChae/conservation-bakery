@@ -1,0 +1,69 @@
+<!-- @dsCard group="Controls" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Numeric entry — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="numeric-entry.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Numeric entry</h1>
+    <p class="cb-preview-lede">
+      A value with visible engineering units and a permanently visible range
+      hint (never a placeholder — a placeholder disappears the moment a
+      value is typed, and is not read reliably by every screen reader). Try
+      typing a value outside 140.0–220.0.
+    </p>
+
+    <div class="cb-preview-example">
+      <div id="numeric-entry-demo" class="cb-numeric-entry" data-invalid="false">
+        <label class="cb-numeric-entry__label" for="numeric-entry-input">Target temperature</label>
+        <div class="cb-numeric-entry__field">
+          <input
+            type="number"
+            id="numeric-entry-input"
+            min="140"
+            max="220"
+            step="0.5"
+            value="176"
+            inputmode="decimal"
+            aria-describedby="numeric-entry-hint numeric-entry-error"
+          />
+          <span class="cb-numeric-entry__unit" aria-hidden="true">&deg;C</span>
+        </div>
+        <p id="numeric-entry-hint" class="cb-numeric-entry__hint">Range 140.0&ndash;220.0 &deg;C</p>
+        <p id="numeric-entry-error" class="cb-numeric-entry__error" role="alert"></p>
+      </div>
+      <p class="cb-preview-example__caption">
+        The error text uses <code>--cb-color-text-danger</code>, a darker
+        ink than <code>--cb-color-safety-red</code> (which is tuned to be a
+        fill, not body text) — 5.10–7.57:1 across surfaces, see
+        <code>src/contrast.spec.ts</code>.
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+  <script src="numeric-entry.js"></script>
+</body>
+</html>

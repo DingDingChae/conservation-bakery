@@ -1,0 +1,71 @@
+<!-- @dsCard group="Controls" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Mode selector — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="mode-selector.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Mode selector</h1>
+    <p class="cb-preview-lede">
+      A chunky physical mode switch. Built on native
+      <code>&lt;input type="radio"&gt;</code> elements, so Tab moves to the
+      group, arrow keys move between positions, and a screen reader
+      announces "radio button, 2 of 4" the same way it would for any radio
+      group — no custom keyboard handling to get wrong.
+    </p>
+
+    <div class="cb-preview-example">
+      <fieldset class="cb-mode-selector">
+        <legend class="cb-mode-selector__legend">Mixer drive mode</legend>
+        <div class="cb-mode-selector__track">
+          <label class="cb-mode-selector__option">
+            <input type="radio" name="mixer-mode" value="off" checked />
+            <span>Off</span>
+          </label>
+          <label class="cb-mode-selector__option">
+            <input type="radio" name="mixer-mode" value="manual" />
+            <span>Manual</span>
+          </label>
+          <label class="cb-mode-selector__option">
+            <input type="radio" name="mixer-mode" value="auto" />
+            <span>Auto</span>
+          </label>
+          <label class="cb-mode-selector__option">
+            <input type="radio" name="mixer-mode" value="remote" />
+            <span>Remote</span>
+          </label>
+        </div>
+      </fieldset>
+      <p class="cb-preview-example__caption">
+        The selected position uses <code>--cb-color-accent-amber</code> with
+        <code>--cb-color-on-accent-amber</code> ink (5.59:1 light, 8.72:1 dark,
+        6.43:1 Kid mode).
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+/*
+ * Setpoint-versus-process-value readout. Two mono-spaced numeric fields
+ * (setpoint, process value) plus a text status ("within tolerance" /
+ * "deviation high" / "deviation low") that never depends on colour alone —
+ * a small deviation bar is decorative and aria-hidden, the words carry the
+ * meaning.
+ */
+
+.cb-spv {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--cb-space-3);
+  min-width: 16rem;
+  padding: var(--cb-space-4);
+  background: var(--cb-color-surface-recess);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-elevation-recessed);
+}
+
+.cb-spv__values {
+  display: flex;
+  gap: var(--cb-space-5);
+  margin: 0;
+}
+
+.cb-spv__values dt {
+  font-size: var(--cb-font-size-xs);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-spv__values dd {
+  margin: 0;
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-xxl);
+  font-variant-numeric: tabular-nums;
+  color: var(--cb-color-text-primary);
+}
+
+.cb-spv__values dd small {
+  font-family: var(--cb-font-family-ui);
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-regular);
+  color: var(--cb-color-text-secondary);
+  margin-left: var(--cb-space-1);
+}
+
+.cb-spv__bar {
+  position: relative;
+  height: 0.5rem;
+  border-radius: var(--cb-radius-pill);
+  background: var(--cb-color-bg);
+  border: var(--cb-border-width-hairline) solid var(--cb-color-border);
+}
+
+.cb-spv__bar-marker {
+  position: absolute;
+  top: 50%;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--cb-color-text-amber);
+  border: var(--cb-border-width-thin) solid var(--cb-color-bg);
+}
+
+.cb-spv__status {
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-primary);
+}

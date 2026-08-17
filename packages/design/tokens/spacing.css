@@ -1,0 +1,24 @@
+/*
+ * Conservation Bakery design tokens — spacing.
+ *
+ * A 4px base grid, named by step rather than pixel size so Kid mode can
+ * redefine every step to a larger physical size without any component
+ * changing which token it reaches for.
+ */
+
+:root {
+  --cb-space-0: 0;
+  --cb-space-1: 0.25rem; /* 4px */
+  --cb-space-2: 0.5rem; /* 8px */
+  --cb-space-3: 0.75rem; /* 12px */
+  --cb-space-4: 1rem; /* 16px */
+  --cb-space-5: 1.5rem; /* 24px */
+  --cb-space-6: 2rem; /* 32px */
+  --cb-space-7: 3rem; /* 48px */
+  --cb-space-8: 4rem; /* 64px */
+
+  /* Minimum interactive hit target — WCAG 2.5.5/2.5.8 target size. Every
+     control token below (buttons, tiles, selector segments) sizes itself
+     against this rather than a hard-coded pixel value. */
+  --cb-hit-target-min: 2.75rem; /* 44px */
+}

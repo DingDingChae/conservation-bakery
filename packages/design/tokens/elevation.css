@@ -1,0 +1,33 @@
+/*
+ * Conservation Bakery design tokens — elevation.
+ *
+ * Elevation here is physical, not a z-axis metaphor: a raised tile catches
+ * light on its top edge, a recessed meter well is shadowed inward. Values
+ * are tuned by eye against both colour schemes; Kid mode softens all of
+ * them (tokens/kid.css) rather than removing them, so depth cues survive
+ * the token swap.
+ */
+
+:root {
+  --cb-elevation-flat: none;
+
+  /* A sunken slot: a meter well, a switch bezel, a numeric-entry field. */
+  --cb-elevation-recessed:
+    inset 0 2px 4px rgba(0, 0, 0, 0.35),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.04);
+
+  /* A control at rest on the panel face: a tile, an idle button. */
+  --cb-elevation-raised-1:
+    0 1px 2px rgba(0, 0, 0, 0.4),
+    inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+
+  /* A whole faceplate floating above the desk surface. */
+  --cb-elevation-raised-2:
+    0 4px 10px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+
+  /* A single fastener head (screw, rivet) — used at small sizes only. */
+  --cb-elevation-fastener:
+    inset 0 1px 1px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+}

@@ -1,0 +1,60 @@
+<!-- @dsCard group="System" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Toast / status line — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="toast.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Toast / status line</h1>
+    <p class="cb-preview-lede">
+      A brief, non-blocking status message. The <code>role="status"</code>
+      region stays in the document at all times — only its
+      <code>data-visible</code> attribute and text change — because a live
+      region that is inserted fresh each time is announced inconsistently
+      across screen readers.
+    </p>
+
+    <div class="cb-preview-example">
+      <div class="cb-toast-stage">
+        <div id="demo-toast" class="cb-toast" data-visible="false" role="status" aria-live="polite">
+          <span id="demo-toast-message" class="cb-toast__message"></span>
+          <button type="button" id="demo-toast-dismiss" class="cb-toast__dismiss" aria-label="Dismiss">&times;</button>
+        </div>
+      </div>
+      <div class="cb-demo-controls">
+        <button type="button" id="toast-show" class="cb-button">Show status line</button>
+      </div>
+      <p class="cb-preview-example__caption">
+        Auto-dismisses after 6 seconds, or press the dismiss button. Its
+        left edge uses <code>--cb-color-text-amber</code> as an accent, and
+        the entrance animation is skipped entirely under reduced motion.
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+  <script src="toast.js"></script>
+</body>
+</html>

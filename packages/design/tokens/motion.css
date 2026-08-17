@@ -1,0 +1,40 @@
+/*
+ * Conservation Bakery design tokens — motion.
+ *
+ * `--cb-motion-flash-*` exists for exactly one purpose: the
+ * active-unacknowledged annunciator state, which flashes until acknowledged
+ * per ISA-style annunciator convention. Nothing else in this library
+ * animates on a loop.
+ *
+ * Reduced motion: this file zeroes every duration under
+ * `prefers-reduced-motion: reduce` as a token-level fallback, but the
+ * annunciator tile does not rely on that alone — its flashing @keyframes
+ * rule is itself only defined under `prefers-reduced-motion: no-preference`
+ * (see components/annunciator-tile.html), so a reduced-motion user gets no
+ * animation constructed at all, not a zero-duration one that could still
+ * paint a single flicker frame. The state is instead carried by a static
+ * icon and text label change — see that component's "distinguishable
+ * without motion or colour" notes.
+ */
+
+:root {
+  --cb-motion-duration-instant: 0ms;
+  --cb-motion-duration-fast: 120ms;
+  --cb-motion-duration-base: 200ms;
+  --cb-motion-duration-slow: 400ms;
+  --cb-motion-ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  --cb-motion-flash-duration: 600ms;
+  --cb-motion-flash-iteration: infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cb-motion-duration-instant: 0ms;
+    --cb-motion-duration-fast: 0ms;
+    --cb-motion-duration-base: 0ms;
+    --cb-motion-duration-slow: 0ms;
+    --cb-motion-flash-duration: 0ms;
+    --cb-motion-flash-iteration: 1;
+  }
+}

@@ -1,0 +1,67 @@
+/*
+ * Panel frame — the brushed steel enclosure every other component sits
+ * inside. A visible fastener at each corner is the one deliberately
+ * "hardware" detail: it is what reads as a real fabricated panel rather
+ * than a rounded card.
+ */
+
+.cb-panel-frame {
+  position: relative;
+  background: var(--cb-color-surface-panel);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thick) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-lg);
+  box-shadow: var(--cb-elevation-raised-2);
+  padding: var(--cb-space-6);
+}
+
+.cb-panel-frame__title {
+  font-size: var(--cb-font-size-lg);
+  font-weight: var(--cb-font-weight-bold);
+  margin: 0 0 var(--cb-space-3);
+}
+
+.cb-panel-frame__body {
+  font-size: var(--cb-font-size-md);
+  color: var(--cb-color-text-secondary);
+}
+
+/* Fasteners are decorative (a screw head), so they are aria-hidden in
+   markup and exist purely as a CSS pseudo-shape — never load-bearing for
+   meaning. */
+.cb-panel-frame__fastener {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: var(--cb-color-fastener);
+  box-shadow: var(--cb-elevation-fastener);
+}
+
+.cb-panel-frame__fastener::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 65%;
+  height: 1.5px;
+  background: rgba(0, 0, 0, 0.45);
+  transform: rotate(28deg);
+}
+
+.cb-panel-frame__fastener--tl {
+  top: var(--cb-space-2);
+  left: var(--cb-space-2);
+}
+.cb-panel-frame__fastener--tr {
+  top: var(--cb-space-2);
+  right: var(--cb-space-2);
+}
+.cb-panel-frame__fastener--bl {
+  bottom: var(--cb-space-2);
+  left: var(--cb-space-2);
+}
+.cb-panel-frame__fastener--br {
+  bottom: var(--cb-space-2);
+  right: var(--cb-space-2);
+}

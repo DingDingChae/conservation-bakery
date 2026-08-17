@@ -1,0 +1,155 @@
+/*
+ * Shared preview-harness styling for packages/design/components/*.html.
+ *
+ * This file is NOT part of the design language — it is scaffolding so each
+ * standalone preview page (opened directly from disk, no build step) has a
+ * readable page background, a scheme/mode switcher toolbar, and a
+ * consistent way to show a labelled example. Every actual design-language
+ * rule lives in the component's own stylesheet, reading only tokens from
+ * ../../tokens/index.css and ../../tokens/kid.css.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cb-color-bg);
+  color: var(--cb-color-text-primary);
+  font-family: var(--cb-font-family-ui);
+  font-size: var(--cb-font-size-md);
+  line-height: var(--cb-line-height-normal);
+  transition: background-color var(--cb-motion-duration-base) var(--cb-motion-ease-standard);
+}
+
+/* A visible, high-contrast focus indicator, on every scheme, for every
+   focusable element in every component preview — the accessibility
+   contract requires this to be real, not decorative. */
+:focus-visible {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cb-preview-page {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: var(--cb-space-6) var(--cb-space-5) var(--cb-space-8);
+}
+
+.cb-preview-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cb-space-4);
+  padding: var(--cb-space-3) var(--cb-space-4);
+  margin-bottom: var(--cb-space-6);
+  background: var(--cb-color-surface-panel);
+  border: var(--cb-border-width-hairline) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+}
+
+.cb-preview-toolbar__field {
+  display: flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  font-size: var(--cb-font-size-sm);
+}
+
+.cb-preview-toolbar select,
+.cb-preview-toolbar input[type='checkbox'] {
+  font: inherit;
+}
+
+.cb-preview-toolbar select {
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-2);
+  background: var(--cb-color-bg);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-preview-toolbar input[type='checkbox'] {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.cb-preview-title {
+  font-size: var(--cb-font-size-xl);
+  font-weight: var(--cb-font-weight-bold);
+  margin: 0 0 var(--cb-space-2);
+}
+
+.cb-preview-lede {
+  max-width: 42rem;
+  color: var(--cb-color-text-secondary);
+  margin: 0 0 var(--cb-space-6);
+}
+
+.cb-preview-example {
+  margin: 0 0 var(--cb-space-7);
+}
+
+.cb-preview-example__caption {
+  font-size: var(--cb-font-size-sm);
+  color: var(--cb-color-text-secondary);
+  margin: var(--cb-space-2) 0 0;
+}
+
+.cb-preview-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-4);
+  align-items: flex-start;
+}
+
+/* A plain control-room push button, reused by every component preview that
+   needs one to demonstrate interaction (acknowledge, reset, dismiss,
+   step). Real design-language buttons live with their component; this one
+   is deliberately generic. */
+.cb-button {
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-4);
+  background: var(--cb-color-surface-panel);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  font: inherit;
+  font-weight: var(--cb-font-weight-medium);
+  cursor: pointer;
+}
+
+.cb-button:hover {
+  background: var(--cb-color-surface-recess);
+}
+
+.cb-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cb-demo-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-3);
+  margin-top: var(--cb-space-4);
+}

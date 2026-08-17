@@ -1,0 +1,71 @@
+/*
+ * Mode selector — a chunky physical selector switch (OFF / MANUAL / AUTO /
+ * REMOTE and similar). Built on native radio inputs so keyboard support
+ * (arrow keys move between options within the group, per native
+ * <input type="radio"> behaviour) and screen-reader announcement ("radio
+ * button, N of M") come from the platform, not from re-implemented ARIA.
+ */
+
+.cb-mode-selector {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.cb-mode-selector__legend {
+  padding: 0;
+  margin: 0 0 var(--cb-space-2);
+  font-family: var(--cb-font-family-ui);
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-mode-selector__track {
+  display: inline-flex;
+  background: var(--cb-color-surface-recess);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  padding: var(--cb-space-1);
+  gap: var(--cb-space-1);
+}
+
+.cb-mode-selector__option {
+  position: relative;
+  display: flex;
+}
+
+.cb-mode-selector__option input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.cb-mode-selector__option span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 5rem;
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-3);
+  border-radius: var(--cb-radius-sm);
+  font-family: var(--cb-font-family-ui);
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-secondary);
+  cursor: pointer;
+  user-select: none;
+}
+
+.cb-mode-selector__option input:checked + span {
+  background: var(--cb-color-accent-amber);
+  color: var(--cb-color-on-accent-amber);
+  box-shadow: var(--cb-elevation-raised-1);
+}
+
+.cb-mode-selector__option input:focus-visible + span {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 2px;
+}

@@ -1,0 +1,71 @@
+<!-- @dsCard group="Readouts" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Setpoint / process value readout — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="setpoint-readout.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Setpoint vs process value readout</h1>
+    <p class="cb-preview-lede">
+      Setpoint (SP) and process value (PV) as tabular-figure numerals, plus a
+      status word — "within tolerance", "deviation high", "deviation low" —
+      that is always present as text, never implied by colour alone. The
+      small bar and marker underneath are decorative and
+      <code>aria-hidden</code>; a screen reader gets the same information
+      from the definition list and the status text.
+    </p>
+
+    <div class="cb-preview-example">
+      <div class="cb-spv" role="group" aria-labelledby="spv-title">
+        <span id="spv-title" class="cb-visually-hidden">Oven zone 1 temperature</span>
+        <dl class="cb-spv__values">
+          <div>
+            <dt>SP</dt>
+            <dd>176.0<small>&deg;C</small></dd>
+          </div>
+          <div>
+            <dt>PV</dt>
+            <dd id="spv-pv-value">150.0<small>&deg;C</small></dd>
+          </div>
+        </dl>
+        <div class="cb-spv__bar" aria-hidden="true">
+          <span id="spv-marker" class="cb-spv__bar-marker" style="left: 12.5%"></span>
+        </div>
+        <p id="spv-status" class="cb-spv__status" aria-live="polite">Deviation low</p>
+      </div>
+      <div class="cb-demo-controls">
+        <button type="button" id="spv-nudge" class="cb-button">Step process value</button>
+      </div>
+      <p class="cb-preview-example__caption">
+        Steps through a fixed sequence of process values (no randomness) so
+        the readout is identical on every run of the preview.
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+  <script src="setpoint-readout.js"></script>
+</body>
+</html>

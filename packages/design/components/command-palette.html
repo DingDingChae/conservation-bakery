@@ -1,0 +1,87 @@
+<!-- @dsCard group="System" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Command palette — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="command-palette.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Command palette</h1>
+    <p class="cb-preview-lede">
+      <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd> anywhere on this page, or
+      the button below, opens the palette. It filters a fixed command list
+      by an anchored regular expression built from what you type plus the
+      four toggles. Built on the native <code>&lt;dialog&gt;</code> element,
+      so focus trapping and Escape-to-close come from the browser, not from
+      hand-written focus management.
+    </p>
+
+    <div class="cb-preview-example">
+      <div class="cb-demo-controls">
+        <button type="button" id="palette-open" class="cb-button">
+          Open command palette (Ctrl+Shift+F)
+        </button>
+      </div>
+
+      <dialog id="command-palette" class="cb-command-palette" aria-labelledby="palette-title">
+        <div class="cb-command-palette__header">
+          <p id="palette-title" class="cb-command-palette__title">Command palette</p>
+          <label class="cb-visually-hidden" for="palette-input">Filter commands</label>
+          <input
+            type="text"
+            id="palette-input"
+            class="cb-command-palette__input"
+            role="combobox"
+            aria-expanded="true"
+            aria-controls="palette-list"
+            aria-autocomplete="list"
+            placeholder="Type a pattern, e.g. ^open or oven$"
+            autocomplete="off"
+          />
+          <div class="cb-command-palette__toggles">
+            <label><input type="checkbox" id="palette-anchor-start" />Anchor start (^)</label>
+            <label><input type="checkbox" id="palette-anchor-end" />Anchor end ($)</label>
+            <label><input type="checkbox" id="palette-whole-word" />Whole word</label>
+            <label><input type="checkbox" id="palette-case-sensitive" />Case sensitive</label>
+          </div>
+          <p id="palette-status" class="cb-command-palette__status" role="status" aria-live="polite" data-error="false"></p>
+        </div>
+        <ul id="palette-list" class="cb-command-palette__list" role="listbox" aria-labelledby="palette-title"></ul>
+        <div class="cb-command-palette__footer">
+          <button type="button" id="palette-close" class="cb-button">Close</button>
+        </div>
+      </dialog>
+
+      <p class="cb-preview-example__caption">
+        Arrow keys move the active option, Enter runs it, Escape closes.
+        Invalid patterns (an unbalanced group, for example) are caught and
+        shown as text in the status line — the palette never throws.
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+  <script src="command-palette.js"></script>
+</body>
+</html>

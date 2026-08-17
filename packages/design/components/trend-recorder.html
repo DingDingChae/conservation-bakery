@@ -1,0 +1,104 @@
+<!-- @dsCard group="Readouts" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Trend recorder — Conservation Bakery design</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="../tokens/index.css" />
+  <link rel="stylesheet" href="../tokens/kid.css" />
+  <link rel="stylesheet" href="shared/preview.css" />
+  <link rel="stylesheet" href="panel-frame.css" />
+  <link rel="stylesheet" href="trend-recorder.css" />
+</head>
+<body>
+  <div class="cb-preview-page">
+    <header class="cb-preview-toolbar" role="region" aria-label="Preview controls">
+      <div class="cb-preview-toolbar__field">
+        <label for="theme-select">Colour scheme</label>
+        <select id="theme-select" data-role="theme-select">
+          <option value="system">Match system</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </div>
+      <div class="cb-preview-toolbar__field">
+        <input type="checkbox" id="kid-toggle" data-role="kid-toggle" />
+        <label for="kid-toggle">Kid mode</label>
+      </div>
+    </header>
+
+    <h1 class="cb-preview-title">Trend recorder</h1>
+    <p class="cb-preview-lede">
+      A paper-style strip chart. The drawing itself is decorative and
+      <code>aria-hidden</code> — the chart's actual accessible name and
+      description come from an <code>&lt;svg role="img"&gt;</code>'s
+      <code>&lt;title&gt;</code>/<code>&lt;desc&gt;</code>, and the exact
+      values it plots are always available as a real
+      <code>&lt;table&gt;</code> in the disclosure below it.
+    </p>
+
+    <div class="cb-preview-example">
+      <figure class="cb-trend" style="margin: 0">
+        <svg
+          class="cb-trend__svg"
+          viewBox="0 0 480 160"
+          role="img"
+          aria-labelledby="trend-title trend-desc"
+        >
+          <title id="trend-title">Oven zone 1 temperature trend, last 35 minutes</title>
+          <desc id="trend-desc">
+            Process value climbs from 150.0&deg;C toward the 176.0&deg;C setpoint,
+            briefly overshoots to about 181.2&deg;C at 30 minutes, then settles back
+            toward 178.9&deg;C by 35 minutes. Full values are in the table below.
+          </desc>
+          <line class="cb-trend__axis" x1="0" y1="150" x2="460" y2="150" />
+          <line class="cb-trend__axis" x1="0" y1="10" x2="0" y2="150" />
+          <polyline
+            class="cb-trend__series-sp"
+            points="0,49.2 460,49.2"
+          />
+          <polyline
+            class="cb-trend__series-pv"
+            points="0,122 65.7,70.2 131.4,53.7 197.1,49.2 262.9,51.2 328.6,44.2 394.3,34.6 460,41.1"
+          />
+        </svg>
+        <figcaption class="cb-trend__legend">
+          <span><span class="cb-trend__legend-swatch" style="color: var(--cb-color-text-amber)" aria-hidden="true"></span>Process value (&deg;C)</span>
+          <span><span class="cb-trend__legend-swatch cb-trend__legend-swatch--sp" style="color: var(--cb-color-text-secondary)" aria-hidden="true"></span>Setpoint (&deg;C)</span>
+        </figcaption>
+      </figure>
+
+      <details class="cb-trend__table-toggle">
+        <summary>View trend data as a table (text equivalent)</summary>
+        <table class="cb-trend__table">
+          <caption>Oven zone 1 temperature, sampled every 5 minutes</caption>
+          <thead>
+            <tr>
+              <th scope="col">Time (min)</th>
+              <th scope="col">Setpoint (&deg;C)</th>
+              <th scope="col">Process value (&deg;C)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">0</th><td>176.0</td><td>150.0</td></tr>
+            <tr><th scope="row">5</th><td>176.0</td><td>168.5</td></tr>
+            <tr><th scope="row">10</th><td>176.0</td><td>174.4</td></tr>
+            <tr><th scope="row">15</th><td>176.0</td><td>176.0</td></tr>
+            <tr><th scope="row">20</th><td>176.0</td><td>175.3</td></tr>
+            <tr><th scope="row">25</th><td>176.0</td><td>177.8</td></tr>
+            <tr><th scope="row">30</th><td>176.0</td><td>181.2</td></tr>
+            <tr><th scope="row">35</th><td>176.0</td><td>178.9</td></tr>
+          </tbody>
+        </table>
+      </details>
+      <p class="cb-preview-example__caption">
+        The paper-feed motion only animates under
+        <code>prefers-reduced-motion: no-preference</code> — with reduced
+        motion requested, the strip is a static, fully readable image.
+      </p>
+    </div>
+  </div>
+  <script src="shared/preview.js"></script>
+</body>
+</html>

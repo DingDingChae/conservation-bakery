@@ -1,0 +1,60 @@
+/*
+ * Conservation Bakery design tokens — colour, light scheme.
+ *
+ * "Light scheme" is the day-shift control room: warm bakery light (flour
+ * white, butter, caramel, crust brown, oven-glow amber) against charcoal
+ * steel structure. Hard safety red and green are reserved exclusively for
+ * alarm and run/stop state — nothing else in the palette may use them.
+ *
+ * Every pair below that is actually used as text-on-background or as a
+ * non-text state indicator (an annunciator tile fill, a focus ring, a
+ * divider that must be findable) is verified by
+ * packages/design/src/contrast.spec.ts, which parses this file and recomputes
+ * the ratio from the raw hex values — the numbers in these comments are not
+ * asserted directly, they are what that computation prints, kept here so a
+ * reviewer does not have to re-run the test to see the margin.
+ *
+ * WCAG AA thresholds: 4.5:1 for body text, 3:1 for large text (>=24px, or
+ * >=19px bold) and for non-text UI indicators.
+ */
+
+:root,
+[data-theme='light'] {
+  /* Surfaces — brushed steel panel over a flour-white desk. */
+  --cb-color-bg: #ede7d9;
+  --cb-color-surface-panel: #d9d2c2;
+  --cb-color-surface-recess: #c7bfac; /* sunken slot: a meter well, a switch bezel */
+
+  /* Ink. */
+  --cb-color-text-primary: #2b2620; /* vs bg 12.16:1, vs panel 9.96:1, vs recess 8.19:1 */
+  --cb-color-text-secondary: #55503f; /* vs panel 5.35:1 */
+  --cb-color-text-inverse: #f5f1e6; /* for use on dark fills: label plates, ink-filled tiles */
+
+  /* Structure: fasteners, hairlines, panel seams. */
+  --cb-color-border: #6b6350; /* vs panel 3.96:1, vs bg 4.83:1, vs recess 3.26:1 (non-text >=3:1) */
+  --cb-color-fastener: #6b6350;
+
+  /* Engraved phenolic label strip: dark face, light engraved fill. */
+  --cb-color-label-bg: #2b2620;
+  --cb-color-label-text: #f5f1e6; /* 13.28:1 */
+
+  /* Oven-glow amber — the one warm accent allowed to carry meaning that
+     is not alarm/run state (active heat, a highlighted setpoint). */
+  --cb-color-accent-amber: #e08a1e; /* fill */
+  --cb-color-on-accent-amber: #2b2620; /* ink for text/icons placed on the amber fill: 5.59:1 */
+  --cb-color-text-amber: #8c4614; /* amber ink on bg/panel: 5.68:1 / 4.65:1 — safe for body text */
+
+  /* Focus ring: a caramel-brown ring, visible against both bg and panel. */
+  --cb-color-focus-ring: #b5581b; /* vs panel 3.19:1, vs bg 3.89:1 (non-text >=3:1) */
+
+  /* Hard safety state — reserved. Never used decoratively. */
+  --cb-color-safety-red: #c81e2c; /* vs bg 4.63:1, vs panel 3.79:1 (non-text >=3:1) */
+  --cb-color-safety-green: #166b36; /* vs bg 5.34:1, vs panel 4.37:1 (non-text >=3:1) */
+  --cb-color-on-safety: #ffffff; /* text on a safety-red/green fill: red 5.71:1, green 6.58:1 */
+
+  /* A distinct, darker "danger ink" for error/alarm TEXT set directly on an
+     ordinary surface (not inside a red fill) — --cb-color-safety-red itself
+     is tuned to be a legible fill, not body-text ink, and falls short of
+     4.5:1 against the recessed surface. */
+  --cb-color-text-danger: #8f0f19; /* vs bg 7.57:1, vs panel 6.20:1, vs recess 5.10:1 */
+}

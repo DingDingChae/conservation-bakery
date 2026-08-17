@@ -1,0 +1,14 @@
+/*
+ * Conservation Bakery design tokens — borders.
+ *
+ * Widths only; colour is deliberately not set here — every component reads
+ * --cb-color-border (or --cb-color-focus-ring for the focus state) from the
+ * active colour scheme, so a border token never has to be redefined per
+ * scheme.
+ */
+
+:root {
+  --cb-border-width-hairline: 1px; /* seams, dividers */
+  --cb-border-width-thin: 2px; /* control outlines, tile edges */
+  --cb-border-width-thick: 3px; /* focus ring, panel frame bezel */
+}

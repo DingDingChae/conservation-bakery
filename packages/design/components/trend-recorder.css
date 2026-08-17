@@ -1,0 +1,128 @@
+/*
+ * Trend recorder — a paper-style scrolling strip chart, the way a real
+ * circular or strip chart recorder draws a pen trace on ruled paper. The
+ * chart itself is `aria-hidden`; every value it draws also exists in a
+ * `<table>` inside a `<details>` disclosure right below it, which is the
+ * actual text equivalent WCAG 1.1.1 requires for a non-text chart — not a
+ * generic "chart" label.
+ *
+ * The horizontal paper-feed motion is the one other place in this system
+ * that animates on a loop besides the annunciator flash, so it gets the
+ * same reduced-motion treatment: the scrolling @keyframes rule only exists
+ * under `prefers-reduced-motion: no-preference`. Without it the paper is
+ * simply static — still fully readable, nothing is lost.
+ */
+
+.cb-trend {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--cb-color-surface-recess);
+  background-image: repeating-linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.06) 0,
+    rgba(0, 0, 0, 0.06) 1px,
+    transparent 1px,
+    transparent 24px
+  );
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-elevation-recessed);
+  padding: var(--cb-space-3);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cb-trend {
+    animation: cb-trend-feed 12s linear infinite;
+  }
+
+  @keyframes cb-trend-feed {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -480px 0;
+    }
+  }
+}
+
+.cb-trend__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.cb-trend__axis {
+  stroke: var(--cb-color-border);
+  stroke-width: 1;
+}
+
+.cb-trend__series-pv {
+  fill: none;
+  stroke: var(--cb-color-text-amber);
+  stroke-width: 2;
+}
+
+.cb-trend__series-sp {
+  fill: none;
+  stroke: var(--cb-color-text-secondary);
+  stroke-width: 2;
+  stroke-dasharray: 4 3;
+}
+
+.cb-trend__legend {
+  display: flex;
+  gap: var(--cb-space-4);
+  margin-top: var(--cb-space-2);
+  font-size: var(--cb-font-size-xs);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-trend__legend-swatch {
+  display: inline-block;
+  width: 1.25rem;
+  height: 0;
+  margin-right: var(--cb-space-1);
+  border-top: 2px solid currentColor;
+  vertical-align: middle;
+}
+
+.cb-trend__legend-swatch--sp {
+  border-top-style: dashed;
+}
+
+.cb-trend__table-toggle {
+  margin-top: var(--cb-space-3);
+}
+
+.cb-trend__table-toggle summary {
+  cursor: pointer;
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-primary);
+}
+
+.cb-trend__table {
+  margin-top: var(--cb-space-3);
+  border-collapse: collapse;
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-sm);
+}
+
+.cb-trend__table caption {
+  text-align: left;
+  font-family: var(--cb-font-family-ui);
+  color: var(--cb-color-text-secondary);
+  margin-bottom: var(--cb-space-2);
+}
+
+.cb-trend__table th,
+.cb-trend__table td {
+  border: var(--cb-border-width-hairline) solid var(--cb-color-border);
+  padding: var(--cb-space-1) var(--cb-space-2);
+  text-align: right;
+}
+
+.cb-trend__table th {
+  font-family: var(--cb-font-family-ui);
+  text-align: right;
+}
