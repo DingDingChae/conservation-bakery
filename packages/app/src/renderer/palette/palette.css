@@ -1,0 +1,168 @@
+/*
+ * Command palette styling — reads only design tokens, matching the class names and
+ * visual language of packages/design/components/command-palette.css (the reviewed
+ * markup for this exact component), plus rules for the pieces that preview doesn't
+ * cover: the pattern-mode builder and result group headings.
+ *
+ * Every colour, size and radius below is a token custom property; nothing here is a
+ * literal so Kid mode's token overlay (packages/design/tokens/kid.css) applies with no
+ * change to this file.
+ */
+
+.cb-command-palette {
+  width: min(34rem, 92vw);
+  padding: 0;
+  background: var(--cb-color-surface-panel);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thick) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-lg);
+  box-shadow: var(--cb-elevation-raised-2);
+}
+
+.cb-command-palette::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Shared name across the renderer (see kit/live.ts's live regions) — declared here too
+   so this component still renders correctly if nothing else in the page defines it. */
+.cb-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.cb-command-palette__header {
+  padding: var(--cb-space-4) var(--cb-space-4) var(--cb-space-3);
+  border-bottom: var(--cb-border-width-hairline) solid var(--cb-color-border);
+}
+
+.cb-command-palette__title {
+  margin: 0 0 var(--cb-space-2);
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__input {
+  width: 100%;
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-3);
+  background: var(--cb-color-surface-recess);
+  color: var(--cb-color-text-primary);
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-md);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-command-palette__pattern {
+  margin-top: var(--cb-space-3);
+  font-size: var(--cb-font-size-xs);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__pattern > label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-1);
+}
+
+.cb-command-palette__pattern-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-3);
+  margin: var(--cb-space-2) 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.cb-command-palette__pattern-controls label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-1);
+}
+
+.cb-command-palette__status {
+  margin-top: var(--cb-space-2);
+  font-size: var(--cb-font-size-xs);
+  color: var(--cb-color-text-secondary);
+  min-height: 1.2em;
+}
+
+.cb-command-palette__status[data-error='true'] {
+  color: var(--cb-color-text-danger);
+}
+
+.cb-command-palette__list {
+  list-style: none;
+  margin: 0;
+  padding: var(--cb-space-2);
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+.cb-command-palette__group {
+  padding: var(--cb-space-2) var(--cb-space-3) var(--cb-space-1);
+  font-size: var(--cb-font-size-xs);
+  font-weight: var(--cb-font-weight-medium);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__option {
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border-radius: var(--cb-radius-sm);
+  font-size: var(--cb-font-size-sm);
+  cursor: pointer;
+}
+
+.cb-command-palette__option[aria-selected='true'] {
+  background: var(--cb-color-accent-amber);
+  color: var(--cb-color-on-accent-amber);
+}
+
+.cb-command-palette__empty {
+  padding: var(--cb-space-3);
+  font-size: var(--cb-font-size-sm);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--cb-space-3);
+  padding: var(--cb-space-3) var(--cb-space-4);
+  border-top: var(--cb-border-width-hairline) solid var(--cb-color-border);
+}
+
+.cb-command-palette__hint {
+  margin: 0;
+  font-size: var(--cb-font-size-xs);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-command-palette__close {
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-4);
+  background: var(--cb-color-surface-panel);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  font: inherit;
+  font-weight: var(--cb-font-weight-medium);
+  cursor: pointer;
+}
+
+.cb-command-palette__close:hover {
+  background: var(--cb-color-surface-recess);
+}

@@ -1,0 +1,87 @@
+/*
+ * The zero-residual panel. Reads only `--cb-*` custom properties from
+ * `@conservation-bakery/design`'s token stylesheets — see the note at the top of
+ * `tree.css` for why. Nothing on this screen is ever hidden, rounded or abbreviated
+ * by CSS either: `overflow` is left visible/scrolling, never `text-overflow: ellipsis`.
+ */
+
+.cb-provenance-balance {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-4);
+}
+
+.cb-provenance-balance__summary {
+  margin: 0;
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-primary);
+}
+
+/* The unmissable state: a non-zero residual anywhere flips the whole panel's
+   surface, not just one row, to the danger treatment — the summary text (built
+   from the `balance.notOk` catalogue key) says so too, so nothing here depends
+   on colour alone. */
+.cb-provenance-balance[data-balance-ok='false'] {
+  border-color: var(--cb-color-safety-red);
+  box-shadow: var(--cb-elevation-raised-2), inset 0 0 0 var(--cb-border-width-thick) var(--cb-color-safety-red);
+}
+
+.cb-provenance-balance[data-balance-ok='false'] .cb-provenance-balance__summary {
+  color: var(--cb-color-text-danger);
+}
+
+.cb-provenance-balance__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--cb-font-size-sm);
+}
+
+.cb-provenance-balance__table th,
+.cb-provenance-balance__table td {
+  text-align: left;
+  padding: var(--cb-space-2) var(--cb-space-3);
+  border-bottom: var(--cb-border-width-hairline) solid var(--cb-color-border);
+  /* Never truncated — an exact residual string is never allowed to be cut off. */
+  white-space: normal;
+  overflow: visible;
+}
+
+.cb-provenance-balance__table thead th {
+  font-size: var(--cb-font-size-xs);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-provenance-balance__residual {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-1);
+}
+
+.cb-provenance-balance__residual-value {
+  font-family: var(--cb-font-family-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--cb-color-text-primary);
+  /* No text-overflow: ellipsis, ever — a residual is never allowed to be cut off. */
+  white-space: normal;
+  word-break: break-all;
+}
+
+.cb-provenance-balance__row[data-residual-ok='false'] .cb-provenance-balance__residual-value {
+  color: var(--cb-color-text-danger);
+  font-weight: var(--cb-font-weight-bold);
+}
+
+/* The unmissable per-row state: real visible text naming the violation, not a
+   colour-only change — see the module doc comment on `balance.ts`. */
+.cb-provenance-balance__violation {
+  display: inline-block;
+  font-size: var(--cb-font-size-xs);
+  font-weight: var(--cb-font-weight-bold);
+  color: var(--cb-color-on-safety);
+  background: var(--cb-color-safety-red);
+  padding: 0.125rem var(--cb-space-2);
+  border-radius: var(--cb-radius-sm);
+  white-space: normal;
+}

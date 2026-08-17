@@ -1,0 +1,302 @@
+/*
+ * The control-room shell layout: the panel frame; a header carrying the clock, the
+ * speed control and the global alarm annunciator; a navigation rail; the main area;
+ * the always-visible balance panel; the settings surface; and the fault overlay.
+ *
+ * Reads only `--cb-*` custom properties from `@conservation-bakery/design`'s token
+ * stylesheets (see `index.html`, which links them before this file) — nothing here is
+ * a literal colour, size or duration, so Kid mode's token swap
+ * (`[data-mode="kid"]`, applied on `<html>` by `main.ts`) restyles the whole shell with
+ * no markup or class change here, per that package's README.
+ */
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--cb-color-bg);
+  color: var(--cb-color-text-primary);
+  font-family: var(--cb-font-family-ui);
+  font-size: var(--cb-font-size-md);
+  line-height: var(--cb-line-height-normal);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/*
+ * Reduced motion, forced. `Preferences.reducedMotion` is a player choice independent
+ * of the OS's own `prefers-reduced-motion` media query (which every design component
+ * already honours on its own — see packages/design/README.md's accessibility
+ * contract) — `main.ts` mirrors that choice onto `<html data-reduced-motion>`, and
+ * this blanket override stops every animation and transition on the page regardless
+ * of which component defined it, without this file needing to know any component's
+ * own animation class names.
+ */
+html[data-reduced-motion='true'] *,
+html[data-reduced-motion='true'] *::before,
+html[data-reduced-motion='true'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  scroll-behavior: auto !important;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+.cb-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Faulted: the rest of the shell is visually dimmed and made inert, so a player
+   cannot keep issuing commands into a world that has already stopped — see
+   `shell/fault.ts`. The fault overlay itself is a sibling of `.cb-shell`, always at
+   full opacity and interactive, so this rule never touches it. */
+body[data-fault='true'] .cb-shell {
+  opacity: 0.35;
+  filter: grayscale(0.6);
+  pointer-events: none;
+}
+
+/* --- Header ------------------------------------------------------------------- */
+
+.cb-shell-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cb-space-4);
+  padding: var(--cb-space-3) var(--cb-space-5);
+  background: var(--cb-color-surface-panel);
+  border-bottom: var(--cb-border-width-thick) solid var(--cb-color-border);
+  box-shadow: var(--cb-elevation-raised-1);
+}
+
+.cb-shell-header__clock {
+  margin: 0;
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-lg);
+  font-variant-numeric: tabular-nums;
+}
+
+.cb-shell-header__speed {
+  margin-left: auto;
+}
+
+.cb-shell-header__annunciator {
+  min-width: 10rem;
+}
+
+/* --- Body: nav rail / main / balance aside -------------------------------------- */
+
+.cb-shell__body {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr) 20rem;
+  gap: var(--cb-space-5);
+  flex: 1;
+  padding: var(--cb-space-5);
+  align-items: start;
+}
+
+@media (max-width: 72rem) {
+  .cb-shell__body {
+    grid-template-columns: 12rem minmax(0, 1fr);
+  }
+  .cb-shell__aside-slot {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 48rem) {
+  .cb-shell__body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cb-shell__nav-slot,
+  .cb-shell__aside-slot {
+    grid-column: 1;
+  }
+}
+
+.cb-shell__main-slot:focus-visible {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 4px;
+}
+
+/* --- Navigation rail ------------------------------------------------------------ */
+
+.cb-shell-nav {
+  position: sticky;
+  top: var(--cb-space-5);
+  background: var(--cb-color-surface-panel);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-lg);
+  padding: var(--cb-space-4);
+  box-shadow: var(--cb-elevation-raised-1);
+}
+
+.cb-shell-nav__heading {
+  margin: 0 0 var(--cb-space-3);
+  font-size: var(--cb-font-size-xs);
+  font-weight: var(--cb-font-weight-medium);
+  letter-spacing: var(--cb-letter-spacing-label);
+  text-transform: uppercase;
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-shell-nav__list {
+  list-style: none;
+  margin: 0 0 var(--cb-space-4);
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-1);
+}
+
+.cb-shell-nav__list:last-child {
+  margin-bottom: 0;
+}
+
+.cb-shell-nav__button {
+  width: 100%;
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-3);
+  text-align: left;
+  background: transparent;
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid transparent;
+  border-radius: var(--cb-radius-md);
+  font: inherit;
+  font-weight: var(--cb-font-weight-medium);
+  cursor: pointer;
+}
+
+.cb-shell-nav__button:hover {
+  background: var(--cb-color-surface-recess);
+}
+
+.cb-shell-nav__button:focus-visible {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.cb-shell-nav__button--active {
+  background: var(--cb-color-accent-amber);
+  color: var(--cb-color-on-accent-amber);
+  border-color: var(--cb-color-accent-amber);
+}
+
+/* --- Main area ------------------------------------------------------------------- */
+
+.cb-shell__main-slot {
+  min-width: 0;
+}
+
+/* --- Balance aside: always visible, never scrolled out of the layout entirely --- */
+
+.cb-shell__aside-slot {
+  position: sticky;
+  top: var(--cb-space-5);
+}
+
+/* --- Settings surface -------------------------------------------------------- */
+
+.cb-shell-settings__toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-5);
+  margin: var(--cb-space-4) 0;
+}
+
+.cb-shell-settings__toggles label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--cb-space-2);
+  min-height: var(--cb-hit-target-min);
+}
+
+.cb-shell-settings__difficulty-list {
+  margin: 0 0 var(--cb-space-3);
+  padding-left: var(--cb-space-5);
+  font-size: var(--cb-font-size-sm);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-shell-settings__supplier {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cb-space-3);
+  margin-top: var(--cb-space-3);
+}
+
+.cb-shell-settings__supplier select {
+  font: inherit;
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-3);
+  background: var(--cb-color-surface-recess);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+}
+
+.cb-shell-settings__supplier input[type='number'] {
+  font: inherit;
+  font-family: var(--cb-font-family-mono);
+  width: 8rem;
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-3);
+  background: var(--cb-color-surface-recess);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+}
+
+.cb-shell-settings__supplier select:focus-visible,
+.cb-shell-settings__supplier input:focus-visible,
+.cb-shell-settings__toggles input:focus-visible {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* --- Fault overlay: unmissable, and never something the shell can visually bury --- */
+
+.cb-shell-fault {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--cb-space-3);
+  padding: var(--cb-space-6);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.cb-shell-fault__title,
+.cb-shell-fault__body,
+.cb-shell-fault__detail {
+  max-width: 40rem;
+  margin: 0;
+  padding: var(--cb-space-4) var(--cb-space-5);
+  background: var(--cb-color-safety-red);
+  color: var(--cb-color-on-safety);
+  border-radius: var(--cb-radius-md);
+}
+
+.cb-shell-fault__title {
+  font-size: var(--cb-font-size-xl);
+  font-weight: var(--cb-font-weight-bold);
+}
+
+.cb-shell-fault__detail {
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-sm);
+}

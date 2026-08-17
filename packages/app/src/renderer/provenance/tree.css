@@ -1,0 +1,152 @@
+/*
+ * The ancestry screen. Reads exactly the tokens `@conservation-bakery/design`
+ * publishes (`tokens/index.css` + `tokens/kid.css`) — this file declares no colour,
+ * size or duration of its own, only `--cb-*` custom properties, so Kid mode's token
+ * swap (`[data-mode="kid"]`) restyles this screen with no markup or class change,
+ * per that package's README. The host page must link the design package's token
+ * stylesheets before this one.
+ */
+
+.cb-provenance-tree {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-4);
+}
+
+.cb-provenance-tree__form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cb-space-3);
+}
+
+.cb-provenance-tree__form label {
+  font-size: var(--cb-font-size-sm);
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-provenance-tree__form input {
+  font: inherit;
+  font-family: var(--cb-font-family-mono);
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-3);
+  background: var(--cb-color-surface-recess);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  min-width: 14rem;
+}
+
+.cb-provenance-tree__submit {
+  min-height: var(--cb-hit-target-min);
+  padding: 0 var(--cb-space-5);
+  font: inherit;
+  font-weight: var(--cb-font-weight-medium);
+  background: var(--cb-color-accent-amber);
+  color: var(--cb-color-on-accent-amber);
+  border: none;
+  border-radius: var(--cb-radius-md);
+  cursor: pointer;
+}
+
+.cb-provenance-tree__form input:focus-visible,
+.cb-provenance-tree__submit:focus-visible,
+.cb-provenance-tree__tree :focus-visible {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.cb-provenance-tree__status {
+  margin: 0;
+  font-size: var(--cb-font-size-sm);
+  color: var(--cb-color-text-secondary);
+}
+
+/* Deliberately loud: a capped walk must never read as a complete one. Text-carried
+   (not colour-alone) — the wording itself says "not the complete ancestry". */
+.cb-provenance-tree__truncated {
+  margin: 0;
+  padding: var(--cb-space-3) var(--cb-space-4);
+  font-weight: var(--cb-font-weight-bold);
+  color: var(--cb-color-text-danger);
+  background: var(--cb-color-surface-recess);
+  border: var(--cb-border-width-thick) dashed var(--cb-color-safety-red);
+  border-radius: var(--cb-radius-md);
+}
+
+.cb-provenance-tree__tree,
+.cb-provenance-tree__tree [role='group'] {
+  list-style: none;
+  margin: 0;
+  padding-left: var(--cb-space-5);
+}
+
+.cb-provenance-tree__tree {
+  padding-left: 0;
+}
+
+.cb-provenance-tree__tree [role='treeitem'] {
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-provenance-tree__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--cb-space-1);
+  min-height: var(--cb-hit-target-min);
+  padding: var(--cb-space-2) var(--cb-space-3);
+  cursor: pointer;
+  border-radius: var(--cb-radius-sm);
+}
+
+.cb-provenance-tree__row:hover {
+  background: var(--cb-color-surface-recess);
+}
+
+.cb-provenance-tree__row-label {
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-primary);
+}
+
+.cb-provenance-tree__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--cb-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cb-provenance-tree__fact {
+  font-family: var(--cb-font-family-mono);
+  font-size: var(--cb-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--cb-color-text-secondary);
+}
+
+/* World reservoirs (atmosphere, soil, groundwater, sun) are the screen's payoff —
+   the safety-green ink signals "this is the point", never a pass/fail judgement. */
+.cb-provenance-tree__fact--root-world {
+  font-family: var(--cb-font-family-ui);
+  font-weight: var(--cb-font-weight-bold);
+  color: var(--cb-color-safety-green);
+}
+
+.cb-provenance-tree__fact--root-market {
+  font-family: var(--cb-font-family-ui);
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-amber);
+}
+
+.cb-provenance-tree__fact--root-other {
+  font-family: var(--cb-font-family-ui);
+  font-weight: var(--cb-font-weight-medium);
+  color: var(--cb-color-text-secondary);
+}
+
+.cb-provenance-tree__fact--truncated {
+  font-family: var(--cb-font-family-ui);
+  font-weight: var(--cb-font-weight-bold);
+  color: var(--cb-color-text-danger);
+}
