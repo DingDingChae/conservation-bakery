@@ -11,7 +11,7 @@ import { app, BrowserWindow, ipcMain, nativeTheme, shell } from 'electron';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-import { IPC, type Command, type CommandResult } from '../shared/ipc.js';
+import { IPC, type Command, type CommandResult, type FaultReport } from '../shared/ipc.js';
 import { SimulationHost } from './simulationHost.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -79,6 +79,19 @@ app.whenReady().then(() => {
       window.webContents.send(IPC.snapshotPush, snapshot);
     }
   });
+  // Forward real faults. Previously nothing did, so the renderer had to infer trouble
+  // from snapshots going quiet — which meant a busy machine looked exactly like a
+  // conservation failure. A fault is now told, never guessed.
+  host.on('fault', (message) => {
+    if (window && !window.isDestroyed()) {
+      window.webContents.send(IPC.faultPush, {
+        kind: 'conservation',
+        message,
+        tick: host?.snapshot()?.tick ?? 0,
+      } satisfies FaultReport);
+    }
+  });
+
   host.start();
 
   ipcMain.handle(IPC.snapshotRequest, () => host?.snapshot() ?? null);

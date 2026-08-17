@@ -51,9 +51,16 @@ import type {
 } from '../shared/ipc.js';
 import { fromExact, toExact } from '../shared/ipc.js';
 
-import type { DifficultyChangeRecord, DifficultyKnobs, DifficultySettings } from './difficulty.js';
+import type {
+  DifficultyChangeRecord,
+  DifficultyKnobs,
+  DifficultyPresetName,
+  DifficultySettings,
+} from './difficulty.js';
 import {
+  DIFFICULTY_PRESETS,
   breakdownHazardMultiplier,
+  presetSettings,
   startingCashMinor,
   supplierCallsPermitted,
   supplierLeadTimeTicks,
@@ -334,6 +341,12 @@ export class SimWorld {
   // Command dispatch.
   // -------------------------------------------------------------------
 
+  // Checked against the preset table itself rather than a second hand-written list, so
+  // adding a preset cannot leave a validator quietly out of date.
+  static #isPreset(value: string): value is DifficultyPresetName {
+    return Object.prototype.hasOwnProperty.call(DIFFICULTY_PRESETS, value);
+  }
+
   #dispatch(command: Command): CommandResult {
     switch (command.kind) {
       case 'setSpeed': {
@@ -363,6 +376,30 @@ export class SimWorld {
       }
       case 'callSupplier':
         return this.#callSupplier(command.substanceId, command.massUg);
+      case 'setDifficulty': {
+        // A preset is a starting position, not a lock: a command may name a preset, a
+        // set of knobs, or both, and knobs applied alongside a preset win. Difficulty
+        // changes only prices, lead times, tolerances and help — never mass or energy —
+        // so there is nothing here that could create a gram, whatever is asked for.
+        if (command.preset !== undefined && !SimWorld.#isPreset(command.preset)) {
+          return refusedIpc(`"${command.preset}" is not a difficulty preset`);
+        }
+        if (command.preset !== undefined) {
+          this.#difficulty = presetSettings(command.preset);
+        }
+        if (command.knobs !== undefined) {
+          for (const [name, value] of Object.entries(command.knobs)) {
+            if (typeof value === 'number' && !Number.isFinite(value)) {
+              return refusedIpc(`knob "${name}" must be a finite value`);
+            }
+          }
+          this.setDifficulty(command.knobs as Partial<DifficultyKnobs>);
+        }
+        if (command.preset === undefined && command.knobs === undefined) {
+          return refusedIpc('a difficulty change must name a preset, some knobs, or both');
+        }
+        return { accepted: true };
+      }
     }
   }
 

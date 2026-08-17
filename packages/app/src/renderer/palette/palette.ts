@@ -17,6 +17,7 @@
 import type { Disposable, PaletteEntry, RendererContext } from '../context.js';
 import { el } from '../kit/dom.js';
 
+import { builtinPaletteEntries } from './commands.js';
 import { rankEntries } from './match.js';
 import { buildPattern, previewMatches, type PatternMode } from './regex.js';
 
@@ -60,7 +61,11 @@ function optionId(entryId: string): string {
 }
 
 export function mountPalette(root: HTMLElement, context: RendererContext): Disposable {
-  const title = el('p', { class: 'cb-command-palette__title', attrs: { id: 'cb-palette-title' } });
+  const title = el('p', {
+    class: 'cb-command-palette__title',
+    attrs: { id: 'cb-palette-title' },
+    text: context.t('palette.title'),
+  });
 
   // The input's placeholder text also serves as its accessible name (via the hidden
   // label below) — one string, one key, rather than a second near-duplicate to keep in
@@ -233,7 +238,7 @@ export function mountPalette(root: HTMLElement, context: RendererContext): Dispo
   }
 
   function render(): void {
-    const all = context.paletteEntries();
+    const all = [...context.paletteEntries(), ...builtinPaletteEntries(context)];
     const usePattern = patternToggle.checked;
     let ranked: readonly PaletteEntry[];
     let statusText: string;

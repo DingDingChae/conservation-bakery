@@ -1,11 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
 import type { AlarmSnapshot } from '../../shared/ipc.js';
+import type { Translate } from '../context.js';
 import {
   alarmStateCatalogueKey,
   alarmTransitionAnnouncement,
   availableAlarmAction,
   barMarkerPercent,
+  classifyRefusal,
+  describeRefusal,
   deviationStatus,
   formatEngineeringValue,
   formatRange,
@@ -19,6 +22,7 @@ import {
   sanitizeDomId,
   scaleTrendSeries,
   trendDomain,
+  unitCatalogueKey,
   validateSetpointInput,
   type TrendSample,
 } from './logic.js';
@@ -289,5 +293,136 @@ describe('sanitizeDomId', () => {
 
   it('replaces anything not alphanumeric, underscore or hyphen', () => {
     expect(sanitizeDomId('mill 1:zone/2')).toBe('mill-1-zone-2');
+  });
+});
+
+describe('unitCatalogueKey', () => {
+  it('maps every raw unit symbol the simulation actually emits to a real catalogue key', () => {
+    expect(unitCatalogueKey('C')).toBe('unit.celsius');
+    expect(unitCatalogueKey('°C')).toBe('unit.celsius');
+    expect(unitCatalogueKey('kg')).toBe('unit.kilogram');
+    expect(unitCatalogueKey('g')).toBe('unit.gram');
+    expect(unitCatalogueKey('h')).toBe('unit.hour');
+    expect(unitCatalogueKey('min')).toBe('unit.minute');
+    expect(unitCatalogueKey('s')).toBe('unit.second');
+    expect(unitCatalogueKey('%')).toBe('unit.percent');
+    expect(unitCatalogueKey('/h')).toBe('unit.perHour');
+    expect(unitCatalogueKey('tick')).toBe('unit.tick');
+  });
+
+  it('returns null for a symbol the catalogue has no entry for, so the caller falls back to the raw text', () => {
+    expect(unitCatalogueKey('rpm')).toBeNull();
+    expect(unitCatalogueKey('fraction')).toBeNull();
+    expect(unitCatalogueKey('')).toBeNull();
+  });
+});
+
+describe('classifyRefusal', () => {
+  it('recognises the exact "simulation is not running" sentence main.ts composes', () => {
+    expect(classifyRefusal('The simulation is not running.')).toEqual({
+      key: 'refusal.simulationNotRunning',
+      values: {},
+    });
+  });
+
+  it('recognises the alarm.ts acknowledge refusal, carrying the alarm id and its real state', () => {
+    expect(classifyRefusal('alarm "door-interlock" is active-acknowledged, not active-unacknowledged')).toEqual({
+      key: 'refusal.alarmNotUnacknowledged',
+      values: { alarm: 'door-interlock', state: 'active-acknowledged' },
+    });
+  });
+
+  it('recognises the alarm.ts reset refusal', () => {
+    expect(classifyRefusal('alarm "door-interlock" is normal, not cleared')).toEqual({
+      key: 'refusal.alarmNotCleared',
+      values: { alarm: 'door-interlock', state: 'normal' },
+    });
+  });
+
+  it('recognises the interlock.ts refusal shape', () => {
+    expect(classifyRefusal('Door interlock refused: door is open (protects oven-1)')).toEqual({
+      key: 'refusal.interlock',
+      values: { machine: 'Door interlock', condition: 'door is open' },
+    });
+  });
+
+  it('recognises the machine.ts illegal-transition refusal', () => {
+    expect(classifyRefusal('"oven-1" cannot go from OFF to AUTO')).toEqual({
+      key: 'refusal.modeTransition',
+      values: { machine: 'oven-1', from: 'OFF', to: 'AUTO' },
+    });
+  });
+
+  it('recognises the machine.ts not-commissioned refusal', () => {
+    expect(classifyRefusal('"oven-1" has not been commissioned and cannot run')).toEqual({
+      key: 'refusal.notCommissioned',
+      values: { machine: 'oven-1' },
+    });
+  });
+
+  it('falls back to refusal.generic, carrying the real text, for anything unrecognised', () => {
+    expect(classifyRefusal('unknown machine "no-such-machine"')).toEqual({
+      key: 'refusal.generic',
+      values: { reason: 'unknown machine "no-such-machine"' },
+    });
+  });
+
+  it('falls back to refusal.generic when a shape almost matches but the state/mode token is not real', () => {
+    expect(classifyRefusal('alarm "x" is not-a-real-state, not active-unacknowledged')).toEqual({
+      key: 'refusal.generic',
+      values: { reason: 'alarm "x" is not-a-real-state, not active-unacknowledged' },
+    });
+    expect(classifyRefusal('"oven-1" cannot go from OFF to NOWHERE')).toEqual({
+      key: 'refusal.generic',
+      values: { reason: '"oven-1" cannot go from OFF to NOWHERE' },
+    });
+  });
+});
+
+describe('describeRefusal', () => {
+  // A small stand-in catalogue, close enough to the real one (interpolation and all)
+  // to prove `describeRefusal` composes real, translated copy — not the worker's raw
+  // English — without pulling in the whole four-catalogue i18n module for a unit test.
+  const fakeCatalogue: Readonly<Record<string, string>> = {
+    'refusal.generic': 'Refused — {reason}',
+    'refusal.simulationNotRunning': 'The simulation is not running',
+    'refusal.alarmNotUnacknowledged': 'Alarm {alarm} is {state}, not ready to acknowledge',
+    'refusal.alarmNotCleared': 'Alarm {alarm} is {state}, not ready to reset',
+    'refusal.interlock': '{machine}: an interlock refused the command — {condition}',
+    'refusal.modeTransition': '{machine} cannot switch from {from} to {to}',
+    'refusal.notCommissioned': '{machine} has not been commissioned and cannot run',
+    'alarm.state.activeAcknowledged': 'Active — acknowledged',
+    'mode.off': 'OFF',
+    'mode.auto': 'AUTO',
+  };
+  const fakeTranslate: Translate = (key, values) => {
+    const template = fakeCatalogue[key] ?? key;
+    if (!values) return template;
+    return template.replace(/\{(\w+)\}/g, (whole, name: string) => {
+      const value = values[name];
+      return value === undefined ? whole : String(value);
+    });
+  };
+
+  it('shows refusal.generic with the real reason text for an undefined reason', () => {
+    expect(describeRefusal(fakeTranslate, undefined)).toBe('Refused — ');
+  });
+
+  it('translates the alarm state, not the raw AlarmState token, into the sentence', () => {
+    expect(describeRefusal(fakeTranslate, 'alarm "door-interlock" is active-acknowledged, not active-unacknowledged')).toBe(
+      'Alarm door-interlock is Active — acknowledged, not ready to acknowledge',
+    );
+  });
+
+  it('translates both mode names, not the raw MachineMode tokens, into the sentence', () => {
+    expect(describeRefusal(fakeTranslate, '"oven-1" cannot go from OFF to AUTO')).toBe(
+      'oven-1 cannot switch from OFF to AUTO',
+    );
+  });
+
+  it('falls back to refusal.generic verbatim for an unrecognised reason', () => {
+    expect(describeRefusal(fakeTranslate, 'unknown machine "no-such-machine"')).toBe(
+      'Refused — unknown machine "no-such-machine"',
+    );
   });
 });

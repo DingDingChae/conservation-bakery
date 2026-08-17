@@ -21,6 +21,7 @@
  */
 
 import type { AlarmSnapshot, AlarmState, MachineMode } from '../../shared/ipc.js';
+import type { Translate } from '../context.js';
 
 // ---------------------------------------------------------------------------
 // Mode transitions.
@@ -110,6 +111,36 @@ export function barMarkerPercent(value: number, rangeLow: number, rangeHigh: num
   if (span <= 0) return 0;
   const percent = ((value - rangeLow) / span) * 100;
   return Math.min(100, Math.max(0, percent));
+}
+
+// ---------------------------------------------------------------------------
+// Unit symbols. `TagSnapshot.unit` (shared/ipc.ts) arrives from the simulation as a
+// plain, un-translated symbol (`sim-worker/machines.ts` writes `'C'`, `'kg'`, `'rpm'`,
+// `'fraction'` directly onto the wire) — rendering it straight through, as this module
+// did before this task, means the unit never changes with the Cantonese/Kid toggle even
+// though every word around it does. This table routes a *known* symbol through
+// `renderer/i18n/catalogue.ts`'s own `unit.*` keys; a symbol this table does not
+// recognise (`rpm`, `fraction` — nothing in the catalogue names either yet) is returned
+// unchanged by `render.ts`'s own fallback, exactly as before, rather than invented.
+// ---------------------------------------------------------------------------
+
+const UNIT_CATALOGUE_KEY: Readonly<Record<string, string>> = {
+  C: 'unit.celsius',
+  '°C': 'unit.celsius',
+  kg: 'unit.kilogram',
+  g: 'unit.gram',
+  h: 'unit.hour',
+  min: 'unit.minute',
+  s: 'unit.second',
+  '%': 'unit.percent',
+  '/h': 'unit.perHour',
+  tick: 'unit.tick',
+};
+
+/** The catalogue key for a raw unit symbol, or `null` if this table does not recognise
+ * it — `render.ts` falls back to the raw symbol in that case. */
+export function unitCatalogueKey(rawUnit: string): string | null {
+  return UNIT_CATALOGUE_KEY[rawUnit] ?? null;
 }
 
 // ---------------------------------------------------------------------------
@@ -211,6 +242,129 @@ const ALARM_STATE_CATALOGUE_KEY: Readonly<Record<AlarmState, string>> = {
  * name — the same word an annunciator tile anywhere in the product uses for it. */
 export function alarmStateCatalogueKey(state: AlarmState): string {
   return ALARM_STATE_CATALOGUE_KEY[state];
+}
+
+// ---------------------------------------------------------------------------
+// Refusal classification. A `CommandResult.reason` that reaches the renderer is the
+// worker's own English sentence (see `sim-worker/world.ts`, `packages/sim/src/process
+// /alarm.ts` and `interlock.ts`) — showing it verbatim, as `render.ts` did before this
+// task via `refusal.generic` for every refusal, means a refusal never changes with the
+// Cantonese/Kid toggle even though the rest of the panel does. This classifies a raw
+// reason against the *exact* shapes those modules compose it from, so a real, bilingual
+// catalogue entry can be shown instead — a reason this scan does not recognise still
+// falls through to `refusal.generic`, which shows the real English text rather than
+// hiding it, so an unclassified refusal is at least honest instead of silent.
+// ---------------------------------------------------------------------------
+
+const SIMULATION_NOT_RUNNING_REASON = 'The simulation is not running.';
+const ALARM_NOT_UNACKNOWLEDGED_PATTERN = /^alarm "([^"]+)" is (\S+), not active-unacknowledged$/;
+const ALARM_NOT_CLEARED_PATTERN = /^alarm "([^"]+)" is (\S+), not cleared$/;
+const INTERLOCK_PATTERN = /^(.+) refused: (.+) \(protects .+\)$/;
+const MODE_TRANSITION_PATTERN = /^"([^"]+)" cannot go from (\S+) to (\S+)$/;
+const NOT_COMMISSIONED_PATTERN = /^"([^"]+)" has not been commissioned and cannot run$/;
+
+function isAlarmState(value: string): value is AlarmState {
+  return value in ALARM_STATE_CATALOGUE_KEY;
+}
+
+function isMachineMode(value: string): value is MachineMode {
+  return (MODE_ORDER as readonly string[]).includes(value);
+}
+
+export type RefusalClassification =
+  | { readonly key: 'refusal.simulationNotRunning'; readonly values: Readonly<Record<string, never>> }
+  | {
+      readonly key: 'refusal.alarmNotUnacknowledged' | 'refusal.alarmNotCleared';
+      readonly values: { readonly alarm: string; readonly state: AlarmState };
+    }
+  | { readonly key: 'refusal.interlock'; readonly values: { readonly machine: string; readonly condition: string } }
+  | {
+      readonly key: 'refusal.modeTransition';
+      readonly values: { readonly machine: string; readonly from: MachineMode; readonly to: MachineMode };
+    }
+  | { readonly key: 'refusal.notCommissioned'; readonly values: { readonly machine: string } }
+  | { readonly key: 'refusal.generic'; readonly values: { readonly reason: string } };
+
+/** Classifies a raw `CommandResult.reason` against the exact refusal shapes the
+ * simulation composes, or falls back to `refusal.generic` (still carrying the real
+ * text) for anything this scan does not recognise. Pure and DOM-free, like every other
+ * function in this module — see `describeRefusal` for the version that also does the
+ * catalogue lookup, for a caller that already holds a `Translate`. */
+export function classifyRefusal(reason: string): RefusalClassification {
+  if (reason === SIMULATION_NOT_RUNNING_REASON) return { key: 'refusal.simulationNotRunning', values: {} };
+
+  const notUnacknowledged = ALARM_NOT_UNACKNOWLEDGED_PATTERN.exec(reason);
+  if (notUnacknowledged) {
+    const [, alarm, state] = notUnacknowledged;
+    if (alarm !== undefined && state !== undefined && isAlarmState(state)) {
+      return { key: 'refusal.alarmNotUnacknowledged', values: { alarm, state } };
+    }
+  }
+
+  const notCleared = ALARM_NOT_CLEARED_PATTERN.exec(reason);
+  if (notCleared) {
+    const [, alarm, state] = notCleared;
+    if (alarm !== undefined && state !== undefined && isAlarmState(state)) {
+      return { key: 'refusal.alarmNotCleared', values: { alarm, state } };
+    }
+  }
+
+  const interlock = INTERLOCK_PATTERN.exec(reason);
+  if (interlock) {
+    const [, machine, condition] = interlock;
+    if (machine !== undefined && condition !== undefined) {
+      return { key: 'refusal.interlock', values: { machine, condition } };
+    }
+  }
+
+  const modeTransition = MODE_TRANSITION_PATTERN.exec(reason);
+  if (modeTransition) {
+    const [, machine, from, to] = modeTransition;
+    if (machine !== undefined && from !== undefined && to !== undefined && isMachineMode(from) && isMachineMode(to)) {
+      return { key: 'refusal.modeTransition', values: { machine, from, to } };
+    }
+  }
+
+  const notCommissioned = NOT_COMMISSIONED_PATTERN.exec(reason);
+  if (notCommissioned) {
+    const [, machine] = notCommissioned;
+    if (machine !== undefined) return { key: 'refusal.notCommissioned', values: { machine } };
+  }
+
+  return { key: 'refusal.generic', values: { reason } };
+}
+
+/**
+ * Classifies and translates a raw `CommandResult.reason` (or `undefined`, for a
+ * refusal carrying no reason at all) into real, bilingual copy, given any `Translate`
+ * — `context.t` in `render.ts`, or the palette's own, so this one function is the
+ * single place refusal copy is built rather than each call site improvising its own
+ * `refusal.generic` interpolation. `state`/`from`/`to` are routed back through their
+ * own catalogue keys (`alarmStateCatalogueKey`/`modeCatalogueKey`) rather than shown as
+ * the simulation's raw `AlarmState`/`MachineMode` token, so the whole sentence is one
+ * language, not English machinery embedded in a Cantonese one.
+ */
+export function describeRefusal(t: Translate, reason: string | undefined): string {
+  if (reason === undefined) return t('refusal.generic', { reason: '' });
+  const classification = classifyRefusal(reason);
+  switch (classification.key) {
+    case 'refusal.alarmNotUnacknowledged':
+    case 'refusal.alarmNotCleared':
+      return t(classification.key, {
+        alarm: classification.values.alarm,
+        state: t(alarmStateCatalogueKey(classification.values.state)),
+      });
+    case 'refusal.modeTransition':
+      return t(classification.key, {
+        machine: classification.values.machine,
+        from: t(modeCatalogueKey(classification.values.from)),
+        to: t(modeCatalogueKey(classification.values.to)),
+      });
+    case 'refusal.generic':
+      return t('refusal.generic', { reason: classification.values.reason });
+    default:
+      return t(classification.key, classification.values);
+  }
 }
 
 export type AlarmTransitionAnnouncement = 'raised' | 'acknowledged' | 'cleared';

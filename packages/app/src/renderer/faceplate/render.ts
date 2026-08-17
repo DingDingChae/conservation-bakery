@@ -23,13 +23,14 @@
  * register — see this task's final report for why a per-tag Kid rewrite (CLAUDE.md's
  * "TOP HEAT SP" example) is not implemented here.
  *
- * DOM rendering in this module is NOT covered by an automated test: neither `jsdom`
- * nor `happy-dom` is installed in this repository (checked via `node -e
- * "require.resolve(...)"` before writing this file), and CLAUDE.md/CONTRACT.md forbid
- * adding a new dependency without explicit instruction. Every piece of logic that
- * *can* be tested without a DOM — formatting, range validation, mode-transition
- * legality, alarm ordering, trend geometry — lives in `logic.ts` and is exercised by
- * `logic.spec.ts` instead.
+ * DOM rendering in this module is not unit-tested directly, but it is exercised for
+ * real by `renderer/__smoke__/mount.spec.ts` (`happy-dom`, added to this repository
+ * since this module was first written), which mounts the real shell — this faceplate
+ * included — for every register/language combination and fails on a thrown error or a
+ * `⟦missing:…⟧` placeholder anywhere in the tree. Every piece of logic that *can* be
+ * tested without a DOM at all — formatting, range validation, mode-transition
+ * legality, alarm ordering, unit and refusal-reason translation, trend geometry —
+ * still lives in `logic.ts` and is exercised directly by `logic.spec.ts`.
  */
 
 import type {
@@ -50,6 +51,7 @@ import {
   alarmTransitionAnnouncement,
   availableAlarmAction,
   barMarkerPercent,
+  describeRefusal,
   deviationStatus,
   formatEngineeringValue,
   formatRange,
@@ -62,6 +64,7 @@ import {
   sanitizeDomId,
   scaleTrendSeries,
   trendDomain,
+  unitCatalogueKey,
   validateSetpointInput,
   type ModeRefusal,
   type SetpointValidation,
@@ -178,6 +181,8 @@ interface AlarmRow {
   readonly button: HTMLButtonElement;
   readonly icon: HTMLElement;
   readonly stateText: HTMLElement;
+  readonly actionLabel: HTMLElement;
+  readonly meta: HTMLElement;
   readonly reason: HTMLElement;
 }
 
@@ -196,6 +201,15 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
   let modeRefusalText: string | null = null;
   let paletteRegistered = false;
   let unregisterCommands: Disposable | null = null;
+
+  /** A tag's unit as it should be shown to the player: routed through the catalogue's
+   * `unit.*` keys (`logic.ts`'s `unitCatalogueKey`) for a symbol the catalogue knows —
+   * `°C` reads as "degrees" in the Kid register — and the raw symbol unchanged for one
+   * it does not (`rpm`, `fraction`), so an unmapped unit is never hidden or invented. */
+  function localizedUnit(rawUnit: string): string {
+    const key = unitCatalogueKey(rawUnit);
+    return key ? context.t(key) : rawUnit;
+  }
 
   const container = el('section', {
     class: 'cb-panel-frame',
@@ -293,22 +307,34 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
       const icon = el('span', { class: 'cb-annunciator-tile__icon', attrs: { 'aria-hidden': 'true' } });
       const label = el('span', { class: 'cb-annunciator-tile__label', text: alarmSnapshot.label });
       const stateText = el('span', { class: 'cb-annunciator-tile__state' });
+      // The action verb (Acknowledge/Reset) this tile currently offers, if any — real
+      // wording from the catalogue (`alarm.acknowledge`/`alarm.reset`), not left for the
+      // icon and state text alone to imply what pressing the tile actually does.
+      const actionLabel = el('span', { class: 'cb-annunciator-tile__action' });
       const button = el('button', {
         class: 'cb-annunciator-tile',
-        attrs: { type: 'button', role: 'listitem', id: alarmDomId, 'aria-describedby': `${alarmDomId}-reason` },
+        attrs: {
+          type: 'button',
+          role: 'listitem',
+          id: alarmDomId,
+          'aria-describedby': `${alarmDomId}-meta ${alarmDomId}-reason`,
+        },
       }) as HTMLButtonElement;
-      button.append(icon, label, stateText);
+      button.append(icon, label, stateText, actionLabel);
+      // Priority and the tick this alarm was raised at — real annunciator detail
+      // (`alarm.priority`/`alarm.raisedAtTick`), not only the bare state word.
+      const meta = el('p', { class: 'cb-numeric-entry__hint', attrs: { id: `${alarmDomId}-meta` } });
       const reason = el('p', {
         class: 'cb-numeric-entry__error',
         attrs: { id: `${alarmDomId}-reason`, role: 'alert' },
       });
       reason.hidden = true;
-      const wrapper = el('div', { children: [button, reason] });
+      const wrapper = el('div', { children: [button, meta, reason] });
       alarmsRow.append(wrapper);
       button.addEventListener('click', () => {
         void handleAlarmAction(alarmSnapshot.id);
       });
-      next.set(alarmSnapshot.id, { wrapper, button, icon, stateText, reason });
+      next.set(alarmSnapshot.id, { wrapper, button, icon, stateText, actionLabel, meta, reason });
     }
     alarmRows = next;
   }
@@ -324,12 +350,18 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
       row.stateText.textContent = alarmSnapshot.firstOut
         ? `${stateLabel} — ${context.t('alarm.firstOut')}`
         : stateLabel;
+      const action = availableAlarmAction(alarmSnapshot.state);
+      const actionText = action ? context.t(action === 'acknowledge' ? 'alarm.acknowledge' : 'alarm.reset') : '';
+      row.actionLabel.textContent = actionText;
       row.button.setAttribute(
         'aria-label',
-        `${alarmSnapshot.label}: ${stateLabel}${alarmSnapshot.firstOut ? `, ${context.t('alarm.firstOut')}` : ''}`,
+        `${alarmSnapshot.label}: ${stateLabel}${alarmSnapshot.firstOut ? `, ${context.t('alarm.firstOut')}` : ''}${actionText ? `, ${actionText}` : ''}`,
       );
-      const action = availableAlarmAction(alarmSnapshot.state);
       row.button.disabled = action === null;
+      row.meta.textContent = [
+        context.t('alarm.priority', { priority: alarmSnapshot.priority }),
+        context.t('alarm.raisedAtTick', { tick: alarmSnapshot.raisedAtTick }),
+      ].join(' · ');
       const reason = alarmRefusals.get(alarmSnapshot.id);
       row.reason.textContent = reason ?? '';
       row.reason.hidden = !reason;
@@ -399,7 +431,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
             'aria-describedby': `${hintId} ${errorId}`,
           },
         }) as HTMLInputElement;
-        const unit = el('span', { class: 'cb-numeric-entry__unit', attrs: { 'aria-hidden': 'true' }, text: tag.unit });
+        const unit = el('span', { class: 'cb-numeric-entry__unit', attrs: { 'aria-hidden': 'true' }, text: localizedUnit(tag.unit) });
         field.append(input, unit);
         const hint = el('p', { class: 'cb-numeric-entry__hint', attrs: { id: hintId } });
         const error = el('p', { class: 'cb-numeric-entry__error', attrs: { id: errorId, role: 'alert' } });
@@ -411,7 +443,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
           const validation = validateSetpointInput(input.value, tag.rangeLow, tag.rangeHigh);
           wrapper.dataset.invalid = String(!validation.ok);
           input.setAttribute('aria-invalid', String(!validation.ok));
-          error.textContent = validation.ok ? '' : describeSetpointValidation(validation, tag.unit);
+          error.textContent = validation.ok ? '' : describeSetpointValidation(validation, localizedUnit(tag.unit));
         });
         input.addEventListener('change', () => {
           void handleSetpointChange(tag.id, input, wrapper, error);
@@ -455,8 +487,8 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
         attrs: { 'aria-hidden': 'true' },
       });
       legend.append(
-        el('span', { children: [pvSwatch, context.t('faceplate.trend.legendPv', { unit: tag.unit })] }),
-        el('span', { children: [spSwatch, context.t('faceplate.trend.legendSp', { unit: tag.unit })] }),
+        el('span', { children: [pvSwatch, context.t('faceplate.trend.legendPv', { unit: localizedUnit(tag.unit) })] }),
+        el('span', { children: [spSwatch, context.t('faceplate.trend.legendSp', { unit: localizedUnit(tag.unit) })] }),
       );
       figure.append(svg, legend);
 
@@ -468,8 +500,8 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
       const headRow = el('tr', {
         children: [
           el('th', { attrs: { scope: 'col' }, text: context.t('faceplate.trend.columnTick') }),
-          el('th', { attrs: { scope: 'col' }, text: context.t('faceplate.trend.columnSp', { unit: tag.unit }) }),
-          el('th', { attrs: { scope: 'col' }, text: context.t('faceplate.trend.columnPv', { unit: tag.unit }) }),
+          el('th', { attrs: { scope: 'col' }, text: context.t('faceplate.trend.columnSp', { unit: localizedUnit(tag.unit) }) }),
+          el('th', { attrs: { scope: 'col' }, text: context.t('faceplate.trend.columnPv', { unit: localizedUnit(tag.unit) }) }),
         ],
       });
       thead.append(headRow);
@@ -493,18 +525,18 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
       if (spv) {
         spv.setpointDd.replaceChildren(
           tag.setpoint === null ? '—' : formatEngineeringValue(tag.setpoint),
-          el('small', { attrs: { 'aria-hidden': 'true' }, text: tag.unit }),
+          el('small', { attrs: { 'aria-hidden': 'true' }, text: localizedUnit(tag.unit) }),
         );
         spv.pvDd.replaceChildren(
           formatEngineeringValue(tag.value),
-          el('small', { attrs: { 'aria-hidden': 'true' }, text: tag.unit }),
+          el('small', { attrs: { 'aria-hidden': 'true' }, text: localizedUnit(tag.unit) }),
         );
         spv.marker.style.left = `${barMarkerPercent(tag.value, tag.rangeLow, tag.rangeHigh)}%`;
         const status = deviationStatus(tag.value, tag.setpoint, tag.rangeLow, tag.rangeHigh);
         spv.status.textContent = context.t(`faceplate.tag.status.${statusKeySuffix(status)}`);
         spv.rangeHint.textContent = context.t('faceplate.tag.range', {
           range: formatRange(tag.rangeLow, tag.rangeHigh),
-          unit: tag.unit,
+          unit: localizedUnit(tag.unit),
         });
       }
 
@@ -512,7 +544,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
       if (entry && tag.setpoint !== null) {
         entry.hint.textContent = context.t('faceplate.setpoint.hint', {
           range: formatRange(tag.rangeLow, tag.rangeHigh),
-          unit: tag.unit,
+          unit: localizedUnit(tag.unit),
         });
         // Never overwrite what the player is actively typing — a snapshot can
         // arrive mid-keystroke, and the renderer observes, it does not fight
@@ -560,7 +592,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
       ? context.t('faceplate.trend.svgDesc', {
           label: tag.label,
           value: formatEngineeringValue(latest.value),
-          unit: tag.unit,
+          unit: localizedUnit(tag.unit),
           count: history.length,
         })
       : context.t('faceplate.trend.svgDescEmpty', { label: tag.label });
@@ -619,7 +651,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
     const command: Command = { kind: 'setMode', machineId, mode: target };
     const result = await sendCommand(command);
     if (!result.accepted) {
-      modeRefusalText = context.t('refusal.generic', { reason: result.reason ?? '' });
+      modeRefusalText = describeRefusal(context.t, result.reason);
       modeStatus.textContent = modeRefusalText;
       modeStatus.hidden = false;
       context.announce(modeRefusalText, 'assertive');
@@ -646,7 +678,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
     const result = await sendCommand(command);
     const row = alarmRows.get(alarmId);
     if (!result.accepted) {
-      const reason = context.t('refusal.generic', { reason: result.reason ?? '' });
+      const reason = describeRefusal(context.t, result.reason);
       alarmRefusals.set(alarmId, reason);
       if (row) {
         row.reason.textContent = reason;
@@ -670,7 +702,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
     if (!machine || !tag) return;
     const validation = validateSetpointInput(input.value, tag.rangeLow, tag.rangeHigh);
     if (!validation.ok) {
-      const reason = describeSetpointValidation(validation, tag.unit);
+      const reason = describeSetpointValidation(validation, localizedUnit(tag.unit));
       wrapper.setAttribute('data-invalid', 'true');
       input.setAttribute('aria-invalid', 'true');
       error.textContent = reason;
@@ -680,7 +712,7 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
     const command: Command = { kind: 'setSetpoint', machineId, tagId, value: validation.value };
     const result = await sendCommand(command);
     if (!result.accepted) {
-      const reason = context.t('refusal.generic', { reason: result.reason ?? '' });
+      const reason = describeRefusal(context.t, result.reason);
       wrapper.setAttribute('data-invalid', 'true');
       input.setAttribute('aria-invalid', 'true');
       error.textContent = reason;
@@ -700,6 +732,22 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
     return context.snapshot()?.machines.find((machine) => machine.id === machineId);
   }
 
+  /**
+   * Runs a command registered directly from the palette (a mode switch, an alarm
+   * acknowledge/reset) rather than from a visible control on this faceplate. The
+   * palette dialog closes the instant an entry runs (`palette.ts`'s own `runEntry`), so
+   * by the time a refusal comes back there is no longer a field or a tile on screen to
+   * show it next to — only the live region, which is why the message is prefixed with
+   * `refusal.title` ("Command refused") rather than shown bare the way an inline error
+   * next to a specific control can be.
+   */
+  async function runPaletteCommand(command: Command): Promise<void> {
+    const result = await sendCommand(command);
+    if (!result.accepted) {
+      context.announce(`${context.t('refusal.title')} — ${describeRefusal(context.t, result.reason)}`, 'assertive');
+    }
+  }
+
   function registerPalette(machine: MachineSnapshot): void {
     if (paletteRegistered) return;
     paletteRegistered = true;
@@ -711,9 +759,21 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
         keywords: [machine.id],
         run: () => context.reveal({ kind: 'machine', machineId: machine.id }),
       },
+      // A tag with a setpoint is labelled with `command.setSetpoint` (its current
+      // value included) rather than the bare `faceplate.palette.tag` a read-only tag
+      // gets, since running this entry takes the player straight to the control that
+      // sets it — a real shortcut into the plant, not only a lookup.
       ...machine.tags.map((tag) => ({
         id: `faceplate:tag:${machine.id}:${tag.id}`,
-        label: context.t('faceplate.palette.tag', { machine: machine.label, tag: tag.label }),
+        label:
+          tag.setpoint === null
+            ? context.t('faceplate.palette.tag', { machine: machine.label, tag: tag.label })
+            : context.t('command.setSetpoint', {
+                machine: machine.label,
+                tag: tag.label,
+                value: formatEngineeringValue(tag.setpoint),
+                unit: localizedUnit(tag.unit),
+              }),
         group: context.t('palette.groupMachines'),
         keywords: [tag.id, machine.id],
         run: () => context.reveal({ kind: 'tag', machineId: machine.id, tagId: tag.id }),
@@ -725,6 +785,37 @@ function mountFaceplate(root: HTMLElement, context: RendererContext, machineId: 
         keywords: [alarmSnapshot.id, machine.id],
         run: () => context.reveal({ kind: 'alarm', machineId: machine.id, alarmId: alarmSnapshot.id }),
       })),
+      // Mode changes: one entry per mode, each a real command run right from the
+      // palette — not only a reveal — so Ctrl+Shift+F can actually drive the plant.
+      // An illegal or refused transition is announced exactly as the mode selector's
+      // own refusal path describes it (`describeRefusal`), never silently dropped.
+      ...MODE_ORDER.map((mode) => ({
+        id: `faceplate:mode:${machine.id}:${mode}`,
+        label: context.t('command.setMode', { machine: machine.label, mode: context.t(modeCatalogueKey(mode)) }),
+        group: context.t('palette.groupMachines'),
+        keywords: [machine.id, mode],
+        run: () => runPaletteCommand({ kind: 'setMode', machineId: machine.id, mode }),
+      })),
+      // Alarm actions available right now — acknowledge or reset — executed directly,
+      // without first navigating to the tile.
+      ...machine.alarms.flatMap((alarmSnapshot) => {
+        const action = availableAlarmAction(alarmSnapshot.state);
+        if (!action) return [];
+        const labelKey = action === 'acknowledge' ? 'command.acknowledgeAlarm' : 'command.resetAlarm';
+        const command: Command =
+          action === 'acknowledge'
+            ? { kind: 'acknowledgeAlarm', machineId: machine.id, alarmId: alarmSnapshot.id }
+            : { kind: 'resetAlarm', machineId: machine.id, alarmId: alarmSnapshot.id };
+        return [
+          {
+            id: `faceplate:alarm-action:${machine.id}:${alarmSnapshot.id}`,
+            label: context.t(labelKey, { machine: machine.label, alarm: alarmSnapshot.label }),
+            group: context.t('palette.groupAlarms'),
+            keywords: [alarmSnapshot.id, machine.id],
+            run: () => runPaletteCommand(command),
+          },
+        ];
+      }),
     ];
     unregisterCommands = context.registerCommands(entries);
   }

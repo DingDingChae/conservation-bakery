@@ -102,6 +102,38 @@ export interface ProvenanceNode {
   readonly truncated?: boolean;
 }
 
+export type DifficultyPresetName = 'freePlay' | 'easy' | 'realistic' | 'punishing';
+
+export type DifficultyKnobName =
+  | 'economyPressure'
+  | 'breakdownRate'
+  | 'qualityTolerance'
+  | 'spoilage'
+  | 'regulatorStrictness'
+  | 'timePressure'
+  | 'assistance';
+
+/**
+ * Why a run stopped.
+ *
+ * These are deliberately separate, because conflating them is a real failure mode and
+ * we shipped it once: a window that has merely stopped *hearing* from the simulation
+ * told the player the world's books had stopped balancing. One is a transport problem
+ * that resolves itself; the other means the world can no longer be trusted and must
+ * never be dismissed.
+ */
+export type FaultKind =
+  /** Rule 1 was violated. Unrecoverable. The world is no longer trustworthy. */
+  | 'conservation'
+  /** The worker stopped or errored. Unrecoverable for this session. */
+  | 'worker';
+
+export interface FaultReport {
+  readonly kind: FaultKind;
+  readonly message: string;
+  readonly tick: number;
+}
+
 /** Commands the renderer may request. The simulation decides whether they are legal. */
 export type Command =
   | { readonly kind: 'setSpeed'; readonly speed: SpeedMultiplier }
@@ -109,7 +141,12 @@ export type Command =
   | { readonly kind: 'setSetpoint'; readonly machineId: string; readonly tagId: string; readonly value: number }
   | { readonly kind: 'acknowledgeAlarm'; readonly machineId: string; readonly alarmId: string }
   | { readonly kind: 'resetAlarm'; readonly machineId: string; readonly alarmId: string }
-  | { readonly kind: 'callSupplier'; readonly substanceId: string; readonly massUg: ExactString };
+  | { readonly kind: 'callSupplier'; readonly substanceId: string; readonly massUg: ExactString }
+  | {
+      readonly kind: 'setDifficulty';
+      readonly preset?: DifficultyPresetName;
+      readonly knobs?: Partial<Record<DifficultyKnobName, number>>;
+    };
 
 /**
  * A command may be refused. A refusal is a first-class result carrying a reason the
@@ -126,6 +163,14 @@ export interface RendererApi {
   readonly onSnapshot: (listener: (snapshot: WorldSnapshot) => void) => () => void;
   readonly send: (command: Command) => Promise<CommandResult>;
   readonly getProvenance: (lotId: string) => Promise<ProvenanceNode>;
+  /**
+   * Subscribe to real faults from the simulation.
+   *
+   * Without this the renderer has no way to learn that the world broke, and is forced
+   * to guess from the absence of snapshots — which is how a loaded machine ended up
+   * being reported to the player as a conservation failure.
+   */
+  readonly onFault: (listener: (fault: FaultReport) => void) => () => void;
 }
 
 export const IPC = {
@@ -133,4 +178,5 @@ export const IPC = {
   snapshotPush: 'sim:snapshot:push',
   command: 'sim:command',
   provenance: 'sim:provenance',
+  faultPush: 'sim:fault:push',
 } as const;

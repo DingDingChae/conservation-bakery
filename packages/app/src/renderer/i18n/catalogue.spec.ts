@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { CATALOGUE_KEYS, createTranslate, interpolate, translate } from './catalogue.js';
 import { enKid } from './en-kid.js';
 import { enPanel } from './en-panel.js';
+import { scanKeyUsage } from './keyUsage.js';
 import { yueKid } from './yue-kid.js';
 import { yuePanel } from './yue-panel.js';
 
@@ -14,12 +15,16 @@ const CATALOGUES = {
 } as const;
 
 describe('catalogue key parity', () => {
-  // This is the test that actually matters, per the i18n task: adding a key to one
-  // catalogue and forgetting the others must fail the build. TypeScript's own
-  // excess-property check on each catalogue file's `Record<CatalogueKey, string>`
-  // literal already catches this at compile time, but this test re-asserts the same
-  // invariant at runtime with plain `Object.keys`, so the guarantee holds even if a
-  // catalogue file is ever refactored away from a literal object assignment.
+  // Catalogue-versus-catalogue only: a key present in one catalogue and absent from
+  // another is still a bug, and TypeScript's own excess-property check on each
+  // catalogue file's `Record<CatalogueKey, string>` literal already catches it at
+  // compile time — this test re-asserts the same invariant at runtime with plain
+  // `Object.keys`, so the guarantee holds even if a catalogue file is ever refactored
+  // away from a literal object assignment. It is deliberately *not* the test that
+  // matters most: all four catalogues can agree with each other and still all be
+  // missing a key the real renderer calls `t()` with — see "catalogue completeness
+  // against real call sites" below, which is the check that would actually have caught
+  // that.
   const canonical = [...CATALOGUE_KEYS].sort();
 
   it.each(Object.entries(CATALOGUES))('%s has every canonical key and no others', (_name, catalogue) => {
@@ -41,6 +46,39 @@ describe('catalogue key parity', () => {
     const canonicalSet = new Set<string>(CATALOGUE_KEYS);
     const orphaned = Object.keys(catalogue).filter((key) => !canonicalSet.has(key));
     expect(orphaned).toEqual([]);
+  });
+});
+
+describe('catalogue completeness against real call sites', () => {
+  // This is the test that actually matters, per the i18n task: 48 keys were called as
+  // `context.t('faceplate.trend.title')` and the like throughout the renderer, defined
+  // in no catalogue, and rendered as the literal `⟦missing:…⟧` placeholder to the
+  // player — and the catalogue-versus-catalogue check above could never have caught it,
+  // because it only ever compares the four catalogues to each other, never to the code
+  // that calls `t()`. `scanKeyUsage()` (`keyUsage.ts`) statically scans every real
+  // renderer source file for a `t('...')`/`translate('...')` call site and reports
+  // every key it finds — see that module's own doc comment for exactly what it can and
+  // cannot see with node builtins alone and no TypeScript parser.
+  const scan = scanKeyUsage();
+  const canonicalSet = new Set<string>(CATALOGUE_KEYS);
+
+  it('names every key a real call site uses that no catalogue defines', () => {
+    const missing = [...scan.callSiteKeys.keys()].filter((key) => !canonicalSet.has(key)).sort();
+    expect(missing).toEqual([]);
+  });
+
+  it('names every canonical key no scanned source file ever references, so the catalogues cannot rot', () => {
+    const unused = CATALOGUE_KEYS.filter(
+      (key) =>
+        !scan.callSiteKeys.has(key) &&
+        !scan.anyKeyShapedLiteral.has(key) &&
+        ![...scan.templateKeyPrefixes].some((prefix) => key.startsWith(prefix)),
+    );
+    expect(unused).toEqual([]);
+  });
+
+  it('found at least one real call site, so an empty scan cannot masquerade as a clean one', () => {
+    expect(scan.callSiteKeys.size).toBeGreaterThan(0);
   });
 });
 

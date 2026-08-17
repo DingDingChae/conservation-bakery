@@ -17,6 +17,7 @@ import electron = require('electron');
 import type {
   Command,
   CommandResult,
+  FaultReport,
   ProvenanceNode,
   RendererApi,
   WorldSnapshot,
@@ -30,6 +31,7 @@ const CHANNELS = {
   snapshotPush: 'sim:snapshot:push',
   command: 'sim:command',
   provenance: 'sim:provenance',
+  faultPush: 'sim:fault:push',
 } as const;
 
 const api: RendererApi = {
@@ -49,6 +51,14 @@ const api: RendererApi = {
 
   getProvenance: (lotId: string) =>
     electron.ipcRenderer.invoke(CHANNELS.provenance, lotId) as Promise<ProvenanceNode>,
+
+  onFault: (listener: (fault: FaultReport) => void) => {
+    const handler = (_event: unknown, fault: FaultReport): void => listener(fault);
+    electron.ipcRenderer.on(CHANNELS.faultPush, handler);
+    return () => {
+      electron.ipcRenderer.removeListener(CHANNELS.faultPush, handler);
+    };
+  },
 };
 
 electron.contextBridge.exposeInMainWorld('bakery', api);

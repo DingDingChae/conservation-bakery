@@ -10,6 +10,25 @@
  * no markup or class change here, per that package's README.
  */
 
+/*
+ * `hidden` must actually hide.
+ *
+ * The user agent's `[hidden] { display: none }` lives in the user-agent origin, and ANY
+ * author-origin `display` declaration beats it regardless of selector specificity. So a
+ * rule as ordinary as `.cb-shell-fault { display: flex }` silently defeats `hidden` on
+ * that element — which is exactly what happened here: the fault overlay is
+ * `position: fixed; inset: 0`, so it sat invisible but pointer-catching over the entire
+ * window and swallowed every click in the application from the first frame, while the
+ * simulation underneath was running perfectly.
+ *
+ * This is declared once, globally, rather than as a `:not([hidden])` guard on each rule,
+ * because the trap is armed for every element that has both `hidden` and a `display`,
+ * and the next one added would hit it again.
+ */
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   margin: 0;
@@ -280,15 +299,28 @@ body[data-fault='true'] .cb-shell {
   background: rgba(0, 0, 0, 0.75);
 }
 
+/* `min-width`/`min-height` here are a defence-in-depth backstop, not the fix for the
+   empty-box report — `shell/fault.ts`'s `applyDetail` guarantees `detail` always gets
+   non-empty text now (see that module's own doc comment for the real cause: an empty
+   `message` string reaching `report()`, not a colour or size token). This still keeps
+   every one of the three boxes from ever visually collapsing to a padding-only sliver
+   if a future caller ever manages to hand this surface blank text again. */
 .cb-shell-fault__title,
 .cb-shell-fault__body,
 .cb-shell-fault__detail {
   max-width: 40rem;
+  min-width: 16rem;
+  min-height: 1.5em;
   margin: 0;
   padding: var(--cb-space-4) var(--cb-space-5);
   background: var(--cb-color-safety-red);
   color: var(--cb-color-on-safety);
   border-radius: var(--cb-radius-md);
+  /* Every documented `--cb-color-on-safety`/`--cb-color-safety-red` pairing already
+     clears WCAG's 4.5:1 normal-text minimum (see tokens/color-*.css) at any size, but
+     `font-weight-medium` still buys real-world legibility margin "at a glance" per
+     this task's brief, on top of the contrast ratio alone. */
+  font-weight: var(--cb-font-weight-medium);
 }
 
 .cb-shell-fault__title {
@@ -298,5 +330,56 @@ body[data-fault='true'] .cb-shell {
 
 .cb-shell-fault__detail {
   font-family: var(--cb-font-family-mono);
+  /* Bumped from `--cb-font-size-sm` (14px, "secondary label" scale per
+     typography.css) to the body scale: this line carries the one actionable
+     diagnostic on the surface, not a caption, and must read at a glance like the
+     title and body above it. */
+  font-size: var(--cb-font-size-md);
+  white-space: pre-wrap;
+  word-break: break-word;
+  /* Redundant with the shared block above today — deliberately so. This is the one
+     line on the surface that carries dynamic, caller-supplied text rather than fixed
+     copy, so it is the one most likely to be touched by a future edit; redeclaring
+     `color`/`background` right here means the two can never silently drift apart (one
+     rule keeps a colour, the other loses it) without a rule change that is still,
+     visibly, right on top of both properties. `styles/faultDetail.spec.ts` pins the
+     same two properties statically, from the stylesheet's own text, so a regression
+     here fails the build rather than only showing up as a blank box in a screenshot —
+     see `shell/fault.ts`'s module doc comment for the investigation that led here. */
+  background: var(--cb-color-safety-red);
+  color: var(--cb-color-on-safety);
+}
+
+/* The fault surface is reachable via `.focus()` the instant a fault latches (see
+   `shell/fault.ts`'s `report`) as well as by Tab — this keeps a visible ring either
+   way, matching every other focusable surface in the shell. */
+.cb-shell-fault:focus-visible {
+  outline: var(--cb-border-width-thick) solid var(--cb-color-focus-ring);
+  outline-offset: 4px;
+}
+
+/* --- Transport notice: a quiet, self-clearing "not hearing from the simulation right
+   now" indicator — never the fault overlay above. See `shell/fault.ts`'s module doc
+   comment for why conflating the two is the exact false positive this exists to
+   prevent: a slow frame on a loaded machine is a transport hiccup, not proof the
+   world's books have stopped balancing, and must never be presented as one. */
+
+.cb-shell-transport {
+  position: fixed;
+  right: var(--cb-space-5);
+  bottom: var(--cb-space-5);
+  z-index: 998;
+  max-width: 24rem;
+  margin: 0;
+  padding: var(--cb-space-3) var(--cb-space-4);
+  background: var(--cb-color-surface-panel);
+  color: var(--cb-color-text-primary);
+  border: var(--cb-border-width-thin) solid var(--cb-color-border);
+  border-radius: var(--cb-radius-md);
+  box-shadow: var(--cb-elevation-raised-2);
   font-size: var(--cb-font-size-sm);
+  /* Never a click target and never in the way of one either — this notice is purely
+     informational and must not be able to intercept a pointer meant for whatever is
+     underneath it, however briefly it happens to be showing. */
+  pointer-events: none;
 }
