@@ -1,0 +1,17 @@
+{
+  "name": "@conservation-bakery/sim",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Deterministic, exactly-conserved simulation core. No DOM, no Electron, no I/O.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc --build",
+    "test": "vitest run"
+  }
+}
