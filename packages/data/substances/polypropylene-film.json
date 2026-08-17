@@ -1,0 +1,23 @@
+{
+  "id": "polypropylene-film",
+  "name": "Polypropylene film, packaging",
+  "category": "packaging",
+  "state": "solid",
+  "elements": {
+    "C": 853708348,
+    "H": 143291652,
+    "O": 0,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 3000000
+  },
+  "source": "Polypropylene repeat unit (C3H6)n, monomer mass 42.081 from IUPAC standard atomic weights (C 12.011 x3, H 1.008 x6). C fraction of the polymer backbone 36.033/42.081 = 85.6303%.",
+  "notes": "997000000 ug/kg is backbone (C3H6)n split by monomer ratio; the remaining 3000000 ug/kg (0.3%) is the typical mass share of processing additives in commercial film (slip agents, antioxidants, anti-block) and is carried entirely in Ash since its own composition is not tracked here. H is set to close the remainder exactly."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "wheat-flour-white",
+  "name": "Wheat flour, white (~76% extraction, all-purpose)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 400962000,
+    "H": 69032903,
+    "O": 506465097,
+    "N": 16480000,
+    "P": 1750000,
+    "K": 1250000,
+    "S": 2060000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 150000,
+    "Mg": 400000,
+    "Fe": 50000,
+    "Ash": 1400000
+  },
+  "source": "Proximate composition (per kg): water 119 g, protein 103 g, fat 10 g, ash 5 g, carbohydrate by difference 763 g, typical of white all-purpose wheat flour milled to roughly 76% extraction (USDA FoodData Current pattern for enriched all-purpose flour).",
+  "notes": "Same conversion method as wheat-grain. White flour's lower ash and mineral content relative to the whole grain reflects the bran and germ being milled away — see wheat-bran and wheat-germ, which carry the minerals this file lacks. Compare compositionMass(getComposition('wheat-flour-white', m)) + compositionMass(bran) + compositionMass(germ) is NOT expected to equal wheat-grain's per-kg figures exactly, because milling yields are not 100% flour+bran+germ (some loss to milling streams); each file stands on its own sourced composition, closed independently by Ash."
+}

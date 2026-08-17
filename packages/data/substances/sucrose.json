@@ -1,0 +1,23 @@
+{
+  "id": "sucrose",
+  "name": "Sucrose (C12H22O11), refined table sugar",
+  "category": "sugar",
+  "state": "solid",
+  "elements": {
+    "C": 421072928,
+    "H": 64785844,
+    "O": 514141228,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "Sucrose molar mass 342.297 g/mol from IUPAC standard atomic weights (C 12.011 x12, H 1.008 x22, O 15.999 x11).",
+  "notes": "Refined sucrose is essentially the pure compound (food-grade sugar is >99.9% sucrose); C and H are rounded to the nearest microgram and O absorbs the remainder so the three-element compound closes exactly."
+}

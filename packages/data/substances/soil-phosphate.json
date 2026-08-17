@@ -1,0 +1,23 @@
+{
+  "id": "soil-phosphate",
+  "name": "Soil phosphate, P2O5-equivalent plant-available phosphorus",
+  "category": "soil-nutrient",
+  "state": "solid",
+  "elements": {
+    "C": 0,
+    "H": 0,
+    "O": 563571293,
+    "N": 0,
+    "P": 436428707,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "Reported as P2O5 equivalent, the standard agronomic convention for the 'P' figure in an N-P2O5-K2O fertiliser analysis. P2O5 formula mass 141.943 from IUPAC standard atomic weights (P 30.974 x2, O 15.999 x5). P fraction 61.948/141.943 = 43.6429%.",
+  "notes": "P is rounded to the nearest microgram; O closes exactly. The P2O5 convention is a reporting unit, not a claim that phosphorus exists in soil as the oxide; it lets this file line up with standard fertiliser labelling and analysis."
+}

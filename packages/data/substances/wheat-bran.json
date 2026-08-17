@@ -1,0 +1,23 @@
+{
+  "id": "wheat-bran",
+  "name": "Wheat bran, crude",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 401296000,
+    "H": 67086768,
+    "O": 445537232,
+    "N": 24960000,
+    "P": 23200000,
+    "K": 14500000,
+    "S": 3120000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 1740000,
+    "Mg": 8700000,
+    "Fe": 1160000,
+    "Ash": 8700000
+  },
+  "source": "Proximate composition (per kg): water 99 g, protein 156 g, fat 43 g, ash 58 g, carbohydrate by difference 644 g, typical of crude wheat bran (USDA FoodData Central pattern).",
+  "notes": "Same conversion method as wheat-grain. Bran concentrates the grain's phosphorus and magnesium, reflected in a higher mineral share of its (larger) ash fraction than either the whole grain or white flour."
+}

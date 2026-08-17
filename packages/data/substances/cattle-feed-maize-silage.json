@@ -1,0 +1,23 @@
+{
+  "id": "cattle-feed-maize-silage",
+  "name": "Cattle feed, maize silage (as fed)",
+  "category": "feed",
+  "state": "solid",
+  "elements": {
+    "C": 153356000,
+    "H": 94187384,
+    "O": 729916616,
+    "N": 4480000,
+    "P": 2625000,
+    "K": 6125000,
+    "S": 560000,
+    "Na": 525000,
+    "Cl": 0,
+    "Ca": 2625000,
+    "Mg": 1400000,
+    "Fe": 0,
+    "Ash": 4200000
+  },
+  "source": "As-fed composition (per kg): water 650 g (dry matter 350 g), of which protein 8%, fat 3%, ash 5% and carbohydrate/fibre by difference 84% of dry matter, typical of well-fermented whole-plant maize silage (dairy/beef ration tables).",
+  "notes": "Dry-matter fractions are converted to as-fed fractions by multiplying through by the 350 g/kg dry-matter share, then run through the same protein/fat/carbohydrate/water elemental model as the wheat files. This is the feed input to the cattle account that a milk- or cream-producing chain must draw from, so that milk's carbon and nitrogen ultimately trace back to a modelled crop rather than appearing from nowhere."
+}

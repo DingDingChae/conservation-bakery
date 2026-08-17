@@ -1,0 +1,23 @@
+{
+  "id": "carbon-dioxide",
+  "name": "Carbon dioxide (CO2)",
+  "category": "atmospheric-gas",
+  "state": "gas",
+  "elements": {
+    "C": 272921448,
+    "H": 0,
+    "O": 727078552,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "CO2 molar mass 44.009 g/mol from IUPAC standard atomic weights (C 12.011, O 15.999 x2). C fraction 12.011/44.009 = 27.2921%.",
+  "notes": "C is rounded to the nearest microgram; O is set to exactly 1000000000 minus C so the two-element compound closes exactly, the same technique the ledger itself uses (see partition() in core/commodity.ts). No Ash needed: CO2 has no third element to hide."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "soil-potash",
+  "name": "Soil potash, K2O-equivalent plant-available potassium",
+  "category": "soil-nutrient",
+  "state": "solid",
+  "elements": {
+    "C": 0,
+    "H": 0,
+    "O": 169849780,
+    "N": 0,
+    "P": 0,
+    "K": 830150220,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "Reported as K2O equivalent, the standard agronomic convention for the 'K' figure in an N-P2O5-K2O fertiliser analysis. K2O formula mass 94.195 from IUPAC standard atomic weights (K 39.098 x2, O 15.999). K fraction 78.196/94.195 = 83.0150%.",
+  "notes": "K is rounded to the nearest microgram; O closes exactly. As with soil-phosphate, the oxide convention is a reporting unit inherited from fertiliser labelling, not a claim about the mineral form potassium actually takes in soil."
+}

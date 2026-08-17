@@ -1,0 +1,23 @@
+{
+  "id": "hen-egg-white",
+  "name": "Hen egg white, raw",
+  "category": "egg",
+  "state": "liquid",
+  "elements": {
+    "C": 62178140,
+    "H": 106310257,
+    "O": 805691603,
+    "N": 17440000,
+    "P": 930000,
+    "K": 1240000,
+    "S": 2180000,
+    "Na": 1550000,
+    "Cl": 0,
+    "Ca": 310000,
+    "Mg": 186000,
+    "Fe": 0,
+    "Ash": 1984000
+  },
+  "source": "Proximate composition (per kg): water 875.7 g, protein 109.0 g, fat 1.7 g, ash 6.2 g, carbohydrate by difference 7.4 g, typical of raw hen egg white (USDA FoodData Central pattern).",
+  "notes": "Same conversion method as hen-egg-whole. Egg white is almost fat-free and its ash is sodium- and potassium-led, unlike the yolk, which is phosphorus- and iron-led."
+}

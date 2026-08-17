@@ -1,0 +1,23 @@
+{
+  "id": "sodium-chloride",
+  "name": "Sodium chloride (NaCl), salt",
+  "category": "mineral",
+  "state": "solid",
+  "elements": {
+    "C": 0,
+    "H": 0,
+    "O": 0,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 393374741,
+    "Cl": 606625259,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "NaCl molar mass 58.443 g/mol from IUPAC standard atomic weights (Na 22.990, Cl 35.453). Na fraction 22.990/58.443 = 39.3375%.",
+  "notes": "Food-grade salt treated as the pure compound (anti-caking agents are a trace fraction and not tracked). Na is rounded to the nearest microgram; Cl closes the two-element compound exactly."
+}

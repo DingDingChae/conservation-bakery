@@ -1,0 +1,8 @@
+{
+  "name": "@conservation-bakery/data",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Sourced substance data: elemental compositions for everything the bakery moves.",
+  "license": "Apache-2.0",
+  "type": "module"
+}

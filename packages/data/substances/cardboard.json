@@ -1,0 +1,23 @@
+{
+  "id": "cardboard",
+  "name": "Cardboard, corrugated kraft paperboard",
+  "category": "packaging",
+  "state": "solid",
+  "elements": {
+    "C": 399600000,
+    "H": 63633472,
+    "O": 506766528,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 15000000,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 15000000
+  },
+  "source": "Composition (per kg): water 70 g, mineral filler/coating (ash) 30 g, cellulosic fibre by difference 900 g, typical of corrugated kraft paperboard (pulp and paper industry proximate figures).",
+  "notes": "The cellulosic fibre (cellulose, hemicellulose and lignin) is modelled with the generic starch/cellulose elemental profile (C44.4/H6.2/O49.4 %, as (C6H10O5)n), which is a reasonable approximation for a lignocellulosic material. Half the mineral filler, calcium carbonate used for coating and sizing, is assigned to Ca; the rest (kaolin clay and other untracked fillers) is carried by Ash so the kilogram closes exactly."
+}

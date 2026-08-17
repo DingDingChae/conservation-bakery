@@ -1,0 +1,23 @@
+{
+  "id": "sodium-bicarbonate",
+  "name": "Sodium bicarbonate (NaHCO3), baking soda",
+  "category": "leavening-mineral",
+  "state": "solid",
+  "elements": {
+    "C": 142977883,
+    "H": 11999143,
+    "O": 571352046,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 273670928,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "NaHCO3 molar mass 84.006 g/mol from IUPAC standard atomic weights (Na 22.990, H 1.008, C 12.011, O 15.999 x3).",
+  "notes": "Food-grade baking soda is essentially pure NaHCO3. Na, H and C are rounded to the nearest microgram; O absorbs the remainder so the four-element compound closes exactly. This is the leavening salt whose decomposition (2 NaHCO3 -> Na2CO3 + H2O + CO2) releases the CO2 that a leavening process must draw from here and post to atmosphere, never invent."
+}

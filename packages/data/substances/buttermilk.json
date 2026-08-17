@@ -1,0 +1,23 @@
+{
+  "id": "buttermilk",
+  "name": "Buttermilk, cultured, low-fat",
+  "category": "dairy",
+  "state": "liquid",
+  "elements": {
+    "C": 45595550,
+    "H": 107378471,
+    "O": 833585980,
+    "N": 5280000,
+    "P": 1500000,
+    "K": 1125000,
+    "S": 660000,
+    "Na": 750000,
+    "Cl": 0,
+    "Ca": 2250000,
+    "Mg": 225000,
+    "Fe": 0,
+    "Ash": 1649999
+  },
+  "source": "Proximate composition (per kg): water 900 g, protein 33 g, fat 9 g, ash 7.5 g, carbohydrate by difference 50.5 g, typical of cultured low-fat buttermilk (USDA FoodData Central pattern).",
+  "notes": "Same conversion method as cow-milk-whole. Buttermilk is the low-fat liquid remaining after butter is churned from cream, so its mineral profile is modelled the same way as milk (calcium- and phosphorus-led ash split)."
+}

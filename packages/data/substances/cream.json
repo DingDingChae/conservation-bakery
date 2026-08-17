@@ -1,0 +1,23 @@
+{
+  "id": "cream",
+  "name": "Cream, heavy whipping (~37% fat)",
+  "category": "dairy",
+  "state": "liquid",
+  "elements": {
+    "C": 303771580,
+    "H": 112217823,
+    "O": 575720597,
+    "N": 3280000,
+    "P": 690000,
+    "K": 460000,
+    "S": 410000,
+    "Na": 460000,
+    "Cl": 0,
+    "Ca": 1150000,
+    "Mg": 138000,
+    "Fe": 0,
+    "Ash": 1702000
+  },
+  "source": "Proximate composition (per kg): water 577.1 g, protein 20.5 g, fat 370 g, ash 4.6 g, carbohydrate (lactose) by difference 27.8 g, typical of heavy whipping cream (USDA FoodData Central pattern).",
+  "notes": "Same conversion method as cow-milk-whole, with the sucrose elemental profile used for lactose. Cream is the fat-concentrated separation product of whole milk, reflected in its much higher C and H share relative to milk."
+}

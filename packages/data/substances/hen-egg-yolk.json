@@ -1,0 +1,23 @@
+{
+  "id": "hen-egg-yolk",
+  "name": "Hen egg yolk, raw",
+  "category": "egg",
+  "state": "liquid",
+  "elements": {
+    "C": 300837380,
+    "H": 103808258,
+    "O": 549706362,
+    "N": 25376000,
+    "P": 5985000,
+    "K": 1710000,
+    "S": 3172000,
+    "Na": 1710000,
+    "Cl": 0,
+    "Ca": 2565000,
+    "Mg": 513000,
+    "Fe": 855000,
+    "Ash": 3762000
+  },
+  "source": "Proximate composition (per kg): water 523.1 g, protein 158.6 g, fat 265.4 g, ash 17.1 g, carbohydrate by difference 35.8 g, typical of raw hen egg yolk (USDA FoodData Central pattern).",
+  "notes": "Same conversion method as hen-egg-whole. The yolk carries almost all of the whole egg's fat, phosphorus and iron, reflected in a higher C share and phosphorus- and iron-led ash split than the white."
+}

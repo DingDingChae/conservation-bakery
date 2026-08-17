@@ -1,0 +1,23 @@
+{
+  "id": "atmospheric-nitrogen",
+  "name": "Atmospheric nitrogen (N2)",
+  "category": "atmospheric-gas",
+  "state": "gas",
+  "elements": {
+    "C": 0,
+    "H": 0,
+    "O": 0,
+    "N": 1000000000,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "Dinitrogen, N2. IUPAC standard atomic weight of nitrogen 14.007.",
+  "notes": "Exact by definition, as for atmospheric-oxygen: a diatomic element gas has no other element to close against."
+}

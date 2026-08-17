@@ -1,0 +1,23 @@
+{
+  "id": "wheat-grain",
+  "name": "Wheat grain, whole (hard red winter, as harvested)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 396232000,
+    "H": 69633877,
+    "O": 493734123,
+    "N": 20800000,
+    "P": 6800000,
+    "K": 5100000,
+    "S": 2600000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 510000,
+    "Mg": 1700000,
+    "Fe": 170000,
+    "Ash": 2720000
+  },
+  "source": "Proximate composition (per kg): water 130 g, protein 130 g, fat 20 g, ash 17 g, carbohydrate by difference 703 g, typical of hard red winter wheat (USDA FoodData Central pattern for whole wheat grain).",
+  "notes": "Protein, fat and carbohydrate are converted to elements via standard biomass conversion factors: protein approx. C53/H7/N16/O22/S2 %, fat approx. C76/H12/O12 %, starch/fibre approx. C44.4/H6.2/O49.4 % (both as (C6H10O5)n). Water contributes H11.19%/O88.81%. The ash fraction is split across the tracked grain minerals (P, K, Mg, Ca, Fe) using typical proportions for cereal grain (phosphorus- and potassium-rich); whatever the tracked elements do not account for — untracked trace minerals plus the residual of these proximate approximations — is carried by Ash so the kilogram closes exactly, per CONTRACT.md rule 1."
+}

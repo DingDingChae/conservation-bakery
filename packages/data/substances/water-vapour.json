@@ -1,0 +1,23 @@
+{
+  "id": "water-vapour",
+  "name": "Water vapour (H2O, gas phase)",
+  "category": "water",
+  "state": "gas",
+  "elements": {
+    "C": 0,
+    "H": 111906744,
+    "O": 888093256,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "H2O molar mass 18.015 g/mol from IUPAC standard atomic weights (H 1.008 x2, O 15.999). H fraction 2.016/18.015 = 11.19067%.",
+  "notes": "Same as water-liquid: identical molecule, different phase. Phase carries no conserved mass of its own, so the elemental composition is identical; only the state field differs. O closes the two-element compound exactly."
+}

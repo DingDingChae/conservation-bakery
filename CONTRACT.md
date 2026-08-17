@@ -64,22 +64,28 @@ None of them may create a gram. There is no code path for it to happen.
 
 ---
 
+<!-- rule2:allow-declaration -->
 ## Rule 2 — No injuries
+<!-- /rule2:allow-declaration -->
 
+<!-- rule2:allow-declaration -->
 No injury, accident, illness, harm, casualty or medical emergency involving any person
 is modelled, counted, simulated, logged, named, depicted, voiced, or written anywhere in
 this product — in any language, in any mode, at any difficulty, in any data file, in any
 string, in any asset, in any comment.
+<!-- /rule2:allow-declaration -->
 
 Hazards in this world are **equipment and product** events only:
 
 | Modelled | Never present |
 | --- | --- |
+<!-- rule2:allow-declaration -->
 | Motor overload trip | Any person coming to any harm |
 | Heating element burnout | Injury, accident, wound, burn |
 | Bearing or belt failure | Illness, sickness, poisoning |
 | Door interlock refusing a command | Casualty, fatality |
 | Batch condemned, lot recalled | Medical or emergency response |
+<!-- /rule2:allow-declaration -->
 | Line stopped, delivery delayed | |
 | Refrigeration loss, power cut | |
 
@@ -90,7 +96,9 @@ withdrawn; the story ends there.
 
 ### How it is enforced
 
+<!-- rule2:allow-declaration -->
 `tests/content/no-harm.spec.ts` sweeps every user-facing string in both languages, every
+<!-- /rule2:allow-declaration -->
 event and alarm identifier, every data file, and every asset name against a denylist,
 and fails the build on a match. Adding a term to the denylist is allowed. Removing one
 is not.

@@ -1,0 +1,23 @@
+{
+  "id": "sugar-beet",
+  "name": "Sugar beet, root (raw)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 103878600,
+    "H": 99856765,
+    "O": 786564635,
+    "N": 2400000,
+    "P": 700000,
+    "K": 2800000,
+    "S": 300000,
+    "Na": 350000,
+    "Cl": 0,
+    "Ca": 700000,
+    "Mg": 350000,
+    "Fe": 0,
+    "Ash": 2100000
+  },
+  "source": "Proximate composition (per kg): water 751 g, protein 15 g, fat 1 g, ash 7 g, carbohydrate by difference 226 g, typical of raw sugar beet root (literature range for Beta vulgaris, sugar-industry feedstock tables).",
+  "notes": "The root's carbohydrate is treated with the sucrose elemental profile (C12H22O11) rather than the generic starch profile, since sucrose is the dominant storage carbohydrate that is later extracted as raw sugar. Ash is split toward potassium and calcium, the dominant beet minerals; the remainder closes via Ash."
+}

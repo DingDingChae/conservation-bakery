@@ -1,0 +1,23 @@
+{
+  "id": "hen-egg-whole",
+  "name": "Hen egg, whole, raw (edible portion, no shell)",
+  "category": "egg",
+  "state": "solid",
+  "elements": {
+    "C": 142002250,
+    "H": 105906986,
+    "O": 719182764,
+    "N": 20096000,
+    "P": 3090000,
+    "K": 1545000,
+    "S": 2512000,
+    "Na": 1545000,
+    "Cl": 0,
+    "Ca": 1030000,
+    "Mg": 309000,
+    "Fe": 309000,
+    "Ash": 2472000
+  },
+  "source": "Proximate composition (per kg): water 761.5 g, protein 125.6 g, fat 95.1 g, ash 10.3 g, carbohydrate by difference 7.5 g, typical of raw whole hen egg, edible portion only (USDA FoodData Central pattern).",
+  "notes": "The shell (mostly calcium carbonate) is a separate co-product not included here; this substance is the edible content only, i.e. white plus yolk in their natural proportion. It is a weighted blend and does not need to equal any fixed ratio of hen-egg-white and hen-egg-yolk, since real eggs vary; each file is sourced and closed independently."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "wheat-germ",
+  "name": "Wheat germ, crude",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 426228000,
+    "H": 72355649,
+    "O": 416656351,
+    "N": 37120000,
+    "P": 15050000,
+    "K": 10750000,
+    "S": 4640000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 860000,
+    "Mg": 5160000,
+    "Fe": 1290000,
+    "Ash": 9890000
+  },
+  "source": "Proximate composition (per kg): water 111 g, protein 232 g, fat 97 g, ash 43 g, carbohydrate by difference 517 g, typical of crude wheat germ (USDA FoodData Central pattern).",
+  "notes": "Same conversion method as wheat-grain. Germ is the grain's most protein- and fat-dense fraction, which shows up as a higher N and C share than bran or flour."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "cow-milk-whole",
+  "name": "Cow milk, whole (3.25% fat)",
+  "category": "dairy",
+  "state": "liquid",
+  "elements": {
+    "C": 61831700,
+    "H": 107835442,
+    "O": 817572858,
+    "N": 5120000,
+    "P": 1750000,
+    "K": 1050000,
+    "S": 640000,
+    "Na": 560000,
+    "Cl": 0,
+    "Ca": 2450000,
+    "Mg": 210000,
+    "Fe": 0,
+    "Ash": 980000
+  },
+  "source": "Proximate composition (per kg): water 881 g, protein 32 g, fat 33 g, ash 7 g, carbohydrate (lactose) by difference 47 g, typical of whole cow milk at 3.25% fat (USDA FoodData Central pattern).",
+  "notes": "Lactose (C12H22O11, same formula as sucrose) uses the sucrose elemental profile. Ash is split toward calcium and phosphorus, milk's dominant minerals, reflecting milk's role as the calcium source for cream, butter and buttermilk downstream."
+}

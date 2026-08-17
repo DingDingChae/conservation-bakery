@@ -1,0 +1,23 @@
+{
+  "id": "butter",
+  "name": "Butter, salted",
+  "category": "dairy",
+  "state": "solid",
+  "elements": {
+    "C": 621193660,
+    "H": 115725480,
+    "O": 240450860,
+    "N": 1360000,
+    "P": 633000,
+    "K": 0,
+    "S": 170000,
+    "Na": 7470186,
+    "Cl": 11519814,
+    "Ca": 633000,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 844000
+  },
+  "source": "Proximate composition (per kg): water 158.7 g, protein 8.5 g, fat 811.1 g, ash 21.1 g, carbohydrate by difference 0.6 g, typical of salted butter (USDA FoodData Central pattern).",
+  "notes": "Salted butter's unusually high ash is mostly added salt, not milk mineral: 90% of the ash mass is modelled as NaCl and split between Na and Cl in the exact stoichiometric ratio of that compound (Na 39.34%, Cl 60.66% by mass); the remaining 10% is milk-derived calcium and phosphorus, as in cream. Ash absorbs the rest."
+}

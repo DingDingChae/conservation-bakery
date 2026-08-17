@@ -1,0 +1,23 @@
+{
+  "id": "methane",
+  "name": "Methane (CH4), burner fuel gas",
+  "category": "fuel-gas",
+  "state": "gas",
+  "elements": {
+    "C": 748675435,
+    "H": 251324565,
+    "O": 0,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "CH4 molar mass 16.043 g/mol from IUPAC standard atomic weights (C 12.011, H 1.008 x4). C fraction 12.011/16.043 = 74.8675%.",
+  "notes": "Pipeline natural gas is treated here as pure methane, the dominant component; trace ethane, propane and inert gases are not modelled separately. C is rounded to the nearest microgram and H closes the two-element compound exactly. Combustion (CH4 + 2 O2 -> CO2 + 2 H2O) is a burner process elsewhere that must draw O2 from atmosphere and post CO2 and H2O back to it."
+}

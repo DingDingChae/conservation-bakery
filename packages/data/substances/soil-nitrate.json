@@ -1,0 +1,23 @@
+{
+  "id": "soil-nitrate",
+  "name": "Soil nitrate (NO3-), plant-available nitrogen",
+  "category": "soil-nutrient",
+  "state": "solid",
+  "elements": {
+    "C": 0,
+    "H": 0,
+    "O": 774095220,
+    "N": 225904780,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "Nitrate anion NO3-, formula mass 62.004 from IUPAC standard atomic weights (N 14.007, O 15.999 x3). N fraction 14.007/62.004 = 22.5905%.",
+  "notes": "Modelled as the mass of the nitrate ion itself, independent of the counter-cation (K+, Ca2+, etc.) that carries it in the soil solution, so this substance composes with any soil cation pool without double-counting mass. N is rounded to the nearest microgram; O closes exactly."
+}
