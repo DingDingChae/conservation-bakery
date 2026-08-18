@@ -1,0 +1,23 @@
+{
+  "id": "yeast",
+  "name": "Baker's yeast, fresh (compressed)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 141820000,
+    "H": 97894721,
+    "O": 716885279,
+    "N": 20800000,
+    "P": 6000000,
+    "K": 7000000,
+    "S": 3600000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 2000000,
+    "Fe": 0,
+    "Ash": 4000000
+  },
+  "source": "Fresh compressed Saccharomyces cerevisiae: illustrative proximate (per kg) water 700 g (~70%, typical compressed-yeast moisture), protein 130 g, carbohydrate (glycogen/mannan/beta-glucan cell wall) 130 g, fat 20 g, ash 20 g (food-science/brewing literature pattern for fresh baker's yeast).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json, except ash is weighted toward phosphorus and potassium, reflecting real yeast cytoplasm/cell-wall mineral content. origin/yeast.ts propagates this substance from a real sugar feed plus a mineral/nitrogen nutrient charge, respiring the remainder of the feed to CO2 via world/exchange.ts's respire() — the real aerobic industrial process, chosen (rather than anaerobic fermentation) because propagation for biomass, unlike leavening a dough, is run aerobically to maximise cell yield."
+}

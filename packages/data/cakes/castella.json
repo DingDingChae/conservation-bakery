@@ -1,0 +1,45 @@
+{
+  "id": "castella",
+  "name": "Castella",
+  "tradition": "Japanese",
+  "origin": "Kasutera, brought to Nagasaki by 16th-century Portuguese traders (its name derives from Pão de Castela, 'bread of Castile') and adapted over centuries into a distinctly Japanese honey sponge, baked tall in a wooden frame.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 80 },
+    {
+      "substanceId": "honey",
+      "role": "sugar",
+      "bakersPercent": 8.3,
+      "note": "sugar fraction of honey (or mizuame starch syrup) at 10% of flour mass, split by USDA honey composition (~83% sugars, ~17% water)"
+    },
+    { "substanceId": "honey", "role": "liquid", "bakersPercent": 1.7 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 180, "note": "an unusually egg-rich sponge, the real hallmark of castella's dense, moist, fine crumb" },
+    {
+      "substanceId": "sodium-bicarbonate",
+      "role": "leavening",
+      "bakersPercent": 1,
+      "note": "traditional castella relies almost entirely on the whipped-egg foam; a small baking-powder dose is common in modern recipes for reliability, modelled here as bicarbonate"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.3 }
+  ],
+  "process": [
+    {
+      "name": "whip eggs and sugar",
+      "description": "whip whole eggs with sugar and honey to a thick, pale ribbon foam",
+      "durationMinutes": 12
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in sifted flour and leavening in stages",
+      "durationMinutes": 3
+    },
+    {
+      "name": "bake",
+      "description": "bake tall in a wooden or paper-lined frame at a moderate temperature so the crumb sets evenly without a crust forming too fast",
+      "temperatureC": 160,
+      "durationMinutes": 55
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Egg mass at 180% of flour, with honey rather than only granulated sugar, is representative of published castella formulas; honey's real composition (USDA FoodData Central: ~82.4 g sugars, ~17.1 g water per 100 g) is split into its own sugar- and liquid-role lines. Little or no added fat is traditional and correct here — castella's richness comes entirely from egg, not butter or oil."
+}

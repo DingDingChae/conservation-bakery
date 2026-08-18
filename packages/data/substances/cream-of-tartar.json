@@ -1,0 +1,23 @@
+{
+  "id": "cream-of-tartar",
+  "name": "Potassium bitartrate (KC4H5O6), cream of tartar",
+  "category": "leavening-mineral",
+  "state": "solid",
+  "elements": {
+    "C": 255314174,
+    "H": 26783437,
+    "O": 510128815,
+    "N": 0,
+    "P": 0,
+    "K": 207773574,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "KC4H5O6 molar mass 188.177 g/mol from IUPAC standard atomic weights (K 39.098, C 12.011 x4, H 1.008 x5, O 15.999 x6).",
+  "notes": "Food-grade cream of tartar is treated as the pure compound, matching sodium-bicarbonate.json's and sucrose.json's own convention for a food-grade-pure mineral salt. Real cream of tartar crystallises from the potassium- and tartaric-acid-rich lees left after winemaking; origin/minerals.ts sources it from a seeded vineyard-region mineral reservoir rather than modelling full fermentation."
+}

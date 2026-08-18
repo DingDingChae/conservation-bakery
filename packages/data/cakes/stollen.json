@@ -1,0 +1,48 @@
+{
+  "id": "stollen",
+  "name": "Stollen",
+  "tradition": "German",
+  "origin": "Christstollen, from Dresden, Germany, since at least the 15th century; a yeasted, enriched fruit bread rather than a chemically leavened cake, dusted heavily with icing sugar, its shape traditionally said to represent the swaddled infant of the Nativity.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 18 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 65 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 15 },
+    { "substanceId": "cow-milk-whole", "role": "liquid", "bakersPercent": 25 },
+    { "substanceId": "rum", "role": "liquid", "bakersPercent": 5, "note": "rum used to soak the dried fruit before mixing, contributing a little of the dough's own liquid" },
+    { "substanceId": "dried-mixed-fruit", "role": "flavour", "bakersPercent": 70 },
+    {
+      "substanceId": "yeast",
+      "role": "leavening",
+      "bakersPercent": 2,
+      "note": "stollen is yeast-leavened, not chemically leavened; bakersPercent here represents a nominal yeast inoculation rate rather than a bicarbonate dose, and physically belongs to the fermentation chemistry in leavening.ts (fermentGlucose), not the bicarbonate reaction validateFormulation's leavening ceiling is calibrated against — flagged for future work rather than pretending otherwise"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1.5 }
+  ],
+  "process": [
+    {
+      "name": "mix and knead dough",
+      "description": "mix flour, milk, egg, sugar, salt and yeast into a dough, then knead in the softened butter",
+      "durationMinutes": 15
+    },
+    {
+      "name": "fold in fruit",
+      "description": "fold in the rum-soaked dried fruit",
+      "durationMinutes": 3
+    },
+    {
+      "name": "proof",
+      "description": "proof until roughly doubled",
+      "temperatureC": 27,
+      "durationMinutes": 90
+    },
+    {
+      "name": "bake",
+      "description": "shape and bake",
+      "temperatureC": 180,
+      "durationMinutes": 40
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "A representative German enriched-dough proportion: substantial butter (65% of flour) and dried fruit (70%) relative to a fairly modest sugar dose (icing sugar dusted on after baking, out of scope here, does most of stollen's real sweetening). See the leavening-role note above for why a yeasted dough's leavening figure is only a nominal placeholder in this formulation engine today."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "almond-in-shell",
+  "name": "Almond, in shell (as harvested)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 465000000,
+    "H": 78071607,
+    "O": 378928393,
+    "N": 16000000,
+    "P": 15000000,
+    "K": 18000000,
+    "S": 3200000,
+    "Na": 600000,
+    "Cl": 0,
+    "Ca": 9000000,
+    "Mg": 12000000,
+    "Fe": 1800000,
+    "Ash": 2400000
+  },
+  "source": "Whole almond drupe (hull already removed at harvest, hard shell intact): illustrative proximate (per kg) water 90 g, protein 100 g, fat 250 g, carbohydrate 500 g (dominated by the woody shell), ash 60 g.",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Cracking (origin/nuts.ts) splits the in-shell nut's own exact composition between almond-kernel and almond-shell by splitByProfile."
+}

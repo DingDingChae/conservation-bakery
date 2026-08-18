@@ -1,0 +1,51 @@
+{
+  "id": "banana-cake",
+  "name": "Banana cake",
+  "tradition": "American",
+  "origin": "Rose to popularity in the United States after baking soda and baking powder became household staples in the late 19th and early 20th centuries, as a way to use very ripe bananas rather than discard them.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 90 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 80 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 60 },
+    {
+      "substanceId": "banana",
+      "role": "liquid",
+      "bakersPercent": 90,
+      "note": "water fraction of mashed ripe banana at 120% of flour mass, split by USDA raw-banana composition (~75% water)"
+    },
+    { "substanceId": "banana", "role": "flavour", "bakersPercent": 30, "note": "non-water fraction (starch, sugars) of the same mashed banana" },
+    {
+      "substanceId": "sodium-bicarbonate",
+      "role": "leavening",
+      "bakersPercent": 2.5,
+      "note": "ripe banana's own mild acidity is enough for a bicarbonate-only leavening, without a separate acid ingredient"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 4
+    },
+    {
+      "name": "add eggs and banana",
+      "description": "beat in eggs, then the mashed banana",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in a loaf pan",
+      "temperatureC": 175,
+      "durationMinutes": 50
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Mashed banana's real water content (USDA FoodData Central, raw banana: ~74.9 g water per 100 g) is split into its own liquid-role line, the same technique used for carrot cake above. 120% banana relative to flour is a representative, banana-forward ratio; real recipes vary with how ripe (and therefore how concentrated) the fruit is."
+}

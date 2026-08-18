@@ -1,0 +1,41 @@
+{
+  "id": "angel-food",
+  "name": "Angel food cake",
+  "tradition": "American",
+  "origin": "A 19th-century American invention that used up the many egg whites left over from other kitchen work (custards, mayonnaise); it is the leanest of the classic American foam cakes, with no fat and no egg yolk at all.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 120 },
+    {
+      "substanceId": "hen-egg-white",
+      "role": "egg",
+      "bakersPercent": 220,
+      "note": "egg white only; the defining absence of any yolk (and so any fat) is what gives angel food its distinctively light, pure-white crumb"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "whip whites",
+      "description": "whip egg whites (with cream of tartar as a whipping stabiliser, negligible mass) to soft peaks"
+    },
+    {
+      "name": "add sugar",
+      "description": "add half the sugar gradually, whipping to stiff, glossy peaks",
+      "durationMinutes": 5
+    },
+    {
+      "name": "fold in flour and sugar",
+      "description": "sift the remaining sugar with the flour and fold into the meringue in stages",
+      "durationMinutes": 3
+    },
+    {
+      "name": "bake",
+      "description": "bake in an ungreased tube pan (the ungreased sides let the foam climb and cling as it sets), then cool inverted",
+      "temperatureC": 177,
+      "durationMinutes": 32
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Egg white around 200-250% of flour mass and no fat at all is the real, defining ratio of angel food (Gisslen, Professional Baking, foam-cake method). No chemical leavening: aeration is entirely the whipped egg-white foam, so leavening-role mass is correctly zero here rather than omitted by oversight. structureIndex is strongly positive (no sugar/fat tenderiser mass to offset flour+egg), matching angel food's real reputation as the driest, most tightly-set of the classic American cakes."
+}

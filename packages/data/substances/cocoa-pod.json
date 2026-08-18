@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-pod",
+  "name": "Cocoa pod, whole (fresh, as harvested)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 99700000,
+    "H": 97980058,
+    "O": 758719942,
+    "N": 3200000,
+    "P": 6000000,
+    "K": 16000000,
+    "S": 2400000,
+    "Na": 800000,
+    "Cl": 0,
+    "Ca": 4000000,
+    "Mg": 4000000,
+    "Fe": 800000,
+    "Ash": 6400000
+  },
+  "source": "Whole fresh Theobroma cacao pod (husk + wet bean + pulp): illustrative high-moisture fibrous-fruit proximate (per kg) water 750 g, protein 20 g, fat 15 g, carbohydrate/fibre 175 g, ash 40 g.",
+  "notes": "Standard protein/fat/carbohydrate/water elemental conversion factors (see wheat-grain.json). The pod is opened into a wet-bean-plus-pulp fraction and a husk fraction by a fixed real mass ratio (origin/cocoa.ts), not by this file's own profile, since bean and husk are compositionally very different fractions of the same pod. Ash is split toward potassium, reflecting cocoa's well-documented high potash content."
+}

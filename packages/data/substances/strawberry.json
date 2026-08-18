@@ -1,0 +1,23 @@
+{
+  "id": "strawberry",
+  "name": "Strawberry, whole (fresh, as harvested)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 40178000,
+    "H": 107459137,
+    "O": 848102863,
+    "N": 1120000,
+    "P": 450000,
+    "K": 1200000,
+    "S": 290000,
+    "Na": 60000,
+    "Cl": 0,
+    "Ca": 300000,
+    "Mg": 300000,
+    "Fe": 60000,
+    "Ash": 480000
+  },
+  "source": "Proximate (per kg) water 910 g, protein 7 g, fat 3 g, carbohydrate 77 g, ash 3 g (USDA FoodData Central pattern for raw strawberries).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json."
+}

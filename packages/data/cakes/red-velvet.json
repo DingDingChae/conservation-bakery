@@ -1,0 +1,52 @@
+{
+  "id": "red-velvet",
+  "name": "Red velvet cake",
+  "tradition": "American",
+  "origin": "A Southern American butter cake distinguished from devil's food by a much smaller dose of cocoa (traditionally reacting with buttermilk and vinegar to a faintly reddish-brown crumb, well before commercial red food colouring became standard) and a cream-cheese frosting rather than chocolate icing.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 130 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 70 },
+    { "substanceId": "vegetable-oil", "role": "fat", "bakersPercent": 55, "note": "many red velvet formulas use oil rather than butter for an especially moist, tender crumb; see catalog.ts module notes on the missing vegetable-oil substance record" },
+    {
+      "substanceId": "cocoa-powder",
+      "role": "fat",
+      "bakersPercent": 0.685,
+      "note": "cocoa fraction of a small 5%-of-flour cocoa dose, far below devil's food's — red velvet is a lightly-cocoa'd butter cake, not a chocolate cake; split as in devils-food.json"
+    },
+    { "substanceId": "cocoa-powder", "role": "flavour", "bakersPercent": 4.315 },
+    { "substanceId": "buttermilk", "role": "liquid", "bakersPercent": 80 },
+    {
+      "substanceId": "sodium-bicarbonate",
+      "role": "leavening",
+      "bakersPercent": 2,
+      "note": "classic recipes add a little vinegar for the bicarbonate to react against, alongside buttermilk's own acidity; vinegar's mass is a few percent of flour, folded into the liquid figure above rather than tracked as its own line"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1.5 }
+  ],
+  "process": [
+    {
+      "name": "cream fat and sugar",
+      "description": "beat oil (or softened butter) and sugar together",
+      "durationMinutes": 4
+    },
+    {
+      "name": "add eggs and cocoa",
+      "description": "beat in eggs, then the small dose of sifted cocoa powder",
+      "durationMinutes": 3
+    },
+    {
+      "name": "alternate flour and buttermilk",
+      "description": "fold in flour (with bicarbonate and salt) and buttermilk in alternating additions",
+      "durationMinutes": 4
+    },
+    {
+      "name": "bake",
+      "description": "bake in round pans",
+      "temperatureC": 175,
+      "durationMinutes": 28
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "Structurally a lightly-cocoa'd American high-ratio butter cake (Gisslen's high-ratio method again), distinguished from devils-food.json mainly by a far smaller cocoa dose (5% of flour vs 20%). The cream-cheese frosting that defines red velvet visually and by taste is a separately-prepared component applied after baking, out of scope for this batter's formulation (see catalog.ts scope note); food colouring is omitted as a negligible, non-physically-meaningful mass."
+}

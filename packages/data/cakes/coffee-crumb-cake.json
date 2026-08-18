@@ -1,0 +1,41 @@
+{
+  "id": "coffee-crumb-cake",
+  "name": "Coffee crumb cake",
+  "tradition": "American",
+  "origin": "A moist, sour-cream-enriched American butter cake (not necessarily flavoured with coffee itself — 'coffee cake' names what it is eaten alongside), topped with a cinnamon streusel crumb.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 80 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 80 },
+    { "substanceId": "cream", "role": "liquid", "bakersPercent": 40, "note": "sour cream is a substantial, defining liquid for this style of American cake; modelled with the registry's cream substance, the nearest real analogue — the bacterial culturing that sours cream is a fermentation step this registry does not yet distinguish from sweet cream" },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "cinnamon", "role": "flavour", "bakersPercent": 1 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs and sour cream",
+      "description": "beat in eggs, then the sour cream",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour and spice",
+      "description": "fold in flour, leavening, salt and cinnamon",
+      "durationMinutes": 2
+    },
+    {
+      "name": "top with streusel and bake",
+      "description": "press a separately-mixed cinnamon-sugar-butter-flour streusel over the batter, then bake",
+      "temperatureC": 180,
+      "durationMinutes": 38
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "A representative sour-cream American butter cake, moister and slightly leaner in egg than a Victoria sponge. The streusel crumb topping is a separately-mixed component pressed onto the batter before baking; consistent with the scope note in catalog.ts, it is described in the process step but kept out of the ingredient list, since it never actually mixes into the batter itself."
+}

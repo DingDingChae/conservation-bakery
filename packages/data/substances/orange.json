@@ -1,0 +1,23 @@
+{
+  "id": "orange",
+  "name": "Orange, whole (with peel, as harvested)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 65300000,
+    "H": 102002598,
+    "O": 803897402,
+    "N": 1600000,
+    "P": 2430000,
+    "K": 10260000,
+    "S": 1010000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 3780000,
+    "Mg": 1890000,
+    "Fe": 540000,
+    "Ash": 7290000
+  },
+  "source": "Whole citrus fruit including peel: illustrative proximate (per kg) water 830 g, protein 10 g, fat 3 g, carbohydrate 130 g, ash 27 g (USDA FoodData Central pattern for orange flesh, adjusted upward in fibre/ash for whole-fruit peel content).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Juicing (origin/citrus.ts) splits the fruit's own exact composition between orange-juice and orange-peel by splitByProfile, so their two masses always sum to exactly the whole fruit pressed."
+}

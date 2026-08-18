@@ -1,0 +1,48 @@
+{
+  "id": "panettone",
+  "name": "Panettone",
+  "tradition": "Italian",
+  "origin": "A tall, domed Milanese enriched sweet bread traditionally made with a natural sourdough starter (lievito madre) over a multi-day process, studded with candied citrus peel and raisins, and eaten at Christmas across Italy.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 32 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 45 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 60, "note": "many recipes weight this heavily toward yolks specifically; modelled here as whole-egg-equivalent mass" },
+    { "substanceId": "cow-milk-whole", "role": "liquid", "bakersPercent": 20 },
+    { "substanceId": "dried-mixed-fruit", "role": "flavour", "bakersPercent": 40, "note": "raisins" },
+    { "substanceId": "candied-peel", "role": "flavour", "bakersPercent": 15 },
+    {
+      "substanceId": "yeast",
+      "role": "leavening",
+      "bakersPercent": 2,
+      "note": "modelled as a nominal commercial-yeast-equivalent dose; the real lievito madre (natural starter) process is a multi-day pre-ferment this bakersPercent figure does not capture — see the same caveat in stollen.json"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1.8 }
+  ],
+  "process": [
+    {
+      "name": "build and mix dough",
+      "description": "mix flour, milk, sugar, egg and starter/yeast, then knead in softened butter in stages",
+      "durationMinutes": 25
+    },
+    {
+      "name": "fold in fruit and peel",
+      "description": "fold in raisins and candied citrus peel",
+      "durationMinutes": 3
+    },
+    {
+      "name": "long proof",
+      "description": "proof at length, the real natural-starter process taking many hours to a full day",
+      "temperatureC": 28,
+      "durationMinutes": 480
+    },
+    {
+      "name": "bake",
+      "description": "bake in a tall paper mould",
+      "temperatureC": 165,
+      "durationMinutes": 48
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "A representative panettone proportion (butter and egg both substantial relative to flour, moderate sugar, a large dried-fruit and candied-peel load) drawn from the pattern shared across published Italian panettone formulas. See the leavening-role note for why this formulation engine's chemical-leavening figure is only a rough proxy for a natural-starter yeasted dough, not literal bicarbonate mass."
+}

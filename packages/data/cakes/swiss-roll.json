@@ -1,0 +1,37 @@
+{
+  "id": "swiss-roll",
+  "name": "Swiss roll",
+  "tradition": "European",
+  "origin": "Despite the name, likely not Swiss in origin; a thin, fatless whisked sponge baked as a sheet, spread with jam or cream while still warm and pliable, then rolled into a spiral and left to cool in that shape.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 200, "note": "an especially egg-rich, fat-free whisked sponge — the high egg content and thin sheet are what let it roll without cracking" },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.3 }
+  ],
+  "process": [
+    {
+      "name": "whip eggs and sugar",
+      "description": "whip whole eggs and sugar to full ribbon-stage volume",
+      "durationMinutes": 8
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in sifted flour gently, preserving as much of the whipped air as possible",
+      "durationMinutes": 2
+    },
+    {
+      "name": "spread thin and bake",
+      "description": "spread thinly on a lined sheet pan and bake hot and fast, so the thin layer sets before it dries out",
+      "temperatureC": 220,
+      "durationMinutes": 9
+    },
+    {
+      "name": "roll while warm",
+      "description": "turn out onto sugared paper, spread with jam or cream, and roll into a spiral while still warm and pliable",
+      "durationMinutes": 5
+    }
+  ],
+  "ovenFamily": "tunnel",
+  "notes": "No added fat at all, real and correctly modelled as zero — a Swiss roll's sheet has to stay pliable enough to roll without cracking, and added fat would work against that. Tagged 'tunnel': like lamington, a thin standardised sheet sponge is a real candidate for continuous-belt commercial baking. The jam or cream filling is a separately-prepared component spread on after baking, out of scope for this batter's formulation."
+}

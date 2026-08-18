@@ -12,3 +12,5 @@ export * from './leavening.js';
 export * from './oven.js';
 export * from './transform.js';
 export * from './staling.js';
+export * from './ovens/index.js';
+export * from './catalog.js';

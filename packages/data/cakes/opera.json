@@ -1,0 +1,38 @@
+{
+  "id": "opera",
+  "name": "Opera cake",
+  "tradition": "French",
+  "origin": "Gateau Opera, created by the Parisian patisserie Dalloyau in the 1950s (or, by a competing account, Patisserie Clichy), named for its resemblance to a miniature stage; thin layers of almond joconde sponge with coffee syrup, coffee buttercream and chocolate ganache.",
+  "ingredients": [
+    { "substanceId": "almond-kernel", "role": "flour", "bakersPercent": 60, "note": "ground almond is joconde's defining flour component, modelled with almond-kernel's own composition (packages/data/substances/almond-kernel.json) ground into flour form" },
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 40 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 60 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 150 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 15 }
+  ],
+  "process": [
+    {
+      "name": "whip almond-flour base",
+      "description": "whip ground almond, icing sugar and whole eggs to a light foam",
+      "durationMinutes": 6
+    },
+    {
+      "name": "fold in flour and butter",
+      "description": "fold in the wheat flour, then the small amount of melted butter",
+      "durationMinutes": 2
+    },
+    {
+      "name": "spread thin",
+      "description": "spread thinly onto lined sheet trays for a fast, even bake",
+      "durationMinutes": 1
+    },
+    {
+      "name": "bake",
+      "description": "bake as thin sheets",
+      "temperatureC": 220,
+      "durationMinutes": 6
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "The joconde sponge (Larousse Gastronomique's standard almond-sponge formula) is a genoise-family foam cake with roughly half its flour replaced by ground almond (almond-kernel, ground into flour form). Ratios are representative rather than one canonical published percentage table. The coffee syrup soak, coffee buttercream and chocolate ganache that define the assembled opera cake are separately-prepared components layered on after baking, out of scope for this batter's formulation."
+}

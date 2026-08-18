@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-bean-wet",
+  "name": "Cocoa bean, wet (with pulp, before fermentation)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 168840000,
+    "H": 103554721,
+    "O": 700405279,
+    "N": 6400000,
+    "P": 3000000,
+    "K": 9000000,
+    "S": 1400000,
+    "Na": 200000,
+    "Cl": 0,
+    "Ca": 1000000,
+    "Mg": 2400000,
+    "Fe": 400000,
+    "Ash": 3400000
+  },
+  "source": "Fresh bean-and-mucilage fraction removed from the pod: illustrative proximate (per kg) water 700 g (dominated by the sugary mucilage pulp), protein 40 g, fat 130 g (bean cotyledon fat), carbohydrate 110 g (pulp sugars), ash 20 g.",
+  "notes": "Fermentation and drying (origin/cocoa.ts) are modelled as real, staged moisture loss from this starting point down to cocoa-bean-dried's target moisture, plus a small aerobic-respiration CO2 loss from pulp sugar metabolism — both balanced postings, not composition-file changes. Standard elemental conversion factors as wheat-grain.json."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "almond-shell",
+  "name": "Almond shell (hard endocarp, cracked off)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 387580000,
+    "H": 64211607,
+    "O": 492808393,
+    "N": 4800000,
+    "P": 2500000,
+    "K": 16000000,
+    "S": 1600000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 9000000,
+    "Mg": 2500000,
+    "Fe": 1000000,
+    "Ash": 18000000
+  },
+  "source": "The hard woody shell cracked away from the kernel: illustrative fibre/lignin-dominant, low-fat proximate (per kg) water 90 g, protein 30 g, fat 10 g, carbohydrate/fibre 820 g, ash 50 g.",
+  "notes": "Standard elemental conversion factors as wheat-grain.json."
+}

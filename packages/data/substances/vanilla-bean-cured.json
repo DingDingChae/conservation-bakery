@@ -1,0 +1,23 @@
+{
+  "id": "vanilla-bean-cured",
+  "name": "Vanilla bean, cured (Bourbon-style, ~35% moisture)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 286080000,
+    "H": 79707361,
+    "O": 563412639,
+    "N": 9600000,
+    "P": 9000000,
+    "K": 24000000,
+    "S": 4200000,
+    "Na": 1200000,
+    "Cl": 0,
+    "Ca": 6000000,
+    "Mg": 6000000,
+    "Fe": 1200000,
+    "Ash": 9600000
+  },
+  "source": "Fully cured (blanched, sweated, sun-dried, conditioned) bean: illustrative proximate (per kg) water 350 g (~35%, typical high-grade Bourbon-cured vanilla), protein 60 g, fat 60 g, carbohydrate 470 g, ash 60 g — cured vanilla retains substantially more moisture than most dried spices (curing chemistry literature).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Vanillin and the bean's other aromatic phenolics are a small mass fraction (typically ~2% of cured bean weight) of the whole bean and are folded into the generic carbohydrate-like bucket here rather than modelled by their own distinct aromatic C:H:O ratio — a stated simplification given their small share of total mass."
+}

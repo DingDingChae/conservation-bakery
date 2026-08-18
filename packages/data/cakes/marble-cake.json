@@ -1,0 +1,47 @@
+{
+  "id": "marble-cake",
+  "name": "Marble cake",
+  "tradition": "American/German",
+  "origin": "A vanilla butter cake batter partially swirled with a cocoa batter before baking, so each slice shows a marbled pattern; documented in American cookbooks since the 19th century, and closely related to the German Marmorkuchen.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 110 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 90 },
+    { "substanceId": "cow-milk-whole", "role": "liquid", "bakersPercent": 20 },
+    {
+      "substanceId": "cocoa-powder",
+      "role": "fat",
+      "bakersPercent": 1.644,
+      "note": "cocoa fraction of a 12%-of-flour cocoa dose (used only in the portion of batter that is swirled dark), split as in devils-food.json"
+    },
+    { "substanceId": "cocoa-powder", "role": "flavour", "bakersPercent": 10.356 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs and milk",
+      "description": "beat in eggs, then milk",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour and split",
+      "description": "fold in flour, leavening and salt; divide the batter and stir cocoa into one portion",
+      "durationMinutes": 3
+    },
+    {
+      "name": "swirl and bake",
+      "description": "spoon the two batters into the pan in alternating dollops and swirl lightly with a knife before baking",
+      "temperatureC": 175,
+      "durationMinutes": 42
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Marbling is a mixing technique (partial swirling, not full blending), so the ingredient list here is stated as the cake's overall average composition across both portions, exactly the way baker's percentage is meant to be read; cocoa is split by fat/solids fraction as in devils-food.json and marble-cake's own dose is deliberately lighter than a full chocolate cake's."
+}

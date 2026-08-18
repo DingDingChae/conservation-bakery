@@ -1,0 +1,23 @@
+{
+  "id": "maple-sap",
+  "name": "Sugar maple sap, as tapped",
+  "category": "crop-fraction",
+  "state": "liquid",
+  "elements": {
+    "C": 8000386,
+    "H": 110899540,
+    "O": 880100074,
+    "N": 0,
+    "P": 0,
+    "K": 300000,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 300000,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 400000
+  },
+  "source": "Proximate (per kg) water 980 g, sugar (sucrose) 19 g (~2%, typical sugar maple sap concentration), ash 1 g — real sap sugar content commonly ranges 1-3%.",
+  "notes": "Standard sucrose elemental ratio (sap sugar is predominantly sucrose, unlike honey's inverted sugar). Boiling down to maple-syrup.json (origin/maple.ts) removes water via the same real technique agri/harvest.ts's dryGrain uses, matching the widely cited ~40:1 sap-to-syrup ratio."
+}

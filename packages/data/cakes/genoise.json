@@ -1,0 +1,43 @@
+{
+  "id": "genoise",
+  "name": "Genoise",
+  "tradition": "French",
+  "origin": "Named for Genoa, Italy, but codified as a whipped whole-egg sponge in French patisserie training since the 19th century; the base of countless French layered cakes (fraisier, opera, Black Forest gateau).",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 166 },
+    {
+      "substanceId": "butter",
+      "role": "fat",
+      "bakersPercent": 20,
+      "note": "melted butter folded in last, off the whipped-egg foam's heat, per the classic genoise method"
+    }
+  ],
+  "process": [
+    {
+      "name": "whip eggs and sugar",
+      "description": "whip whole eggs with sugar over a bain-marie to about 40 C, then off the heat to full ribbon-stage volume",
+      "temperatureC": 40,
+      "durationMinutes": 10
+    },
+    {
+      "name": "fold in flour",
+      "description": "sift and fold flour into the whipped egg foam in stages, minimising deflation of the incorporated air",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in butter",
+      "description": "fold in cooled melted butter last, a small volume against a large foam",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in a buttered and floured round pan",
+      "temperatureC": 177,
+      "durationMinutes": 25
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Flour:sugar:egg:butter close to 100:100:166:20 is the classic genoise proportion set out in Wayne Gisslen, Professional Baking, ch. 'Cakes and Icings' (sponge/foam method): egg mass roughly 1.5-1.7x flour mass, with only a light butter enrichment folded in at the end, distinguishing it from a butter (creaming-method) cake. No chemical leavening: the whipped-egg foam is the only aeration mechanism, matching real practice."
+}

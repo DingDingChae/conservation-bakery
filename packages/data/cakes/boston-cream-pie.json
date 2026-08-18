@@ -1,0 +1,40 @@
+{
+  "id": "boston-cream-pie",
+  "name": "Boston cream pie",
+  "tradition": "American",
+  "origin": "Despite the name, a cake, not a pie — from Boston, Massachusetts, first served at the Parker House Hotel in the 1850s; a sponge cake split and filled with pastry cream, glazed with chocolate on top. Declared the official dessert of Massachusetts in 1996.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 120 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 60 },
+    { "substanceId": "cow-milk-whole", "role": "liquid", "bakersPercent": 15 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 4
+    },
+    {
+      "name": "add eggs and milk",
+      "description": "beat in eggs, then milk",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in a round pan, then split horizontally once cooled",
+      "temperatureC": 175,
+      "durationMinutes": 27
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "A standard American butter-sponge hybrid, between a genoise and a Victoria sponge in richness, chosen for a crumb sturdy enough to be split and filled. The pastry cream filling and chocolate glaze that make this a 'Boston cream pie' rather than a plain sponge are separately-prepared components applied after baking, out of scope for this batter's formulation."
+}

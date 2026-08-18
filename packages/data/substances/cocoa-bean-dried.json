@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-bean-dried",
+  "name": "Cocoa bean, fermented and dried (raw cocoa, ~7% moisture)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 544320000,
+    "H": 89433472,
+    "O": 301206528,
+    "N": 20480000,
+    "P": 6300000,
+    "K": 18900000,
+    "S": 3820000,
+    "Na": 420000,
+    "Cl": 0,
+    "Ca": 2100000,
+    "Mg": 5040000,
+    "Fe": 840000,
+    "Ash": 7140000
+  },
+  "source": "Fermented, sun-dried bean (the traded \"raw cocoa\" commodity): illustrative proximate (per kg) water 70 g (~7%), protein 128 g, fat 440 g, carbohydrate 320 g, ash 42 g — typical published cocoa-bean proximate ranges (cocoa science literature / USDA FoodData Central pattern for cacao).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Fermentation's real chemical changes (sugar consumption, acid formation) are folded into this file's dry-matter profile rather than modelled compound-by-compound; only the associated mass loss (pulp drainage, moisture, CO2) is tracked as an explicit balanced posting in origin/cocoa.ts — a stated simplification."
+}

@@ -1,0 +1,40 @@
+{
+  "id": "pineapple-upside-down-cake",
+  "name": "Pineapple upside-down cake",
+  "tradition": "American",
+  "origin": "Popularised in the United States in the 1920s after canned pineapple rings became widely available; a butter-and-brown-sugar caramel and pineapple rings are laid in the pan first, the batter poured over, and the whole cake inverted after baking.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 90 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "prepare pan topping",
+      "description": "melt butter and brown sugar in the pan, then arrange pineapple rings in the caramel",
+      "temperatureC": 120,
+      "durationMinutes": 5
+    },
+    {
+      "name": "cream butter and sugar for the batter",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 4
+    },
+    {
+      "name": "add eggs and fold in flour",
+      "description": "beat in eggs, then fold in flour, leavening and salt",
+      "durationMinutes": 3
+    },
+    {
+      "name": "bake and invert",
+      "description": "pour the batter over the pan topping and bake, then invert onto a plate while still warm",
+      "temperatureC": 175,
+      "durationMinutes": 38
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "The batter itself is a standard equal-weights butter cake (see victoria-sponge.json, pound-cake.json). The butter-brown-sugar caramel and pineapple rings are a separately-prepared component assembled in the pan before the batter is poured in — real and described in the process steps, but kept out of the ingredient list per catalog.ts's scope note, since baker's percentage describes the one mixed batter, not a second component that shares its pan and bake but is never actually mixed into it."
+}

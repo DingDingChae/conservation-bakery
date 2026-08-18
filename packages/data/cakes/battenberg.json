@@ -1,0 +1,40 @@
+{
+  "id": "battenberg",
+  "name": "Battenberg cake",
+  "tradition": "British",
+  "origin": "Created in 1884 for the marriage of Princess Victoria of Hesse to Prince Louis of Battenberg; the chequerboard pattern (traditionally pink and yellow) is made by baking two batters side by side, then reassembling and wrapping the whole in marzipan.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 100 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "almond-extract", "role": "flavour", "bakersPercent": 0.5, "note": "a light almond flavouring, echoing the marzipan wrap; no extract substance record exists yet (see catalog.ts module notes)" },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs",
+      "description": "beat in eggs",
+      "durationMinutes": 3
+    },
+    {
+      "name": "split and colour",
+      "description": "fold in flour, leavening and salt, then divide the batter and colour one half",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake the two colours side by side in a divided tin",
+      "temperatureC": 180,
+      "durationMinutes": 32
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "The two battenberg batters are simply a standard equal-weights Victoria-sponge-style formula (see victoria-sponge.json), split and coloured before baking; colouring is omitted as a negligible, non-physically-meaningful mass. The marzipan wrap and apricot-jam glue that define the finished cake are separately-prepared components applied after baking, out of scope for this batter's formulation."
+}

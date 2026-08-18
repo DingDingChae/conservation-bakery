@@ -1,0 +1,38 @@
+{
+  "id": "baumkuchen",
+  "name": "Baumkuchen",
+  "tradition": "German",
+  "origin": "German for 'tree cake': its concentric rings, visible when sliced, resemble tree growth rings, produced by painting many thin layers of batter onto a rotating spit under a radiant heater, each layer browning before the next is added.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 90 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 220, "note": "an unusually egg-rich formula even among sponge cakes, since many yolks and whites, whipped separately, are what let this batter set into dozens of thin layers rather than one thick crumb" },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 110 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 1 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter, sugar and yolks",
+      "description": "beat butter, sugar and egg yolks until pale",
+      "durationMinutes": 6
+    },
+    {
+      "name": "whip whites",
+      "description": "whip egg whites to a stable meringue and fold in"
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "build layers on the spit",
+      "description": "paint a thin layer of batter onto the rotating spit, brown under the radiant element, then repeat for 15-20 layers",
+      "temperatureC": 210,
+      "durationMinutes": 90
+    }
+  ],
+  "ovenFamily": "rotary",
+  "notes": "German baking-guild specifications for Baumkuchen call for an unusually high butter and egg content relative to flour, needed for a batter thin enough to paint on and set fast enough under radiant heat to build many distinct layers; figures here are representative of that pattern rather than one single published recipe. The rotating-spit build method is real and is why this is the one cake in the catalogue tagged 'rotary' rather than 'deck' or 'convection'."
+}

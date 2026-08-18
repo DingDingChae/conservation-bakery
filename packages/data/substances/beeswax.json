@@ -1,0 +1,23 @@
+{
+  "id": "beeswax",
+  "name": "Beeswax",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 796000000,
+    "H": 134400000,
+    "O": 64600000,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 5000000
+  },
+  "source": "Illustrative bulk elemental composition of beeswax (predominantly long-chain wax esters and hydrocarbons): C ~79.6%, H ~13.44%, O ~6.46%, trace pollen/propolis ash ~0.5% (wax chemistry literature).",
+  "notes": "Beeswax is markedly more reduced (far lower oxygen content) than a triglyceride fat or a carbohydrate, consistent with real wax-ester and long-chain-hydrocarbon chemistry rather than the generic \"fat\" conversion factor used elsewhere in this dataset. origin/honey.ts sources wax from honey consumed by the hive via splitByProfile against this profile and a respiration-product (\"spent\" CO2+H2O) stream, following the widely cited beekeeping figure that bees consume roughly six to eight kilograms of honey per kilogram of wax secreted."
+}

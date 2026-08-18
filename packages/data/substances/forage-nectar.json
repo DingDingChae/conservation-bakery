@@ -1,0 +1,23 @@
+{
+  "id": "forage-nectar",
+  "name": "Floral nectar, as foraged",
+  "category": "crop-fraction",
+  "state": "liquid",
+  "elements": {
+    "C": 82109221,
+    "H": 102158635,
+    "O": 810732144,
+    "N": 0,
+    "P": 0,
+    "K": 2500000,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 2500000
+  },
+  "source": "Dilute sugar solution collected by foraging bees: illustrative proximate (per kg) water 800 g, sugars 195 g (~20%, a representative mid-range floral nectar concentration; real nectar ranges roughly 5-70% sugar by species), ash 5 g.",
+  "notes": "Sugar is modelled with the sucrose elemental ratio (nectar sugar is a mixture of sucrose, glucose and fructose, all very close in C:H:O ratio; sucrose is used as the single representative, the same simplification sugar-beet.json makes for beet root). Honey.json's moisture reduction (origin/honey.ts) draws from this file via the same real water-removal technique agri/harvest.ts's dryGrain uses."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "orange-peel",
+  "name": "Orange peel (albedo and flavedo, after juicing)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 114070000,
+    "H": 96702856,
+    "O": 744807144,
+    "N": 3040000,
+    "P": 2870000,
+    "K": 13530000,
+    "S": 1200000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 11480000,
+    "Mg": 2460000,
+    "Fe": 820000,
+    "Ash": 9020000
+  },
+  "source": "Citrus peel remaining after juicing: illustrative fibre-rich (pectin-bearing) proximate (per kg) water 720 g, protein 19 g, fat 20 g (peel essential oils and waxes), carbohydrate 200 g, ash 41 g.",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Peel ash is weighted toward calcium, reflecting the calcium-pectate content of citrus albedo. This is the feedstock origin/citrus.ts extracts pectin.json from."
+}

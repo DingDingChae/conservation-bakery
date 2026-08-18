@@ -39,3 +39,9 @@ export {
 
 export type { RefineBatchParams, RefineBatchResult, RefineCompositions, RefineYields } from './refinery.js';
 export { REFINERY_MACHINE_DEFINITION, createRefinery, refineSugarBeet } from './refinery.js';
+
+// ---------------------------------------------------------------------------
+// equipment — mixing/forming/dosing, cooling/finishing/decoration, and
+// packaging/quality-control machine families. See `equipment/index.ts`.
+// ---------------------------------------------------------------------------
+export * from './equipment/index.js';

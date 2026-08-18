@@ -1,0 +1,37 @@
+{
+  "id": "esterhazy-torte",
+  "name": "Esterhazy torte",
+  "tradition": "Austro-Hungarian",
+  "origin": "Named for the Hungarian Esterházy noble family; layers of hazelnut (or walnut) meringue-dacquoise sandwiched with vanilla buttercream, the top traditionally finished with a spiderweb pattern in white and dark icing.",
+  "ingredients": [
+    { "substanceId": "ground-hazelnut", "role": "flour", "bakersPercent": 70, "note": "ground hazelnut, not wheat flour, is the real structural base of a dacquoise; no ground-hazelnut substance record exists yet (see catalog.ts module notes)" },
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 30, "note": "a small amount of wheat flour is a common stabiliser in this style of nut meringue" },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-white", "role": "egg", "bakersPercent": 150 }
+  ],
+  "process": [
+    {
+      "name": "whip whites",
+      "description": "whip egg whites to soft peaks",
+      "durationMinutes": 4
+    },
+    {
+      "name": "add sugar",
+      "description": "add sugar gradually to a stiff, glossy meringue",
+      "durationMinutes": 4
+    },
+    {
+      "name": "fold in nut flour",
+      "description": "fold in the ground hazelnut and wheat flour",
+      "durationMinutes": 2
+    },
+    {
+      "name": "spread thin discs and bake",
+      "description": "spread into thin discs and bake until dry and lightly coloured, without deep browning",
+      "temperatureC": 155,
+      "durationMinutes": 22
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "A dacquoise-family nut meringue: no fat at all in the baked layers themselves (real and correctly zero — the richness in the finished torte comes entirely from the buttercream between layers), close to the same egg-white-to-sugar ratio as a classic French meringue. The vanilla buttercream filling and the spiderweb icing finish are separately-prepared components, out of scope for this formulation."
+}

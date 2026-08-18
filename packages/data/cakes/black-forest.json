@@ -1,0 +1,45 @@
+{
+  "id": "black-forest",
+  "name": "Black Forest gateau",
+  "tradition": "German",
+  "origin": "Schwarzwälder Kirschtorte, named for the Black Forest region of southwestern Germany, known for its cherries and kirsch (cherry brandy); layers of chocolate sponge with whipped cream, cherries and kirsch.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 166 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 20 },
+    {
+      "substanceId": "cocoa-powder",
+      "role": "fat",
+      "bakersPercent": 2.055,
+      "note": "cocoa fraction of a 15%-of-flour cocoa dose, split as in devils-food.json"
+    },
+    { "substanceId": "cocoa-powder", "role": "flavour", "bakersPercent": 12.945 }
+  ],
+  "process": [
+    {
+      "name": "whip eggs and sugar",
+      "description": "whip whole eggs with sugar over a bain-marie to full ribbon-stage volume",
+      "temperatureC": 40,
+      "durationMinutes": 10
+    },
+    {
+      "name": "fold in flour and cocoa",
+      "description": "sift flour and cocoa together and fold into the whipped egg foam",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in butter",
+      "description": "fold in cooled melted butter last",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in round pans, then split into thin layers once cooled",
+      "temperatureC": 180,
+      "durationMinutes": 25
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "The genoise-method sponge here is chocolate-adjusted (cocoa split by fat/solids as in devils-food.json) but otherwise the same foam-cake proportion as genoise.json — this is the real relationship: a Black Forest gateau's sponge layers are a cocoa genoise. The whipped-cream filling, cherries and kirsch that define the finished cake are separately-prepared components layered on after baking, out of scope for this batter's formulation."
+}

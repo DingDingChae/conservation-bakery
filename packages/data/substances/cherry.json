@@ -1,0 +1,23 @@
+{
+  "id": "cherry",
+  "name": "Sweet cherry, whole (fresh, as harvested)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 78390000,
+    "H": 103029251,
+    "O": 812600749,
+    "N": 1760000,
+    "P": 600000,
+    "K": 1600000,
+    "S": 420000,
+    "Na": 80000,
+    "Cl": 0,
+    "Ca": 400000,
+    "Mg": 400000,
+    "Fe": 80000,
+    "Ash": 640000
+  },
+  "source": "Proximate (per kg) water 823 g, protein 11 g, fat 2 g, carbohydrate 160 g, ash 4 g (USDA FoodData Central pattern for raw sweet cherries).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json."
+}

@@ -1,0 +1,48 @@
+{
+  "id": "carrot-cake",
+  "name": "Carrot cake",
+  "tradition": "American/British",
+  "origin": "Grew from medieval European carrot puddings (sweetened with a genuinely scarce and precious sugar substitute) into a 20th-century oil-based spice cake; commonly finished with a cream-cheese frosting, itself popularised in the mid-20th-century United States.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 125 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "vegetable-oil", "role": "fat", "bakersPercent": 90, "note": "carrot cake is traditionally oil-based rather than butter-based, for a moist crumb that stays soft when chilled under cream-cheese frosting; see catalog.ts module notes" },
+    {
+      "substanceId": "carrot",
+      "role": "liquid",
+      "bakersPercent": 79.2,
+      "note": "water fraction of grated carrot at 90% of flour mass, split by USDA raw-carrot composition (~88% water); real recipes vary widely in carrot quantity, 90% of flour mass is a representative middle figure"
+    },
+    { "substanceId": "carrot", "role": "flavour", "bakersPercent": 10.8, "note": "non-water fraction (fibre, sugars, colour) of the same grated carrot" },
+    {
+      "substanceId": "walnut",
+      "role": "flavour",
+      "bakersPercent": 30,
+      "note": "chopped walnuts or pecans, a common but not universal addition; treated as flavour/bulk rather than split by composition since nuts contribute negligible free water"
+    },
+    { "substanceId": "cinnamon", "role": "flavour", "bakersPercent": 1 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1 }
+  ],
+  "process": [
+    {
+      "name": "whisk oil, sugar and eggs",
+      "description": "whisk oil, sugar and eggs to a smooth emulsion",
+      "durationMinutes": 4
+    },
+    {
+      "name": "fold in dry and carrot",
+      "description": "fold in flour, leavening, salt and spice, then the grated carrot and nuts",
+      "durationMinutes": 3
+    },
+    {
+      "name": "bake",
+      "description": "bake in round pans or a sheet tin",
+      "temperatureC": 175,
+      "durationMinutes": 38
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "Grated carrot's real water content (USDA FoodData Central, raw carrot: ~88 g water per 100 g) is split into its own liquid-role line so it is honestly credited toward the batter's hydration rather than treated as inert bulk, the same technique used for banana and pineapple elsewhere in this catalogue. Cream-cheese frosting is a separately-prepared component applied after baking, out of scope for this batter's formulation."
+}

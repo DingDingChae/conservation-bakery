@@ -1,0 +1,40 @@
+{
+  "id": "hummingbird-cake",
+  "name": "Hummingbird cake",
+  "tradition": "American (Southern)",
+  "origin": "A Southern United States spice cake with banana, pineapple and pecans, its recipe printed in Southern Living magazine in 1978 after being submitted by a reader in North Carolina; named, by tradition, for being as sweet as the nectar hummingbirds feed on.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 125 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 90 },
+    { "substanceId": "vegetable-oil", "role": "fat", "bakersPercent": 75, "note": "oil-based, like carrot cake; see catalog.ts module notes on the missing vegetable-oil substance record" },
+    { "substanceId": "banana", "role": "liquid", "bakersPercent": 45, "note": "water fraction of mashed banana at 60% of flour mass, split as in banana-cake.json" },
+    { "substanceId": "banana", "role": "flavour", "bakersPercent": 15 },
+    { "substanceId": "pineapple", "role": "liquid", "bakersPercent": 34.4, "note": "water fraction of crushed, drained pineapple at 40% of flour mass, split by USDA canned-pineapple composition (~86% water)" },
+    { "substanceId": "pineapple", "role": "flavour", "bakersPercent": 5.6 },
+    { "substanceId": "pecan", "role": "flavour", "bakersPercent": 40 },
+    { "substanceId": "cinnamon", "role": "flavour", "bakersPercent": 0.5 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 2.5 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1 }
+  ],
+  "process": [
+    {
+      "name": "whisk oil, sugar and eggs",
+      "description": "whisk oil, sugar and eggs together",
+      "durationMinutes": 4
+    },
+    {
+      "name": "fold in fruit and dry",
+      "description": "fold in flour, leavening, salt and spice, then the mashed banana, crushed pineapple and pecans",
+      "durationMinutes": 4
+    },
+    {
+      "name": "bake",
+      "description": "bake in round pans",
+      "temperatureC": 175,
+      "durationMinutes": 32
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "Both banana and pineapple are split by their own real water content (USDA FoodData Central: raw banana ~74.9%, canned pineapple ~86% water), the same technique used in carrot-cake.json and banana-cake.json, so their real hydration contribution is honestly credited rather than treated as inert bulk. The cream-cheese frosting traditionally finishing this cake is out of scope, as in carrot-cake.json."
+}

@@ -1,0 +1,40 @@
+{
+  "id": "bundt-cake",
+  "name": "Bundt cake (sour cream)",
+  "tradition": "American",
+  "origin": "Named for the fluted ring pan (Bundt is a registered trademark of Nordic Ware, from 1950), not a distinct batter tradition; the classic home-baking filling for that pan is a rich, close-crumbed sour-cream pound-cake-style batter.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 90 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 90 },
+    { "substanceId": "cream", "role": "liquid", "bakersPercent": 25, "note": "sour cream, modelled with the registry's cream substance as the nearest real analogue — see the same note in coffee-crumb-cake.json" },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 6
+    },
+    {
+      "name": "add eggs and sour cream",
+      "description": "beat in eggs, then sour cream",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in a well-greased fluted ring pan",
+      "temperatureC": 175,
+      "durationMinutes": 55
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "A dense, sour-cream-enriched pound-cake relative, close in proportion to pound-cake.json and to coffee-crumb-cake.json's own sour-cream batter, chosen for a batter rich and structurally sound enough to hold the fine detail of a fluted mould without tearing on release."
+}

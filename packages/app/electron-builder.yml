@@ -1,0 +1,61 @@
+# Packaging for Conservation Bakery.
+#
+# The installers this produces are UNSIGNED, deliberately and permanently. Windows will
+# show an unknown-publisher warning. That is stated plainly in the README, in the release
+# notes, and here — it is never worked around, and no signature-authenticity claim is
+# made anywhere in the product or its documentation.
+
+appId: uk.conservationbakery.app
+productName: Conservation Bakery
+copyright: Apache-2.0
+
+directories:
+  output: ../../release
+  buildResources: build
+
+# The renderer loads token and component stylesheets from @conservation-bakery/design at
+# runtime by relative path, so those files must be inside the package, not just the
+# built JavaScript.
+files:
+  - dist/**/*
+  - package.json
+
+extraResources:
+  - from: ../design/tokens
+    to: design/tokens
+  - from: ../design/components
+    to: design/components
+
+asar: true
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: portable
+      arch: [x64]
+  artifactName: ${productName}-${version}-${arch}-unsigned.${ext}
+  # Signing is off, and every signer control is explicitly cleared rather than left to a
+  # default that might pick up a certificate from the machine it happens to build on.
+  signAndEditExecutable: false
+  signtoolOptions:
+    signingHashAlgorithms: []
+    certificateFile: null
+    certificateSubjectName: null
+    certificateSha1: null
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Conservation Bakery
+
+portable:
+  artifactName: ${productName}-${version}-${arch}-portable-unsigned.${ext}
+
+# Nothing in this product phones home, and nothing auto-updates. There is no update feed
+# because there is no signature to verify one against, and shipping an unverifiable
+# auto-update channel would be worse than shipping none.
+publish: null

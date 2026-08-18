@@ -1,0 +1,23 @@
+{
+  "id": "caramel-colour",
+  "name": "Caramel colour, Class I (from heated sucrose)",
+  "category": "sugar",
+  "state": "liquid",
+  "elements": {
+    "C": 400019282,
+    "H": 64903754,
+    "O": 515076964,
+    "N": 0,
+    "P": 0,
+    "K": 6000000,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 14000000
+  },
+  "source": "Illustrative Class I (plain) caramel colour: proximate (per kg) water 30 g, sugar-derived solids 950 g, ash 20 g.",
+  "notes": "Class I caramel colour is made by heating sucrose alone (no ammonium or sulfite compounds), which drives off water and some volatile organics via real dehydration and polymerisation (caramelisation) reactions. This file approximates the resulting dark solids with sucrose's own elemental ratio rather than modelling the polymerised, more-dehydrated product's true (slightly more carbon-rich) ratio — a stated simplification; origin/colour.ts models the associated mass loss explicitly as a real water-loss posting from sucrose.json."
+}

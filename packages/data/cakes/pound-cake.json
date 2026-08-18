@@ -1,0 +1,38 @@
+{
+  "id": "pound-cake",
+  "name": "Pound cake",
+  "tradition": "British/American",
+  "origin": "Named for its founding ratio, documented in English recipe collections from the early 18th century onward: a pound each of flour, sugar, butter and eggs, easy to remember before written recipes with precise weights were common.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 100 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat softened butter and sugar until pale and fluffy, mechanically incorporating the air the batter has no other way to gain",
+      "durationMinutes": 6
+    },
+    {
+      "name": "add eggs",
+      "description": "beat in eggs one at a time, fully emulsifying each before the next",
+      "durationMinutes": 4
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in the flour and salt in stages, mixing only enough to combine",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in a buttered and floured loaf pan",
+      "temperatureC": 163,
+      "durationMinutes": 65
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "The literal, definitional 1:1:1:1 ratio by weight (Wayne Gisslen, Professional Baking, ch. 'Cakes and Icings', and effectively every English-language baking reference since the recipe's naming). structureIndex evaluates to exactly 0 for this ratio — see formulation.spec.ts's own POUND_CAKE fixture for the same figure — matching pound cake's real reputation as a dense, moist cake sitting right at the edge of setting, no chemical leavening required or traditionally used."
+}

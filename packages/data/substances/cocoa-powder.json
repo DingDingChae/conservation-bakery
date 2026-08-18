@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-powder",
+  "name": "Cocoa powder (defatted press cake, ground)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 465076000,
+    "H": 69415202,
+    "O": 372228798,
+    "N": 31360000,
+    "P": 8700000,
+    "K": 26100000,
+    "S": 5660000,
+    "Na": 580000,
+    "Cl": 0,
+    "Ca": 2900000,
+    "Mg": 6960000,
+    "Fe": 1160000,
+    "Ash": 9860000
+  },
+  "source": "Defatted cocoa press cake, ground: illustrative proximate (per kg) water 30 g, protein 196 g, fat 137 g (residual press fat, typical of natural/unsweetened cocoa powder), carbohydrate 579 g, ash 58 g (USDA FoodData Central pattern for unsweetened cocoa powder).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Grinding the press cake into powder is a pure phase change with no further mass loss, so this one file covers both."
+}

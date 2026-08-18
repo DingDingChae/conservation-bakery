@@ -1,0 +1,23 @@
+{
+  "id": "monocalcium-phosphate",
+  "name": "Monocalcium phosphate (Ca(H2PO4)2), MCP",
+  "category": "leavening-mineral",
+  "state": "solid",
+  "elements": {
+    "C": 0,
+    "H": 17227088,
+    "O": 546857509,
+    "N": 0,
+    "P": 264678488,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 171236915,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "Ca(H2PO4)2 molar mass 234.05 g/mol from IUPAC standard atomic weights (Ca 40.078, H 1.008 x4, P 30.974 x2, O 15.999 x8).",
+  "notes": "Food-grade MCP (a common fast-acting baking-powder acid) treated as the pure compound. origin/minerals.ts synthesises it by real molar-mass stoichiometry from the same seeded phosphate-mineral-region reservoir as SAPP."
+}

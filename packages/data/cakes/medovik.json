@@ -1,0 +1,48 @@
+{
+  "id": "medovik",
+  "name": "Medovik",
+  "tradition": "Russian",
+  "origin": "A Russian honey cake, said to have been created for the wife of Tsar Alexander I, who disliked the smell of honey until it was disguised in this many-layered cake; thin honey-butter layers stacked with a sour-cream filling.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 40 },
+    {
+      "substanceId": "honey",
+      "role": "sugar",
+      "bakersPercent": 49.8,
+      "note": "sugar fraction of honey at 60% of flour mass, split by USDA honey composition as in castella.json"
+    },
+    { "substanceId": "honey", "role": "liquid", "bakersPercent": 10.2 },
+    { "substanceId": "cow-milk-whole", "role": "liquid", "bakersPercent": 5 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 40 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 60 },
+    {
+      "substanceId": "sodium-bicarbonate",
+      "role": "leavening",
+      "bakersPercent": 2,
+      "note": "the classic technique whisks bicarbonate into the hot honey-butter mixture, where it reacts with honey's own mild acidity and browns further from the heat, rather than reacting at proof/bake temperature as in a Western butter cake"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.3 }
+  ],
+  "process": [
+    {
+      "name": "melt honey and butter",
+      "description": "melt honey, sugar and butter together, then whisk in the bicarbonate off the heat",
+      "temperatureC": 90,
+      "durationMinutes": 6
+    },
+    {
+      "name": "mix in eggs and flour",
+      "description": "cool slightly, then whisk in eggs and fold in flour",
+      "durationMinutes": 4
+    },
+    {
+      "name": "roll and bake thin layers",
+      "description": "roll into several thin discs and bake each separately",
+      "temperatureC": 190,
+      "durationMinutes": 6
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "Honey's real composition (USDA FoodData Central, as cited in castella.json) is split into its own sugar and liquid lines. Effective hydration is kept comfortably above the 0.6x-sugar dissolution floor by including a small milk addition alongside honey's own water, a modest, explicitly-noted adjustment for margin rather than an attempt to hit an exact published figure. The sour-cream filling between layers is a separately-prepared component, out of scope for this batter's formulation."
+}

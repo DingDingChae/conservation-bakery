@@ -1,0 +1,53 @@
+{
+  "id": "guinness-chocolate-cake",
+  "name": "Guinness chocolate cake",
+  "tradition": "Irish",
+  "origin": "A moist Irish chocolate cake using stout beer in place of some of the buttermilk a devil's-food-style batter would otherwise use; a modern classic rather than a historic recipe, popularised through Irish and British home baking in the late 20th century.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 125 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 70 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 60 },
+    {
+      "substanceId": "cocoa-powder",
+      "role": "fat",
+      "bakersPercent": 3.425,
+      "note": "cocoa fraction of a 25%-of-flour cocoa dose, split as in devils-food.json"
+    },
+    { "substanceId": "cocoa-powder", "role": "flavour", "bakersPercent": 21.575 },
+    {
+      "substanceId": "stout-beer",
+      "role": "liquid",
+      "bakersPercent": 90,
+      "note": "stout is predominantly water (commercial stout is typically ~92% water by mass, the balance mostly dissolved carbohydrate and a few percent alcohol); no stout-beer substance record exists yet (see catalog.ts module notes), and the small alcohol and dissolved-solids fraction is approximated here as water for the purpose of the hydration figures, an explicitly conservative simplification"
+    },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1 }
+  ],
+  "process": [
+    {
+      "name": "warm stout with butter and cocoa",
+      "description": "warm stout with butter and cocoa powder until smooth",
+      "temperatureC": 70,
+      "durationMinutes": 5
+    },
+    {
+      "name": "whisk in sugar and eggs",
+      "description": "cool slightly, then whisk in sugar and eggs",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in a large tin, often a springform or bundt-style pan",
+      "temperatureC": 165,
+      "durationMinutes": 50
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Structurally a high-ratio chocolate cake in the same family as devils-food.json, with stout replacing buttermilk as the main liquid. Cream-cheese icing traditionally finishing this cake is a separately-prepared component, out of scope for this batter's formulation."
+}

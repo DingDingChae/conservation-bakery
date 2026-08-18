@@ -1,0 +1,23 @@
+{
+  "id": "sodium-acid-pyrophosphate",
+  "name": "Sodium acid pyrophosphate (Na2H2P2O7), SAPP",
+  "category": "leavening-mineral",
+  "state": "solid",
+  "elements": {
+    "C": 0,
+    "H": 9083659,
+    "O": 504616175,
+    "N": 0,
+    "P": 279124256,
+    "K": 0,
+    "S": 0,
+    "Na": 207175910,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 0
+  },
+  "source": "Na2H2P2O7 molar mass 221.937 g/mol from IUPAC standard atomic weights (Na 22.990 x2, H 1.008 x2, P 30.974 x2, O 15.999 x7).",
+  "notes": "Food-grade SAPP (a common slow-acting baking-powder acid) treated as the pure compound. origin/minerals.ts synthesises it by real molar-mass stoichiometry from a seeded phosphate-mineral-region reservoir (source of P) and a seeded soda-mineral-region reservoir (source of Na)."
+}

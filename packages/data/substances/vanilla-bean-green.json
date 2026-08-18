@@ -1,0 +1,23 @@
+{
+  "id": "vanilla-bean-green",
+  "name": "Vanilla bean, green (fresh, unfermented pod)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 87960000,
+    "H": 102005396,
+    "O": 786434604,
+    "N": 3200000,
+    "P": 3000000,
+    "K": 8000000,
+    "S": 1400000,
+    "Na": 400000,
+    "Cl": 0,
+    "Ca": 2000000,
+    "Mg": 2000000,
+    "Fe": 400000,
+    "Ash": 3200000
+  },
+  "source": "Fresh green Vanilla planifolia pod, before curing: illustrative high-moisture proximate (per kg) water 800 g, protein 20 g, fat 20 g, carbohydrate 140 g, ash 20 g — green vanilla is essentially odourless and very wet (curing chemistry literature).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Curing (origin/vanilla.ts: blanch, sweat, sun-dry, condition) is modelled as a real staged moisture-content reduction from this file down to vanilla-bean-cured's target, via the same technique agri/harvest.ts's dryGrain uses."
+}

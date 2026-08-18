@@ -1,0 +1,48 @@
+{
+  "id": "chiffon",
+  "name": "Chiffon cake",
+  "tradition": "American",
+  "origin": "Invented by Harry Baker, a Los Angeles insurance salesman, in 1927, and sold to General Mills in 1947; the first American cake to use vegetable oil rather than a solid fat, giving a crumb that stays moist after cooling.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 110 },
+    {
+      "substanceId": "vegetable-oil",
+      "role": "fat",
+      "bakersPercent": 40,
+      "note": "chiffon's defining ingredient is a liquid oil, not a solid fat; packages/data/substances has no vegetable-oil record yet (see catalog.ts module notes), so this line cannot yet move real mass through a Ledger"
+    },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 150 },
+    { "substanceId": "water-liquid", "role": "liquid", "bakersPercent": 40 },
+    {
+      "substanceId": "sodium-bicarbonate",
+      "role": "leavening",
+      "bakersPercent": 4,
+      "note": "real chiffon uses baking powder (bicarbonate plus its own dry acid partner); modelled as bicarbonate alone, the same representative simplification leavening.ts already uses for chemical leavening generally"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1.5 }
+  ],
+  "process": [
+    {
+      "name": "combine wet ingredients",
+      "description": "whisk oil, egg yolks, water and half the sugar with the sifted flour, baking powder and salt into a smooth batter"
+    },
+    {
+      "name": "whip egg whites",
+      "description": "whip egg whites to soft peaks, adding the remaining sugar gradually to a stable meringue"
+    },
+    {
+      "name": "fold together",
+      "description": "fold the meringue into the batter in stages",
+      "durationMinutes": 3
+    },
+    {
+      "name": "bake",
+      "description": "bake in an ungreased tube pan so the batter can climb the sides, then cool inverted",
+      "temperatureC": 163,
+      "durationMinutes": 60
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Ratios follow the standard chiffon proportion (Gisslen, Professional Baking): oil around 35-45% of flour, egg around 150% (yolks in the batter, whipped whites folded in separately), water around 40-60%, sugar slightly above flour. Effective hydration (~154% of flour, crediting egg's own water) sits inside the engine's real cake-batter band and below the ~180% ceiling documented in formulation.ts, consistent with chiffon's real reputation as one of the wettest standard American layer-cake batters."
+}

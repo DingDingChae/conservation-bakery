@@ -1,0 +1,43 @@
+{
+  "id": "simnel-cake",
+  "name": "Simnel cake",
+  "tradition": "British",
+  "origin": "A British fruit cake traditionally eaten at Easter or on Mothering Sunday, with a layer of marzipan baked into its middle and eleven marzipan balls on top, said to represent the twelve apostles minus Judas.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 95 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 110 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 100 },
+    { "substanceId": "dried-mixed-fruit", "role": "flavour", "bakersPercent": 300 },
+    { "substanceId": "candied-peel", "role": "flavour", "bakersPercent": 25 },
+    { "substanceId": "mixed-spice", "role": "flavour", "bakersPercent": 1 },
+    { "substanceId": "brandy", "role": "liquid", "bakersPercent": 5 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 1.5 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs and brandy",
+      "description": "beat in eggs and brandy",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour, spice and fruit",
+      "description": "fold in flour, leavening, salt and mixed spice, then the dried fruit and candied peel",
+      "durationMinutes": 4
+    },
+    {
+      "name": "layer with marzipan and bake",
+      "description": "pour half the batter into the tin, lay a disc of marzipan on top, then add the rest of the batter before baking low and slow",
+      "temperatureC": 150,
+      "durationMinutes": 130
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "A rich fruit cake in the same family as dundee-cake.json and christmas-cake.json, slightly less fruit-dense than the Christmas formula. The marzipan disc baked into the middle, and the marzipan balls and glaze applied on top after baking, are separately-prepared components: even though the internal disc is baked alongside the batter, it is never mixed into it, so per catalog.ts's scope note it is described in the process step rather than folded into the ingredient list."
+}

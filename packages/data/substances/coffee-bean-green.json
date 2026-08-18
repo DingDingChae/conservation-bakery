@@ -1,0 +1,23 @@
+{
+  "id": "coffee-bean-green",
+  "name": "Coffee bean, green (washed and dried, ~11% moisture)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 431020000,
+    "H": 73260208,
+    "O": 434119792,
+    "N": 19200000,
+    "P": 6000000,
+    "K": 16000000,
+    "S": 4400000,
+    "Na": 800000,
+    "Cl": 0,
+    "Ca": 4000000,
+    "Mg": 4000000,
+    "Fe": 800000,
+    "Ash": 6400000
+  },
+  "source": "Washed, dried green coffee bean, the traded commodity: illustrative proximate (per kg) water 105 g (~10.5%), protein 120 g, fat 130 g (green Arabica-type lipid content), carbohydrate 605 g, ash 40 g — typical published green-coffee proximate ranges.",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. This file represents the bean after depulping, fermentation/washing (mucilage removal) and drying — each a real, balanced moisture-and-mass-loss step in origin/coffee.ts."
+}

@@ -1,0 +1,45 @@
+{
+  "id": "kouign-amann",
+  "name": "Kouign-amann",
+  "tradition": "French (Breton)",
+  "origin": "Breton for 'butter cake' (kouign, cake; amann, butter), created in Douarnenez, Brittany, in the 1860s; a laminated yeasted dough folded with layers of butter and sugar, the sugar caramelising in the oven's heat.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 55, "note": "laminated in cold, in folded layers, rather than creamed in — the technique, not the total mass, is what makes kouign-amann's crumb, so this bakersPercent is the whole dough's real total butter" },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 55, "note": "folded into the lamination and coating the exterior; caramelises under the oven's heat into the cake's signature crackling crust" },
+    { "substanceId": "water-liquid", "role": "liquid", "bakersPercent": 55 },
+    {
+      "substanceId": "yeast",
+      "role": "leavening",
+      "bakersPercent": 2,
+      "note": "see stollen.json for the same caveat: this figure is a nominal yeast-inoculation proxy, not a literal chemical leavening dose"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 2 }
+  ],
+  "process": [
+    {
+      "name": "mix base dough",
+      "description": "mix flour, water, yeast and salt into a smooth dough",
+      "durationMinutes": 10
+    },
+    {
+      "name": "laminate",
+      "description": "fold in a butter block, then repeatedly fold and roll with sugar between the folds",
+      "durationMinutes": 40
+    },
+    {
+      "name": "proof",
+      "description": "proof until visibly puffed",
+      "temperatureC": 24,
+      "durationMinutes": 60
+    },
+    {
+      "name": "bake",
+      "description": "bake hot, so the folded sugar layers caramelise into a crackling crust",
+      "temperatureC": 220,
+      "durationMinutes": 28
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Real kouign-amann has no egg at all (the crumb sets through gluten development and lamination, not egg protein), a genuine and correctly-modelled zero here. Butter and sugar each near 55% of flour mass, folded in through lamination rather than creamed, is representative of published Breton bakery formulas."
+}

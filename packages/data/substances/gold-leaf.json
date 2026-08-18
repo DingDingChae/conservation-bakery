@@ -1,0 +1,23 @@
+{
+  "id": "gold-leaf",
+  "name": "Gold leaf, edible (23-24 karat)",
+  "category": "mineral",
+  "state": "solid",
+  "elements": {
+    "C": 0,
+    "H": 0,
+    "O": 0,
+    "N": 0,
+    "P": 0,
+    "K": 0,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 1000000000
+  },
+  "source": "Edible gold leaf is 958-999 fine gold (23-24 karat), with the balance a trace silver/copper alloy.",
+  "notes": "Gold (Au) is not among this simulation's tracked elements (see core/commodity.ts) — bakery-relevant conserved quantities are C, H, O, N, P, K, S, Na, Cl, Ca, Mg, Fe, plus the Ash catch-all for everything else. This file is therefore entirely Ash by construction: honest about what is and is not tracked, per CONTRACT.md, rather than inventing a fictitious gold commodity or silently dropping the leaf's mass."
+}

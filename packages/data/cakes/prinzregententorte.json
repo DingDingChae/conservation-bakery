@@ -1,0 +1,37 @@
+{
+  "id": "prinzregententorte",
+  "name": "Prinzregententorte",
+  "tradition": "German",
+  "origin": "Named for Prince Regent Luitpold of Bavaria (regent from 1886 to 1912); traditionally built from exactly as many thin sponge layers as Bavaria had administrative districts at the time, sandwiched with chocolate buttercream and coated in a chocolate glaze.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 150 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 40 }
+  ],
+  "process": [
+    {
+      "name": "whip eggs and sugar",
+      "description": "whip whole eggs and sugar to full ribbon-stage volume",
+      "durationMinutes": 8
+    },
+    {
+      "name": "fold in flour and butter",
+      "description": "fold in sifted flour, then melted butter",
+      "durationMinutes": 3
+    },
+    {
+      "name": "spread thin discs",
+      "description": "divide and spread thinly across several pans for many separate thin layers",
+      "durationMinutes": 3
+    },
+    {
+      "name": "bake",
+      "description": "bake each thin layer briefly",
+      "temperatureC": 200,
+      "durationMinutes": 7
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "A genoise-family sponge (see genoise.json, opera.json), baked as many thin sheets rather than one thick layer, matching the real construction of this cake. The chocolate buttercream between layers and the chocolate glaze coating the outside are separately-prepared components, out of scope for this formulation."
+}

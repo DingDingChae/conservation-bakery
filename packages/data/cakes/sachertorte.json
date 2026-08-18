@@ -1,0 +1,49 @@
+{
+  "id": "sachertorte",
+  "name": "Sachertorte",
+  "tradition": "Austrian",
+  "origin": "Created in 1832 by Franz Sacher, a 16-year-old apprentice cook, for Prince Wenzel von Metternich in Vienna; the subject of a decades-long legal dispute between the Hotel Sacher and Demel's bakery over the right to call their version 'Original'.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 180 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 90 },
+    {
+      "substanceId": "cocoa-butter",
+      "role": "fat",
+      "bakersPercent": 45.8,
+      "note": "melted dark chocolate at 100% of flour mass, reconstituted from two real registry substances rather than a single forward-referenced 'dark chocolate' id: cocoa butter (packages/data/substances/cocoa-butter.json, ~99.5% fat) plus cocoa powder (below) recombine, at roughly 46:54 by mass, to unsweetened baking chocolate's real ~53% overall fat content — the same pressing relationship cocoa-butter.json's own notes describe between the two files"
+    },
+    {
+      "substanceId": "cocoa-powder",
+      "role": "fat",
+      "bakersPercent": 7.43,
+      "note": "residual fat fraction of the cocoa-powder share (54.2% of the 100%-of-flour chocolate charge) of the same reconstituted chocolate"
+    },
+    { "substanceId": "cocoa-powder", "role": "flavour", "bakersPercent": 46.77 }
+  ],
+  "process": [
+    {
+      "name": "cream butter, sugar and yolks",
+      "description": "beat butter with half the sugar and the egg yolks until pale, then beat in the melted chocolate",
+      "durationMinutes": 5
+    },
+    {
+      "name": "whip whites",
+      "description": "whip the egg whites with the remaining sugar to a stable meringue"
+    },
+    {
+      "name": "fold together",
+      "description": "fold the meringue and the sifted flour alternately into the chocolate-butter base",
+      "durationMinutes": 4
+    },
+    {
+      "name": "bake",
+      "description": "bake in a springform pan",
+      "temperatureC": 175,
+      "durationMinutes": 48
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Egg mass around 1.8x flour, with dark chocolate near 1x flour mass, is representative of the Hotel Sacher's own published proportions for this cake. Rather than a single 'dark chocolate' line with no registry backing, the chocolate is reconstituted from cocoa-butter and cocoa-powder, both real substances in packages/data/substances, in the ratio that reproduces baking chocolate's real ~53% overall fat content — fully ledger-ready, unlike a forward-referenced substance id. The apricot-jam glaze under the chocolate icing (Sachertorte's other defining feature) is a separately-prepared finishing component applied after baking, out of scope for this batter's formulation."
+}

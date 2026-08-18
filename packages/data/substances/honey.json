@@ -1,0 +1,23 @@
+{
+  "id": "honey",
+  "name": "Honey, raw",
+  "category": "crop-fraction",
+  "state": "liquid",
+  "elements": {
+    "C": 330946506,
+    "H": 74665189,
+    "O": 592208305,
+    "N": 160000,
+    "P": 300000,
+    "K": 600000,
+    "S": 220000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 300000,
+    "Mg": 200000,
+    "Fe": 100000,
+    "Ash": 300000
+  },
+  "source": "Proximate (per kg) water 171 g (~17%), sugars 826 g, protein/enzyme content ~1 g, ash 2 g (USDA FoodData Central pattern for raw honey).",
+  "notes": "Honey's sugar is predominantly invert sugar (glucose and fructose from nectar sucrose, inverted by the bees' own invertase), so it is modelled with the glucose/fructose (C6H12O6) elemental ratio rather than sucrose's — a real, documented distinction from forage-nectar's own sucrose-ratio sugar."
+}

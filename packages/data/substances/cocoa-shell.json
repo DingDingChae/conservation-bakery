@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-shell",
+  "name": "Cocoa shell (winnowed off, husk of the bean)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 422710000,
+    "H": 62387202,
+    "O": 407002798,
+    "N": 24800000,
+    "P": 8000000,
+    "K": 44000000,
+    "S": 3100000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 4000000,
+    "Mg": 8000000,
+    "Fe": 0,
+    "Ash": 16000000
+  },
+  "source": "Winnowed shell (the bean's thin testa): illustrative fibre-rich, low-fat proximate (per kg) water 30 g, protein 155 g, fat 45 g, carbohydrate/fibre 690 g, ash 80 g — cocoa shell is a well-documented low-fat, high-fibre, potash-rich by-product (used as mulch/fertiliser or a minor fibre ingredient).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Ash is weighted toward potassium for the same reason as cocoa-pod-husk."
+}

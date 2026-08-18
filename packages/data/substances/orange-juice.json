@@ -1,0 +1,23 @@
+{
+  "id": "orange-juice",
+  "name": "Orange juice, fresh",
+  "category": "crop-fraction",
+  "state": "liquid",
+  "elements": {
+    "C": 51406000,
+    "H": 105991655,
+    "O": 837342345,
+    "N": 1120000,
+    "P": 360000,
+    "K": 1520000,
+    "S": 260000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 560000,
+    "Mg": 280000,
+    "Fe": 80000,
+    "Ash": 1080000
+  },
+  "source": "Fresh-pressed juice: proximate (per kg) water 883 g, protein 7 g, fat 2 g, carbohydrate 104 g, ash 4 g (USDA FoodData Central pattern for raw orange juice).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json."
+}

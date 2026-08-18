@@ -1,0 +1,23 @@
+{
+  "id": "almond-kernel",
+  "name": "Almond kernel (shelled, raw)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 587504000,
+    "H": 93035897,
+    "O": 252300103,
+    "N": 33920000,
+    "P": 7250000,
+    "K": 8700000,
+    "S": 4820000,
+    "Na": 290000,
+    "Cl": 0,
+    "Ca": 4350000,
+    "Mg": 5800000,
+    "Fe": 870000,
+    "Ash": 1160000
+  },
+  "source": "Shelled raw almond: proximate (per kg) water 44 g, protein 212 g, fat 499 g, carbohydrate 216 g, ash 29 g (USDA FoodData Central pattern for raw almonds).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Ash is weighted toward phosphorus, magnesium and calcium, reflecting almonds' real, well-documented mineral density."
+}

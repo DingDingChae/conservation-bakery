@@ -1,0 +1,23 @@
+{
+  "id": "coffee-cherry",
+  "name": "Coffee cherry, whole (ripe, as harvested)",
+  "category": "crop",
+  "state": "solid",
+  "elements": {
+    "C": 146540000,
+    "H": 93359384,
+    "O": 714700616,
+    "N": 4800000,
+    "P": 6000000,
+    "K": 16000000,
+    "S": 2600000,
+    "Na": 800000,
+    "Cl": 0,
+    "Ca": 4000000,
+    "Mg": 4000000,
+    "Fe": 800000,
+    "Ash": 6400000
+  },
+  "source": "Whole ripe Coffea cherry (skin + mucilage/pulp + parchment + bean): illustrative high-moisture proximate (per kg) water 650 g, protein 30 g, fat 20 g, carbohydrate 260 g, ash 40 g.",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. The cherry's bean fraction (roughly a fifth of fresh cherry mass — coffee-processing literature) is separated from skin/pulp/mucilage by a fixed real mass ratio (origin/coffee.ts), then washed and dried to coffee-bean-green's target moisture."
+}

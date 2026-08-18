@@ -1,0 +1,39 @@
+{
+  "id": "tres-leches",
+  "name": "Tres leches cake",
+  "tradition": "Mexican/Latin American",
+  "origin": "Pastel de tres leches, popular across Mexico and Central America; a light sponge baked first, then soaked after baking in a mixture of evaporated milk, sweetened condensed milk and cream, the three milks the cake is named for.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 150 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 20 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "whip eggs and sugar",
+      "description": "whip whole eggs with sugar to a light, pale foam",
+      "durationMinutes": 8
+    },
+    {
+      "name": "fold in flour and butter",
+      "description": "fold in sifted flour and leavening, then a small amount of melted butter",
+      "durationMinutes": 3
+    },
+    {
+      "name": "bake",
+      "description": "bake in a sheet pan",
+      "temperatureC": 175,
+      "durationMinutes": 28
+    },
+    {
+      "name": "soak",
+      "description": "once cooled, pierce and soak the sponge in a mixture of evaporated milk, sweetened condensed milk and cream until fully absorbed",
+      "durationMinutes": 120
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "The base is a standard light egg-foam sponge, close to genoise.json's own proportion, chosen for its real ability to absorb a large volume of milk without collapsing. The three-milk soak that gives the cake its name and character is a real, post-bake process step (using cow-milk-whole and cream from the substance registry, plus a sweetened condensed milk this catalogue's registry does not yet carry), deliberately kept out of the baker's-percentage ingredient list: that list describes one mixed batter, and a soak applied to an already-set, already-baked crumb is a different physical process (diffusion into a porous solid, not a batter setting), not a second batter ingredient."
+}

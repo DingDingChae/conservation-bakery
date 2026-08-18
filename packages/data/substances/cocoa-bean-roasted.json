@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-bean-roasted",
+  "name": "Cocoa bean, roasted (~2% moisture)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 574330000,
+    "H": 88278135,
+    "O": 273091865,
+    "N": 21600000,
+    "P": 6000000,
+    "K": 18000000,
+    "S": 3900000,
+    "Na": 400000,
+    "Cl": 0,
+    "Ca": 2000000,
+    "Mg": 4800000,
+    "Fe": 800000,
+    "Ash": 6800000
+  },
+  "source": "Roasted whole bean: illustrative proximate (per kg) water 20 g (~2%), protein 135 g, fat 460 g, carbohydrate 345 g, ash 40 g — roasting drives off most of the bean's remaining moisture (cocoa science literature).",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. Roasting is modelled in origin/cocoa.ts as a further real moisture-loss step from cocoa-bean-dried's ~7% down to this file's ~2%, via the same water-removal technique agri/harvest.ts's dryGrain uses for grain drying."
+}

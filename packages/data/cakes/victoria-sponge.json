@@ -1,0 +1,44 @@
+{
+  "id": "victoria-sponge",
+  "name": "Victoria sponge",
+  "tradition": "British",
+  "origin": "Named for Queen Victoria, who was said to enjoy a slice with her afternoon tea; the standard British 'equal weights' formula, traditionally weighed as however many eggs are used, then matching weights of flour, sugar and butter.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 100 },
+    {
+      "substanceId": "sodium-bicarbonate",
+      "role": "leavening",
+      "bakersPercent": 3,
+      "note": "real recipes use self-raising flour; modelled here as its built-in raising agent, separated out into its own leavening-role line"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat softened butter and sugar until pale and fluffy",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs",
+      "description": "beat in eggs one at a time",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in the self-raising flour (modelled as flour plus separate leavening) and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "divide between two sandwich tins and bake",
+      "temperatureC": 180,
+      "durationMinutes": 22
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "The 'four-four-four-four' equal-weights formula documented across standard British home-baking references (e.g. Mary Berry, Baking Bible; BBC Good Food's standard Victoria sponge ratio). The jam-and-cream filling that traditionally sandwiches the two layers is a separately-prepared component applied after baking (see catalog.ts's scope note) and is not part of this batter's formulation."
+}

@@ -1,0 +1,48 @@
+{
+  "id": "christmas-cake",
+  "name": "Christmas cake",
+  "tradition": "British",
+  "origin": "The British rich fruit cake traditionally made weeks or months ahead of Christmas and fed with spirits as it matures, then finished with marzipan and royal icing; a descendant of medieval plum porridge via the 16th-century plum cake.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 130 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 110 },
+    {
+      "substanceId": "dried-mixed-fruit",
+      "role": "flavour",
+      "bakersPercent": 450,
+      "note": "an even higher fruit load than Dundee cake, real for the richest British Christmas cake formulas; see dundee-cake.json for the same conservative treatment of dried fruit's own moisture"
+    },
+    { "substanceId": "candied-peel", "role": "flavour", "bakersPercent": 30 },
+    { "substanceId": "mixed-spice", "role": "flavour", "bakersPercent": 1 },
+    { "substanceId": "brandy", "role": "liquid", "bakersPercent": 5, "note": "a measure of brandy mixed directly into the batter itself, distinct from the further feeding of spirits into the baked cake as it matures (which is a post-bake soak, out of scope here)" },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 1 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 6
+    },
+    {
+      "name": "add eggs and brandy",
+      "description": "beat in eggs and brandy",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour, spice and fruit",
+      "description": "fold in flour, leavening, salt and mixed spice, then the dried fruit and candied peel",
+      "durationMinutes": 5
+    },
+    {
+      "name": "bake",
+      "description": "bake very low and slow, protecting the top from over-browning",
+      "temperatureC": 140,
+      "durationMinutes": 240
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Even richer in dried fruit than Dundee cake, matching the real reputation of a British Christmas cake as the densest, most fruit-heavy of the family; the very low, long bake is standard practice, documented across British home-baking references, to cook such a dense mass through without over-browning the outside. Marzipan and royal icing are applied weeks later, well after baking, and are out of scope for this batter's formulation."
+}

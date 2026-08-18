@@ -1,0 +1,23 @@
+{
+  "id": "sourdough-starter",
+  "name": "Sourdough starter, active (100% hydration)",
+  "category": "crop-fraction",
+  "state": "liquid",
+  "elements": {
+    "C": 200080000,
+    "H": 90467777,
+    "O": 697092223,
+    "N": 8320000,
+    "P": 900000,
+    "K": 900000,
+    "S": 1040000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 1200000
+  },
+  "source": "Illustrative 1:1 (by mass) flour-and-water culture, close to wheat-flour-white.json's own dry-matter profile diluted by an equal mass of water, with a small carbohydrate share already consumed by fermentation.",
+  "notes": "Built in origin/culture.ts by blending wheat-flour-white.json and water-liquid.json at equal mass shares (matching the flour file's own protein/fat/carbohydrate/ash pattern, scaled) and then reducing the carbohydrate share slightly to represent starch already metabolised by the wild yeast and lactic-acid bacteria culture — the same real fermentation-driven mass loss (as CO2, via respire()) that origin/culture.ts's propagateStarter() applies explicitly to a fresh batch, so an already-active starter's own resting composition reflects it too."
+}

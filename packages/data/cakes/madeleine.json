@@ -1,0 +1,41 @@
+{
+  "id": "madeleine",
+  "name": "Madeleine",
+  "tradition": "French",
+  "origin": "A small shell-shaped sponge cake from Commercy, Lorraine, made famous by Marcel Proust's In Search of Lost Time; the classic 'hump' on its back is produced by baking at a high initial heat, a real thermal-shock effect.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 90 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 130 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 90, "note": "traditionally browned, as in financier" },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "lemon-zest", "role": "flavour", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "whisk eggs and sugar",
+      "description": "whisk whole eggs and sugar until pale and thick",
+      "durationMinutes": 4
+    },
+    {
+      "name": "fold in dry and butter",
+      "description": "fold in flour, leavening and zest, then melted butter",
+      "durationMinutes": 3
+    },
+    {
+      "name": "chill batter",
+      "description": "chill the batter, a real technique for a sharper, more reliable hump when the cold batter hits a hot mould",
+      "temperatureC": 4,
+      "durationMinutes": 60
+    },
+    {
+      "name": "bake",
+      "description": "bake hot in shell-shaped moulds",
+      "temperatureC": 210,
+      "durationMinutes": 11
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "Ratios follow the standard madeleine proportion documented across French patisserie references (a rich, buttery genoise-adjacent batter, closer to a small butter cake than to a lean sponge). Chilling the batter before a hot bake is real, standard technique for producing the characteristic hump, and is included as a process step rather than a formulation detail."
+}

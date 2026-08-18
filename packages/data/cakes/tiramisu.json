@@ -1,0 +1,36 @@
+{
+  "id": "tiramisu",
+  "name": "Tiramisu (savoiardi base)",
+  "tradition": "Italian",
+  "origin": "A no-bake Italian dessert first documented in the Veneto in the 1960s-1970s; layers of coffee- and liqueur-soaked savoiardi (ladyfinger sponge fingers) with a whipped mascarpone-and-egg cream, dusted with cocoa.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 90 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 170, "note": "yolk and white whipped separately then combined, as in a genoise, but stiffer and piped into finger shapes" },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.3 }
+  ],
+  "process": [
+    {
+      "name": "whip yolks and sugar",
+      "description": "whip egg yolks with half the sugar until pale and thick",
+      "durationMinutes": 5
+    },
+    {
+      "name": "whip whites",
+      "description": "whip egg whites with the remaining sugar to a stiff, stable meringue"
+    },
+    {
+      "name": "fold together and pipe",
+      "description": "fold the yolk mixture and sifted flour into the meringue, then pipe into finger shapes",
+      "durationMinutes": 4
+    },
+    {
+      "name": "bake",
+      "description": "bake until just set and lightly golden",
+      "temperatureC": 190,
+      "durationMinutes": 11
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "This formulation deliberately covers only savoiardi, tiramisu's one genuinely baked component — a stiff, egg-rich, fat-free foam sponge (no butter or oil at all, correctly zero here). The mascarpone-egg cream, coffee soak, liqueur and cocoa dusting that make the finished dessert are a no-bake custard-and-cream assembly, a different physical process from a baked batter (no starch gelatinisation, no protein coagulation under heat) and are described only narratively, out of scope for the baker's-percentage formulation here — the same reasoning documented in catalog.ts's blockers for the excluded cheesecakes, applied correctly by scoping the formulation to only the part of tiramisu that really is a baked cake."
+}

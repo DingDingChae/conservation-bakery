@@ -1,0 +1,39 @@
+{
+  "id": "lamington",
+  "name": "Lamington",
+  "tradition": "Australian",
+  "origin": "Named for Lord Lamington, Governor of Queensland from 1896 to 1901; squares of sponge cake dipped in a thin chocolate icing and rolled in desiccated coconut, said to have been invented by his household's cook to use up day-old sponge.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 120 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 60 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 4
+    },
+    {
+      "name": "add eggs",
+      "description": "beat in eggs",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in a sheet pan, cool, then cut into squares",
+      "temperatureC": 180,
+      "durationMinutes": 26
+    }
+  ],
+  "ovenFamily": "tunnel",
+  "notes": "A standard light butter-cake sponge (between a Victoria sponge and a genoise in richness), matching lamington's real role as a practical way to use up plain sponge. Tagged 'tunnel' oven family: lamington sheet sponge is a standardised, high-volume product commonly produced on a continuous belt line in commercial bakeries, unlike a single-pan home-style cake. The chocolate icing dip and desiccated-coconut coating are separately-prepared components applied after baking, out of scope for this batter's formulation."
+}

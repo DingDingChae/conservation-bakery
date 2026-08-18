@@ -1,0 +1,23 @@
+{
+  "id": "maple-syrup",
+  "name": "Maple syrup, finished",
+  "category": "crop-fraction",
+  "state": "liquid",
+  "elements": {
+    "C": 277908132,
+    "H": 79687883,
+    "O": 632403985,
+    "N": 0,
+    "P": 0,
+    "K": 3500000,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 2500000,
+    "Mg": 500000,
+    "Fe": 0,
+    "Ash": 3500000
+  },
+  "source": "Proximate (per kg) water 330 g (~33%), sugar (sucrose) 660 g (~66 degrees Brix, typical finished-syrup density), ash 10 g — maple syrup is real-world notably rich in calcium, potassium and manganese (manganese is untracked here and folds into Ash).",
+  "notes": "Standard sucrose elemental ratio."
+}

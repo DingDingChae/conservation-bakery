@@ -1,0 +1,39 @@
+{
+  "id": "financier",
+  "name": "Financier",
+  "tradition": "French",
+  "origin": "A small rectangular French cake named for its resemblance to a gold bar, popular with bankers near the Paris stock exchange in the late 19th century; browned butter (beurre noisette) and ground almond, not wheat gluten, give it its structure.",
+  "ingredients": [
+    { "substanceId": "almond-kernel", "role": "flour", "bakersPercent": 60, "note": "ground almond, not wheat flour, is financier's real structural base; modelled with almond-kernel's own composition (packages/data/substances/almond-kernel.json) ground into flour form" },
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 40 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 110 },
+    { "substanceId": "hen-egg-white", "role": "egg", "bakersPercent": 120, "note": "egg white only, no yolk — financier is one of the classic 'white batter' French petits fours" },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 90, "note": "browned (beurre noisette) before folding in, for its characteristic nutty flavour; the browning is a flavour change, not a mass change" }
+  ],
+  "process": [
+    {
+      "name": "brown the butter",
+      "description": "cook butter until the milk solids brown and it smells nutty, then cool slightly",
+      "temperatureC": 130,
+      "durationMinutes": 8
+    },
+    {
+      "name": "whisk dry and egg white",
+      "description": "whisk ground almond, flour and sugar with egg whites to a smooth batter",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in butter",
+      "description": "fold in the browned butter",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake in small individual moulds",
+      "temperatureC": 200,
+      "durationMinutes": 13
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "A representative financier proportion (Larousse Gastronomique's petit-four formulas): roughly equal parts ground almond and wheat flour for the flour baseline, egg white rather than whole egg, and a substantial browned-butter dose."
+}

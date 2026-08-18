@@ -1,0 +1,23 @@
+{
+  "id": "pectin",
+  "name": "Pectin, dried (extracted from citrus peel)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 355984534,
+    "H": 51024428,
+    "O": 562991038,
+    "N": 0,
+    "P": 0,
+    "K": 6000000,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 9000000,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 15000000
+  },
+  "source": "Dried food-grade pectin: illustrative proximate (per kg) water 100 g, polygalacturonic-acid backbone 870 g, ash 30 g (commercial pectin retains some bound calcium/potassium from the citrus peel it was extracted from).",
+  "notes": "The polysaccharide backbone is modelled by its real repeating-unit molecular formula, (C6H8O6)n (polygalacturonic acid; real pectin is partially methyl-esterified, a small further mass fraction this file folds into the same C:H:O bucket rather than modelling separately — a stated simplification). Extraction from orange-peel (origin/citrus.ts) uses a real cited yield (pectin is typically 20-30% of dried citrus peel mass) via splitByProfile against this profile and peel's own remaining-pomace profile."
+}

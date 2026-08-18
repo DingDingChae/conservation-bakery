@@ -1,0 +1,45 @@
+{
+  "id": "madeira-cake",
+  "name": "Madeira cake",
+  "tradition": "British",
+  "origin": "A dense, close-crumbed British loaf cake, historically served alongside a glass of Madeira wine (hence the name) though it does not itself contain wine; denser and less egg-rich than a Victoria sponge, with a firmer crumb that suits slow eating with a drink.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 90 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 90 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 100 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 2 },
+    {
+      "substanceId": "lemon-zest",
+      "role": "flavour",
+      "bakersPercent": 3,
+      "note": "grated lemon zest is the traditional Madeira cake flavouring; no zest substance record exists yet (see catalog.ts module notes)"
+    },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat softened butter and sugar until pale and fluffy",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs and zest",
+      "description": "beat in eggs one at a time with the lemon zest",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt, mixing minimally for a close, firm crumb",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake",
+      "description": "bake low and slow in a loaf or round tin",
+      "temperatureC": 165,
+      "durationMinutes": 70
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Slightly less egg and sugar than a Victoria sponge (British baking references consistently describe Madeira as denser and firmer, with a lower proportion of raising agent), producing the close crumb the cake is known for. Ratios are representative of published British home-baking formulas rather than one single canonical source."
+}

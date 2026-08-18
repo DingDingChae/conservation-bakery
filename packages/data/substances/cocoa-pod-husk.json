@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-pod-husk",
+  "name": "Cocoa pod husk (discarded at opening)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 73278000,
+    "H": 99739396,
+    "O": 784282604,
+    "N": 2400000,
+    "P": 4000000,
+    "K": 22000000,
+    "S": 300000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 2000000,
+    "Mg": 4000000,
+    "Fe": 0,
+    "Ash": 8000000
+  },
+  "source": "Fresh pod husk/rind: illustrative fibrous, low-fat, high-moisture proximate (per kg) water 800 g, protein 15 g, fat 3 g, carbohydrate/fibre 142 g, ash 40 g.",
+  "notes": "Cocoa pod husk ash is real-world notably potassium-rich (it is composted or used directly as a potash soil amendment on cocoa farms); the ash split here is weighted accordingly. Standard elemental conversion factors as wheat-grain.json."
+}

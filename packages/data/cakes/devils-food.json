@@ -1,0 +1,57 @@
+{
+  "id": "devils-food",
+  "name": "Devil's food cake",
+  "tradition": "American",
+  "origin": "An early-20th-century American dark chocolate cake, named as the rich, dark counterpart to angel food; built on the American 'high-ratio' method (sugar mass exceeding flour mass, held in emulsion by a generous fat) that Gisslen documents as the industrial standard for moist, tender chocolate layer cakes.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 130 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 70 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 50 },
+    {
+      "substanceId": "cocoa-powder",
+      "role": "fat",
+      "bakersPercent": 2.74,
+      "note": "residual fat fraction of 20% (of flour mass) cocoa powder, split by this registry's own cocoa-powder substance record (packages/data/substances/cocoa-powder.json: 137 g residual press fat per kg, the rest non-fat solids)"
+    },
+    {
+      "substanceId": "cocoa-powder",
+      "role": "flavour",
+      "bakersPercent": 17.26,
+      "note": "non-fat solids fraction of the same 20%-of-flour cocoa powder line above"
+    },
+    {
+      "substanceId": "buttermilk",
+      "role": "liquid",
+      "bakersPercent": 80,
+      "note": "buttermilk's mild lactic acid, together with the cocoa's own acidity, is what the bicarbonate below actually reacts against"
+    },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3.5 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 1.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs and cocoa",
+      "description": "beat in eggs, then the sifted cocoa powder",
+      "durationMinutes": 3
+    },
+    {
+      "name": "alternate flour and buttermilk",
+      "description": "fold in the flour (with bicarbonate and salt) and buttermilk in alternating additions, starting and ending with flour",
+      "durationMinutes": 4
+    },
+    {
+      "name": "bake",
+      "description": "bake in two round pans",
+      "temperatureC": 175,
+      "durationMinutes": 32
+    }
+  ],
+  "ovenFamily": "convection",
+  "notes": "Sugar above flour mass (130%) with buttermilk carrying most of the hydration is the real signature of the American high-ratio chocolate cake method (Gisslen, Professional Baking). Cocoa powder's fat content (USDA FoodData Central, unsweetened cocoa powder: ~21 g fat per 100 g) is split into its own fat-role line so the formulation's real fat mass includes cocoa butter, not just the added butter."
+}

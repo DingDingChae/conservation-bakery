@@ -1,0 +1,41 @@
+{
+  "id": "lemon-drizzle-cake",
+  "name": "Lemon drizzle cake",
+  "tradition": "British",
+  "origin": "A British loaf cake finished, while still warm, with a syrup of lemon juice and sugar poured over the top, which soaks in and sets into a faintly crunchy, tart crust as it cools.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 100 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 100 },
+    { "substanceId": "lemon-juice", "role": "liquid", "bakersPercent": 10, "note": "lemon juice mixed directly into the batter itself, distinct from the post-bake lemon-sugar drizzle" },
+    { "substanceId": "lemon-zest", "role": "flavour", "bakersPercent": 3 },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 3 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs, zest and juice",
+      "description": "beat in eggs, lemon zest and lemon juice",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour",
+      "description": "fold in flour, leavening and salt",
+      "durationMinutes": 2
+    },
+    {
+      "name": "bake and drizzle",
+      "description": "bake in a loaf pan, then, while still warm, pour over a lemon-juice-and-sugar syrup so it soaks into the crust",
+      "temperatureC": 165,
+      "durationMinutes": 48
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "A standard equal-weights British loaf cake (see victoria-sponge.json, madeira-cake.json) with lemon juice and zest mixed directly into the batter. The finishing lemon-sugar drizzle poured over the warm baked loaf is a separately-prepared syrup soaked into an already-set crumb, a different physical process (diffusion into a porous solid, as in tres-leches.json) and is kept out of the ingredient list, per catalog.ts's scope note."
+}

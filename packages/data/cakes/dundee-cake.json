@@ -1,0 +1,46 @@
+{
+  "id": "dundee-cake",
+  "name": "Dundee cake",
+  "tradition": "British",
+  "origin": "A traditional Scottish rich fruit cake from Dundee, associated with the Keiller marmalade-making family; distinguished from other British fruit cakes by its topping of concentric rings of whole blanched almonds.",
+  "ingredients": [
+    { "substanceId": "wheat-flour-white", "role": "flour", "bakersPercent": 100 },
+    { "substanceId": "sucrose", "role": "sugar", "bakersPercent": 90 },
+    { "substanceId": "hen-egg-whole", "role": "egg", "bakersPercent": 100 },
+    { "substanceId": "butter", "role": "fat", "bakersPercent": 100 },
+    {
+      "substanceId": "dried-mixed-fruit",
+      "role": "flavour",
+      "bakersPercent": 350,
+      "note": "currants, sultanas, raisins and mixed peel together; dried fruit's own residual moisture (typically 15-20%) is not credited toward hydration here, a conservative simplification (see catalog.ts module notes)"
+    },
+    { "substanceId": "orange-marmalade", "role": "liquid", "bakersPercent": 10, "note": "a spoonful of marmalade stirred into the batter, a Dundee-specific touch tying the cake to the Keiller family's marmalade business" },
+    { "substanceId": "sodium-bicarbonate", "role": "leavening", "bakersPercent": 1.5 },
+    { "substanceId": "sodium-chloride", "role": "salt", "bakersPercent": 0.5 }
+  ],
+  "process": [
+    {
+      "name": "cream butter and sugar",
+      "description": "beat butter and sugar until light",
+      "durationMinutes": 5
+    },
+    {
+      "name": "add eggs and marmalade",
+      "description": "beat in eggs and marmalade",
+      "durationMinutes": 3
+    },
+    {
+      "name": "fold in flour and fruit",
+      "description": "fold in flour, leavening and salt, then the dried fruit",
+      "durationMinutes": 4
+    },
+    {
+      "name": "arrange almonds and bake",
+      "description": "arrange whole blanched almonds in rings on top, then bake low and slow",
+      "temperatureC": 150,
+      "durationMinutes": 170
+    }
+  ],
+  "ovenFamily": "deck",
+  "notes": "Dried fruit at 3.5x flour mass is representative of published British rich fruit cake formulas (e.g. traditional Dundee cake recipes documented across British home-baking references); a long, low bake (rather than a hot, fast one) is real practice for a dense, fruit-heavy batter that would over-brown on the outside well before the crumb finished setting at a normal cake temperature."
+}

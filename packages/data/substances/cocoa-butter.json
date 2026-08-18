@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-butter",
+  "name": "Cocoa butter (pressed from liquor)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 756730000,
+    "H": 119693813,
+    "O": 121396187,
+    "N": 160000,
+    "P": 0,
+    "K": 1000000,
+    "S": 20000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 0,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 1000000
+  },
+  "source": "Pressed cocoa fat: illustrative near-pure-fat proximate (per kg) water 2 g, protein 1 g, fat 995 g, ash 2 g — cocoa butter is essentially pure cocoa triglyceride (cocoa science literature).",
+  "notes": "Standard fat elemental conversion factor as wheat-grain.json (C76/H12/O12%). Pressing (origin/cocoa.ts) divides the liquor's own exact composition between this fat-dominant stream and cocoa-powder's solids-dominant stream using splitByProfile (see plant/unit.ts), so butter mass plus powder mass always sum to exactly the liquor pressed, by construction."
+}

@@ -1,0 +1,23 @@
+{
+  "id": "beet-red-colour",
+  "name": "Beet red colour, concentrate (from sugar beet)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 363148649,
+    "H": 61139404,
+    "O": 485203039,
+    "N": 508908,
+    "P": 0,
+    "K": 36000000,
+    "S": 0,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 9000000,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 45000000
+  },
+  "source": "Illustrative dried beet-juice colour concentrate (E162-style natural colour): proximate (per kg) water 50 g, sugars 850 g (the beet's own sucrose, the bulk carrier), betanin pigment 10 g, ash 90 g.",
+  "notes": "Betanin (the red pigment responsible for the colour) is modelled by its real molecular formula, C24H26N2O13, but is a small minority of the concentrate's own mass — commercial beet colour is predominantly the beet's own sugars and minerals with betanin as the minor colorant, not purified pigment. origin/colour.ts extracts this from sugar-beet.json's own registered composition via splitByProfile."
+}

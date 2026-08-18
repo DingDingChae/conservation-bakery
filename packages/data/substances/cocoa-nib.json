@@ -1,0 +1,23 @@
+{
+  "id": "cocoa-nib",
+  "name": "Cocoa nib (winnowed, shell removed)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 585480000,
+    "H": 90418135,
+    "O": 259061865,
+    "N": 20480000,
+    "P": 6300000,
+    "K": 18900000,
+    "S": 3820000,
+    "Na": 420000,
+    "Cl": 0,
+    "Ca": 2100000,
+    "Mg": 5040000,
+    "Fe": 840000,
+    "Ash": 7140000
+  },
+  "source": "Winnowed nib (roasted bean minus shell): illustrative proximate (per kg) water 20 g, protein 128 g, fat 500 g (nib concentrates the bean's fat relative to the whole roasted bean, since shell carries little fat), carbohydrate 310 g, ash 42 g.",
+  "notes": "Standard elemental conversion factors as wheat-grain.json. This is also the profile used for cocoa liquor: grinding the nib to liquor is a pure phase change (solid nib to a fluid paste at process temperature) with no mass loss, so liquor is carried in the ledger as this same substance, just melted, rather than a second near-duplicate file."
+}

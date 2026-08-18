@@ -1,0 +1,23 @@
+{
+  "id": "gelatin",
+  "name": "Gelatin, dried (from rendering)",
+  "category": "crop-fraction",
+  "state": "solid",
+  "elements": {
+    "C": 434300000,
+    "H": 71908809,
+    "O": 323291191,
+    "N": 146200000,
+    "P": 4000000,
+    "K": 0,
+    "S": 4300000,
+    "Na": 0,
+    "Cl": 0,
+    "Ca": 10000000,
+    "Mg": 0,
+    "Fe": 0,
+    "Ash": 6000000
+  },
+  "source": "Dried sheet/powder gelatin: illustrative proximate (per kg) water 120 g, protein 860 g, ash 20 g, negligible fat/carbohydrate — typical of commercial dried gelatin.",
+  "notes": "Gelatin's protein is modelled by real published collagen/gelatin elemental analysis (C ~50.5%, H ~6.8%, N ~17.0%, O ~25.2%, S ~0.5%) rather than the generic protein factor used elsewhere in this dataset, because gelatin's glycine/proline/hydroxyproline-rich amino acid profile really does carry more nitrogen than a typical food protein. Ash is weighted toward calcium and phosphorus, reflecting a bone-derived rendering stock; a hide-derived stock would differ (a stated simplification — origin/gelatin.ts notes the same)."
+}
