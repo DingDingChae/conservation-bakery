@@ -62,6 +62,80 @@ export function screenForRevealTarget(target: RevealTarget): ScreenId | null {
 }
 
 // ---------------------------------------------------------------------------
+// Nav rail grouping and search. The plant grew from two machines to eleven
+// (a mill, a creamery, a refinery, a mixer, three ovens, a cooling tunnel, a
+// wrapper, a QA lab, a sales office — see `sim-worker/plant.ts`) and will
+// keep growing, so the rail groups them by process stage rather than listing
+// every one flat, and offers a filter so a player who knows a machine's name
+// does not have to scan every group to find it.
+// ---------------------------------------------------------------------------
+
+export const MACHINE_GROUPS = [
+  'milling',
+  'creamery',
+  'refinery',
+  'mixing',
+  'ovens',
+  'finishing',
+  'sales',
+  'other',
+] as const;
+export type MachineGroup = (typeof MACHINE_GROUPS)[number];
+
+/** Which nav-rail group a machine id belongs in, from its own id prefix —
+ * every id `plant.ts` mints follows a `<stage>-<n>` shape, so this never
+ * needs the full snapshot, just the id. An id this shell has never seen
+ * (future equipment, or a test fixture) lands in `'other'` rather than being
+ * dropped, so the rail never silently hides a real machine. */
+export function machineGroup(machineId: string): MachineGroup {
+  if (machineId.startsWith('mill-')) return 'milling';
+  if (machineId.startsWith('creamery-')) return 'creamery';
+  if (machineId.startsWith('refinery-')) return 'refinery';
+  if (machineId.startsWith('mixer-')) return 'mixing';
+  if (machineId.startsWith('oven-')) return 'ovens';
+  if (machineId.startsWith('cooler-') || machineId.startsWith('wrapper-') || machineId.startsWith('qa-lab-')) {
+    return 'finishing';
+  }
+  if (machineId.startsWith('sales-office-')) return 'sales';
+  return 'other';
+}
+
+export function machineGroupCatalogueKey(group: MachineGroup): string {
+  return `shell.nav.group.${group}`;
+}
+
+/** Group `machines` in `MACHINE_GROUPS` order, dropping any group with
+ * nothing in it — a stable partition the nav rail renders headings from
+ * directly, so adding a twelfth machine never requires a matching change
+ * here or in `navRail.ts`. */
+export function groupMachines<T extends { readonly id: string }>(
+  machines: readonly T[],
+): readonly { readonly group: MachineGroup; readonly machines: readonly T[] }[] {
+  const byGroup = new Map<MachineGroup, T[]>();
+  for (const machine of machines) {
+    const group = machineGroup(machine.id);
+    const existing = byGroup.get(group);
+    if (existing) existing.push(machine);
+    else byGroup.set(group, [machine]);
+  }
+  return MACHINE_GROUPS.filter((group) => byGroup.has(group)).map((group) => ({
+    group,
+    machines: byGroup.get(group) ?? [],
+  }));
+}
+
+/** Whether a machine's own label matches a player-typed filter — a plain
+ * case-insensitive substring test, the same forgiving match the command
+ * palette's own search already uses for a quick "does this contain what I
+ * typed" check. An empty or whitespace-only query matches everything, so
+ * clearing the field always restores the full list. */
+export function matchesMachineFilter(label: string, query: string): boolean {
+  const needle = query.trim().toLowerCase();
+  if (needle.length === 0) return true;
+  return label.toLowerCase().includes(needle);
+}
+
+// ---------------------------------------------------------------------------
 // Global alarm annunciator: one tile in the header standing for every alarm on
 // every machine, so an operator on the Settings screen still sees a cascade.
 // ---------------------------------------------------------------------------

@@ -198,6 +198,66 @@ export {
 } from './bake/staling.js';
 
 // ---------------------------------------------------------------------------
+// designer — the cake designer: is a proposed design physically real? Structural,
+// thermal, feasibility and cost verdicts over tiers, layers, fillings and finishes.
+// ---------------------------------------------------------------------------
+export type {
+  CakeDesign,
+  CostReport,
+  DesignEvaluation,
+  DesignEvaluationInputs,
+  DesignFilling,
+  DesignFinish,
+  DesignLayer,
+  DesignTier,
+  DesignTopper,
+  FeasibilityProblem,
+  FeasibilityProblemCode,
+  FeasibilityReport,
+  FinishKind,
+  FinishThermalVerdict,
+  Inventory,
+  LineCapability,
+  MaterialCostLine,
+  MaterialDemandLine,
+  PriceTable,
+  StructuralProblem,
+  StructuralProblemCode,
+  StructuralReport,
+  ThermalContext,
+  ThermalProblem,
+  ThermalProblemCode,
+  ThermalReport,
+  TierStructuralVerdict,
+} from './designer/index.js';
+export {
+  BUTTERCREAM_MAX_SUBSTRATE_TEMP_C,
+  CAKE_BOARD_DENSITY_KG_PER_M3,
+  CAKE_BOARD_THICKNESS_M,
+  CRUMB_STRENGTH_MAX_KPA,
+  CRUMB_STRENGTH_MIN_KPA,
+  DOWEL_SPACING_M,
+  FINISH_EQUIPMENT_TYPE,
+  FINISH_KINDS,
+  FONDANT_MAX_SUBSTRATE_TEMP_C,
+  GANACHE_MAX_SUBSTRATE_TEMP_C,
+  GRAVITY_M_PER_S2,
+  MINIMUM_DOWEL_COUNT,
+  THERMALLY_UNGATED_KINDS,
+  TRANSFER_FIXED_MINUTES,
+  designMaterialDemand,
+  evaluateCost,
+  evaluateDesign,
+  evaluateFeasibility,
+  evaluateStructure,
+  evaluateThermal,
+  minimumDowelCount,
+  productTemperatureAtElapsedSeconds,
+  tierCrumbStrengthPa,
+  tierOwnMassUg,
+} from './designer/index.js';
+
+// ---------------------------------------------------------------------------
 // scenario — the first complete provenance loop, genesis to shipped cake.
 // ---------------------------------------------------------------------------
 export type { FirstChainAccounts, FirstChainOutcome, FirstChainRunResult, FirstChainSeed, FirstChainStep, RootLotRecord } from './scenario/index.js';

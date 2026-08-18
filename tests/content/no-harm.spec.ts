@@ -93,8 +93,27 @@ const SCAN_EXTENSIONS: ReadonlySet<string> = new Set([
   '.csv',
 ]);
 
-/** Directories that are never product content and are never walked into. */
-const EXCLUDED_DIRS: ReadonlySet<string> = new Set(['node_modules', 'dist', '.git']);
+/**
+ * Directories that are never product content and are never walked into.
+ *
+ * `release` and `out` hold packaging output. That output embeds a whole Chromium runtime,
+ * including its third-party licence manifest, which legitimately contains words this
+ * sweep denies — in licence text written by other people, not in anything this product
+ * says. Scanning it made a local package build turn the gate red for a reason that had
+ * nothing to do with the product's own content.
+ *
+ * This narrows *where* the rule is enforced, never *what* it forbids: every authored file
+ * is still swept, including `packages/app/build`, which holds real installer resources we
+ * write ourselves and is deliberately absent from this list.
+ */
+const EXCLUDED_DIRS: ReadonlySet<string> = new Set([
+  'node_modules',
+  'dist',
+  '.git',
+  'release',
+  'out',
+  'coverage',
+]);
 
 /**
  * How close a Tier B match and a person-referent word must be, in characters,

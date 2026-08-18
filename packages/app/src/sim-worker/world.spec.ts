@@ -9,14 +9,26 @@ function freshWorld(preset: 'freePlay' | 'easy' | 'realistic' | 'punishing' = 'f
 }
 
 describe('SimWorld', () => {
-  it('boots with two commissioned, off machines and a closed ledger', () => {
+  it('boots with every machine commissioned and off, and a closed ledger', () => {
     const world = freshWorld();
     const snapshot = world.snapshot();
 
     expect(snapshot.tick).toBe(0);
     expect(snapshot.speed).toBe(1);
     expect(snapshot.balanceOk).toBe(true);
-    expect(snapshot.machines.map((m) => m.id).sort()).toEqual(['mixer-1', 'oven-1']);
+    expect(snapshot.machines.map((m) => m.id).sort()).toEqual([
+      'cooler-1',
+      'creamery-1',
+      'mill-1',
+      'mixer-1',
+      'oven-convection-1',
+      'oven-deck-1',
+      'oven-tunnel-1',
+      'qa-lab-1',
+      'refinery-1',
+      'sales-office-1',
+      'wrapper-1',
+    ]);
     for (const machine of snapshot.machines) {
       expect(machine.commissioned).toBe(true);
       expect(machine.mode).toBe('OFF');
@@ -57,28 +69,28 @@ describe('SimWorld', () => {
 
   it('drives a real machine through setMode and setSetpoint, refusing an illegal transition', () => {
     const world = freshWorld();
-    expect(world.applyCommand({ kind: 'setMode', machineId: 'oven-1', mode: 'MANUAL' })).toEqual({ accepted: true });
-    expect(world.snapshot().machines.find((m) => m.id === 'oven-1')?.running).toBe(true);
+    expect(world.applyCommand({ kind: 'setMode', machineId: 'oven-deck-1', mode: 'MANUAL' })).toEqual({ accepted: true });
+    expect(world.snapshot().machines.find((m) => m.id === 'oven-deck-1')?.running).toBe(true);
 
     // AUTO cannot jump straight to SERVICE (see process/machine.ts).
-    const auto = world.applyCommand({ kind: 'setMode', machineId: 'oven-1', mode: 'AUTO' });
+    const auto = world.applyCommand({ kind: 'setMode', machineId: 'oven-deck-1', mode: 'AUTO' });
     expect(auto.accepted).toBe(true);
-    const illegalService = world.applyCommand({ kind: 'setMode', machineId: 'oven-1', mode: 'SERVICE' });
+    const illegalService = world.applyCommand({ kind: 'setMode', machineId: 'oven-deck-1', mode: 'SERVICE' });
     expect(illegalService.accepted).toBe(false);
 
     const setpoint = world.applyCommand({
       kind: 'setSetpoint',
-      machineId: 'oven-1',
+      machineId: 'oven-deck-1',
       tagId: 'bake-temp-setpoint-c',
       value: 210,
     });
     expect(setpoint.accepted).toBe(true);
-    const tag = world.snapshot().machines.find((m) => m.id === 'oven-1')?.tags.find((t) => t.id === 'bake-temp-setpoint-c');
+    const tag = world.snapshot().machines.find((m) => m.id === 'oven-deck-1')?.tags.find((t) => t.id === 'bake-temp-setpoint-c');
     expect(tag?.value).toBe(210);
 
     const badTag = world.applyCommand({
       kind: 'setSetpoint',
-      machineId: 'oven-1',
+      machineId: 'oven-deck-1',
       tagId: 'bake-temp-c', // a measurement, not a setpoint
       value: 1,
     });
@@ -88,7 +100,7 @@ describe('SimWorld', () => {
   it('runs the background scenario and both machines every tick without ever unbalancing the ledger', () => {
     const world = freshWorld();
     world.applyCommand({ kind: 'setMode', machineId: 'mixer-1', mode: 'MANUAL' });
-    world.applyCommand({ kind: 'setMode', machineId: 'oven-1', mode: 'AUTO' });
+    world.applyCommand({ kind: 'setMode', machineId: 'oven-deck-1', mode: 'AUTO' });
 
     for (let i = 0; i < 30; i += 1) world.step();
 
@@ -165,7 +177,7 @@ describe('SimWorld', () => {
       worldA.digest(); // "published" every tick
     }
     for (let i = 0; i < TICKS; i += 1) {
-      if (i === 3) worldB.applyCommand({ kind: 'setMode', machineId: 'oven-1', mode: 'MANUAL' }); // never mind — this world only publishes at the end
+      if (i === 3) worldB.applyCommand({ kind: 'setMode', machineId: 'oven-deck-1', mode: 'MANUAL' }); // never mind — this world only publishes at the end
       worldB.step();
     }
     // worldB's mid-run command above was deliberately different (oven vs
@@ -180,5 +192,68 @@ describe('SimWorld', () => {
 
     expect(worldC.digest()).toBe(worldA.digest());
     expect(worldB.digest()).not.toBe(worldA.digest());
+  });
+
+  it('runs a real Victoria sponge batch end to end — grain and milk to a shipped, paid-for cake — with the ledger closing every tick along the way', () => {
+    const world = freshWorld('freePlay'); // assistance 1 — call-a-supplier permitted.
+
+    const equipmentIds = [
+      'mill-1',
+      'creamery-1',
+      'refinery-1',
+      'mixer-1',
+      'oven-deck-1',
+      'oven-convection-1',
+      'oven-tunnel-1',
+      'cooler-1',
+      'wrapper-1',
+      'qa-lab-1',
+    ] as const;
+    for (const machineId of equipmentIds) {
+      // OFF -> AUTO is not a legal transition (see `process/machine.ts`'s
+      // `LEGAL_TRANSITIONS`) — every machine passes through MANUAL first,
+      // exactly like a real operator bringing a line up.
+      expect(world.applyCommand({ kind: 'setMode', machineId, mode: 'MANUAL' })).toEqual({ accepted: true });
+    }
+
+    // Real raw ingredients for a real recipe (see `plant.ts`'s
+    // `VICTORIA_SPONGE_FORMULATION`), each a real, costed, lead-timed
+    // delivery — nothing here spawns a gram.
+    const kg = 1_000_000_000n;
+    const deliveries: readonly (readonly [string, bigint])[] = [
+      ['wheat-grain', 50n * kg],
+      ['cow-milk-whole', 60n * kg],
+      ['sugar-beet', 60n * kg],
+      ['hen-egg-whole', 2n * kg],
+      ['sodium-bicarbonate', 1n * kg],
+      ['cream-of-tartar', 1n * kg],
+      ['sodium-chloride', 1n * kg],
+      ['polypropylene-film', 1n * kg],
+    ];
+    for (const [substanceId, massUg] of deliveries) {
+      expect(world.applyCommand({ kind: 'callSupplier', substanceId, massUg: toExact(massUg) })).toEqual({ accepted: true });
+    }
+
+    const cashAfterOrdering = world.ledger.balance(PLANT_CASH, PLANT_CASH_COMMODITY);
+
+    // `step()` itself throws if the ledger's books ever stop closing (see
+    // `SimWorld.step`'s own doc comment) — every one of these ticks is
+    // already a real per-tick conservation assertion, not merely the final
+    // one checked below.
+    let shipped = false;
+    for (let i = 0; i < 20_000 && !shipped; i += 1) {
+      world.step();
+      shipped = world.ledger.balance(PLANT_CASH, PLANT_CASH_COMMODITY) > cashAfterOrdering;
+    }
+
+    expect(shipped).toBe(true); // real revenue moved into the plant's own cash account.
+    expect(world.ledger.audit().ok).toBe(true);
+
+    const snapshot = world.snapshot();
+    expect(snapshot.balanceOk).toBe(true);
+    for (const row of snapshot.balance) expect(row.residual).toBe('0');
+
+    const office = snapshot.machines.find((m) => m.id === 'sales-office-1');
+    expect(office?.tags.find((t) => t.id === 'shipments-count')?.value).toBeGreaterThan(0);
   });
 });

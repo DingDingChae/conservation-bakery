@@ -26,25 +26,35 @@ export interface SaveFile {
   readonly startInstantMs: number;
   readonly initialDifficulty: DifficultySettings;
   readonly difficultyChanges: readonly DifficultyChangeRecord[];
-  /** Every accepted command, stamped with the tick it was applied on — a
-   * refused command never changes state, so it is not recorded (replaying
-   * only accepted commands reproduces the exact same state either way). */
-  readonly commands: readonly { readonly type: string; readonly tick: number; readonly payload: IpcCommand }[];
+  /**
+   * Every accepted command, stamped with the tick it was applied on and its
+   * `seq` — its position in the single real order every command and
+   * difficulty change was actually issued in (see `world.ts`'s `#eventSeq`).
+   * A refused command never changes state, so it is not recorded (replaying
+   * only accepted commands reproduces the exact same state either way).
+   */
+  readonly commands: readonly { readonly type: string; readonly tick: number; readonly payload: IpcCommand; readonly seq: number }[];
   /** The tick this save was taken at. `loadWorld` replays to exactly this
    * tick; `rewindWorld` may target any earlier one. */
   readonly tick: number;
 }
 
 export function createSave(world: SimWorld): SaveFile {
+  const seqs = world.commandSequenceNumbers();
   return {
     seed: world.seed,
     startInstantMs: world.startInstantMs,
     initialDifficulty: world.initialDifficulty,
     difficultyChanges: world.difficultyChanges,
-    commands: world.journalRecord().commands.map((command) => ({
+    commands: world.journalRecord().commands.map((command, index) => ({
       type: command.type,
       tick: command.tick,
       payload: command.payload as IpcCommand,
+      // `commandSequenceNumbers()` is a parallel array built 1:1 alongside
+      // the journal (see `world.ts`'s `#commandSeqs`) — falling back to the
+      // array index only protects a save built from a `SimWorld` that
+      // somehow predates this field; every real world always has one.
+      seq: seqs[index] ?? index,
     })),
     tick: world.tick,
   };
@@ -108,24 +118,37 @@ function replay(save: SaveFile, targetTick: number): SimWorld {
     difficulty: save.initialDifficulty,
   });
 
-  const commandsByTick = new Map<number, IpcCommand[]>();
+  // Every recorded event due on a given tick — a command or a difficulty
+  // change — carries the `seq` it actually happened at (see `world.ts`'s
+  // `#eventSeq`), so `applyDue` below can replay two events landing on the
+  // same tick in their real relative order rather than always applying a
+  // difficulty change first. Without this, a command whose behaviour reads
+  // the current difficulty (`callSupplier`'s price and lead time) could
+  // replay against the wrong knobs and never reproduce the live digest.
+  interface ReplayEvent {
+    readonly seq: number;
+    readonly run: () => void;
+  }
+  const eventsByTick = new Map<number, ReplayEvent[]>();
+  const pushEvent = (tick: number, event: ReplayEvent): void => {
+    const existing = eventsByTick.get(tick);
+    if (existing) existing.push(event);
+    else eventsByTick.set(tick, [event]);
+  };
+
   for (const command of save.commands) {
     if (command.tick > targetTick) continue;
-    const existing = commandsByTick.get(command.tick);
-    if (existing) existing.push(command.payload);
-    else commandsByTick.set(command.tick, [command.payload]);
+    pushEvent(command.tick, { seq: command.seq, run: () => world.applyCommand(command.payload) });
   }
-
-  const difficultyByTick = new Map<number, DifficultyKnobs>();
   for (const change of save.difficultyChanges) {
     if (change.tick > targetTick) continue;
-    difficultyByTick.set(change.tick, change.knobs);
+    pushEvent(change.tick, { seq: change.seq, run: () => world.setDifficulty(change.knobs) });
   }
 
   const applyDue = (tick: number): void => {
-    const knobs = difficultyByTick.get(tick);
-    if (knobs) world.setDifficulty(knobs);
-    for (const command of commandsByTick.get(tick) ?? []) world.applyCommand(command);
+    const events = eventsByTick.get(tick);
+    if (!events) return;
+    for (const event of [...events].sort((a, b) => a.seq - b.seq)) event.run();
   };
 
   applyDue(0);

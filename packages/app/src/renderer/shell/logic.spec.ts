@@ -4,7 +4,11 @@ import type { AlarmSnapshot, MachineSnapshot } from '../../shared/ipc.js';
 import {
   aggregateAlarms,
   formatSimulatedClock,
+  groupMachines,
   isInfrastructureFailureMessage,
+  machineGroup,
+  machineGroupCatalogueKey,
+  matchesMachineFilter,
   parseWholeGramsToMicrograms,
   screenEquals,
   screenForRevealTarget,
@@ -162,6 +166,61 @@ describe('parseWholeGramsToMicrograms', () => {
     // Far past Number.MAX_SAFE_INTEGER once scaled to micrograms — a float path would
     // silently lose precision here.
     expect(parseWholeGramsToMicrograms('9007199254740993')).toBe(9_007_199_254_740_993_000_000n);
+  });
+});
+
+describe('machineGroup / groupMachines', () => {
+  it('groups every real plant.ts machine id by its process stage', () => {
+    expect(machineGroup('mill-1')).toBe('milling');
+    expect(machineGroup('creamery-1')).toBe('creamery');
+    expect(machineGroup('refinery-1')).toBe('refinery');
+    expect(machineGroup('mixer-1')).toBe('mixing');
+    expect(machineGroup('oven-deck-1')).toBe('ovens');
+    expect(machineGroup('oven-convection-1')).toBe('ovens');
+    expect(machineGroup('oven-tunnel-1')).toBe('ovens');
+    expect(machineGroup('cooler-1')).toBe('finishing');
+    expect(machineGroup('wrapper-1')).toBe('finishing');
+    expect(machineGroup('qa-lab-1')).toBe('finishing');
+    expect(machineGroup('sales-office-1')).toBe('sales');
+  });
+
+  it('falls back to "other" for an id it does not recognise, rather than dropping it', () => {
+    expect(machineGroup('some-future-machine-1')).toBe('other');
+  });
+
+  it('every group name has a real catalogue key', () => {
+    expect(machineGroupCatalogueKey('milling')).toBe('shell.nav.group.milling');
+  });
+
+  it('partitions machines in a stable, non-empty-group-only order', () => {
+    const grouped = groupMachines([
+      { id: 'oven-deck-1' },
+      { id: 'mill-1' },
+      { id: 'sales-office-1' },
+      { id: 'oven-convection-1' },
+    ]);
+    expect(grouped.map((g) => g.group)).toEqual(['milling', 'ovens', 'sales']);
+    expect(grouped.find((g) => g.group === 'ovens')?.machines.map((m) => m.id)).toEqual([
+      'oven-deck-1',
+      'oven-convection-1',
+    ]);
+  });
+
+  it('returns no groups at all for an empty machine list', () => {
+    expect(groupMachines([])).toEqual([]);
+  });
+});
+
+describe('matchesMachineFilter', () => {
+  it('matches case-insensitively, anywhere in the label', () => {
+    expect(matchesMachineFilter('Deck oven', 'oven')).toBe(true);
+    expect(matchesMachineFilter('Deck oven', 'DECK')).toBe(true);
+    expect(matchesMachineFilter('Deck oven', 'mixer')).toBe(false);
+  });
+
+  it('matches everything for an empty or whitespace-only query', () => {
+    expect(matchesMachineFilter('Deck oven', '')).toBe(true);
+    expect(matchesMachineFilter('Deck oven', '   ')).toBe(true);
   });
 });
 

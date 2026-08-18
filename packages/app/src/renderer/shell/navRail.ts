@@ -1,5 +1,26 @@
 /**
- * The navigation rail: one button per machine, plus Ancestry, Balance and Settings.
+ * The navigation rail: one button per machine, grouped by process stage, plus a filter
+ * and Ancestry, Balance and Settings.
+ *
+ * The plant this rail lists grew from two machines to eleven (see
+ * `sim-worker/plant.ts`'s doc comment: a mill, a creamery, a refinery, a mixer, three
+ * differently-mechanised ovens, a cooling tunnel, a wrapper, a QA lab, a sales office),
+ * and is intended to keep growing. A flat list of eleven-plus buttons stops being
+ * scannable fast, so this module does two things the two-machine rail never needed:
+ *
+ * - **Groups** machines by process stage (`shell/logic.ts`'s `groupMachines`), each
+ *   group a labelled `<section>` with its own `<h3>` heading, so "which oven was I
+ *   looking at" is a glance at one short list, not the whole plant.
+ * - **Filters** the list from a text field (`matchesMachineFilter`), with the match
+ *   count announced to assistive technology on every keystroke, so a player who knows
+ *   a machine's name does not have to scan groups to find it. Filtering never removes
+ *   Ancestry, Balance or Settings — only machines are ever hidden.
+ *
+ * It also registers one command-palette entry per machine (`context.registerCommands`)
+ * so the same "find a machine by name" job is available from the palette too — the
+ * palette already exists (`palette/palette.ts`) and already has its own fuzzy search;
+ * this rail does not reimplement that, it just hands the palette real entries to search.
+ *
  * Selecting a machine or Ancestry hands off to `layout.ts` via `onSelect`, which owns
  * what actually mounts in the main area — this module only ever renders the list and
  * reports a click, exactly the "shell owns layout" split `context.ts` describes.
@@ -8,10 +29,17 @@
  * balance panel actually sits) rather than a screen-changing `onSelect`.
  */
 
-import type { WorldSnapshot } from '../../shared/ipc.js';
-import type { Disposable, RendererContext } from '../context.js';
+import type { MachineSnapshot, WorldSnapshot } from '../../shared/ipc.js';
+import type { Disposable, PaletteEntry, RendererContext } from '../context.js';
 import { el } from '../kit/dom.js';
-import { screenEquals, screenNavId, type ScreenId } from './logic.js';
+import {
+  groupMachines,
+  machineGroupCatalogueKey,
+  matchesMachineFilter,
+  screenEquals,
+  screenNavId,
+  type ScreenId,
+} from './logic.js';
 
 export interface NavRailHandle {
   /** Update which entry is shown as current — called by `layout.ts` whenever the
@@ -24,6 +52,9 @@ export interface NavRailHandle {
 interface NavEntry {
   readonly screen: ScreenId;
   readonly button: HTMLButtonElement;
+  /** `null` for Ancestry/Settings — the filter never hides them, only machines. */
+  readonly li: HTMLLIElement | null;
+  readonly label: string;
 }
 
 export function mountNavRail(
@@ -34,14 +65,21 @@ export function mountNavRail(
 ): NavRailHandle {
   const nav = el('nav', { class: 'cb-shell-nav', attrs: { 'aria-label': context.t('shell.nav.title') } });
   const heading = el('p', { class: 'cb-shell-nav__heading' });
-  const machineList = el('ul', { class: 'cb-shell-nav__list' });
+  const searchLabel = el('label', { attrs: { for: 'cb-shell-nav-search' } });
+  const searchInput = el('input', {
+    attrs: { type: 'search', id: 'cb-shell-nav-search', autocomplete: 'off' },
+  }) as HTMLInputElement;
+  const searchStatus = el('p', { attrs: { 'aria-live': 'polite' } });
+  const groupsContainer = el('div', { class: 'cb-shell-nav__groups' });
   const otherList = el('ul', { class: 'cb-shell-nav__list' });
-  nav.append(heading, machineList, otherList);
+  nav.append(heading, searchLabel, searchInput, searchStatus, groupsContainer, otherList);
   root.append(nav);
 
   let entries: NavEntry[] = [];
   let knownMachineIds: readonly string[] | null = null;
   let active: ScreenId = { kind: 'settings' };
+  let filterQuery = '';
+  let unregisterPalette: Disposable | null = null;
 
   function buildButton(screen: ScreenId, label: string): HTMLButtonElement {
     const button = el('button', {
@@ -53,18 +91,64 @@ export function mountNavRail(
     return button;
   }
 
-  function buildMachineButtons(snapshot: WorldSnapshot | null): void {
-    machineList.replaceChildren();
-    const next: NavEntry[] = [];
-    for (const machine of snapshot?.machines ?? []) {
-      const screen: ScreenId = { kind: 'machine', machineId: machine.id };
-      const button = buildButton(screen, machine.label);
-      const li = el('li', { children: [button] });
-      machineList.append(li);
-      next.push({ screen, button });
+  function applyFilter(): void {
+    let visibleCount = 0;
+    for (const entry of entries) {
+      if (!entry.li) continue; // Ancestry/Settings are never filtered out.
+      const visible = matchesMachineFilter(entry.label, filterQuery);
+      entry.li.hidden = !visible;
+      if (visible) visibleCount += 1;
     }
-    entries = [...next, ...otherEntries()];
+    for (const section of groupsContainer.querySelectorAll<HTMLElement>('[data-cb-nav-group]')) {
+      const anyVisible = [...section.querySelectorAll('li')].some((li) => !(li as HTMLLIElement).hidden);
+      section.hidden = !anyVisible;
+    }
+    searchStatus.textContent =
+      filterQuery.trim().length > 0 ? context.t('shell.nav.search.resultsCount', { count: visibleCount }) : '';
+  }
+
+  function buildMachineButtons(snapshot: WorldSnapshot | null): void {
+    groupsContainer.replaceChildren();
+    const machineEntries: NavEntry[] = [];
+
+    for (const { group, machines } of groupMachines(snapshot?.machines ?? [])) {
+      const headingId = `cb-shell-nav-group-${group}`;
+      const groupHeading = el('h3', {
+        class: 'cb-shell-nav__heading',
+        attrs: { id: headingId },
+        text: context.t(machineGroupCatalogueKey(group)),
+      });
+      const list = el('ul', { class: 'cb-shell-nav__list' });
+      for (const machine of machines) {
+        const screen: ScreenId = { kind: 'machine', machineId: machine.id };
+        const button = buildButton(screen, machine.label);
+        const li = el('li', { children: [button] }) as HTMLLIElement;
+        list.append(li);
+        machineEntries.push({ screen, button, li, label: machine.label });
+      }
+      const section = el('section', {
+        attrs: { 'aria-labelledby': headingId, 'data-cb-nav-group': group },
+        children: [groupHeading, list],
+      });
+      groupsContainer.append(section);
+    }
+
+    entries = [...machineEntries, ...otherEntries()];
     applyActive();
+    applyFilter();
+    registerPaletteEntries(snapshot?.machines ?? []);
+  }
+
+  function registerPaletteEntries(machines: readonly MachineSnapshot[]): void {
+    unregisterPalette?.();
+    const paletteEntries: PaletteEntry[] = machines.map((machine) => ({
+      id: `nav:machine:${machine.id}`,
+      label: context.t('shell.nav.openMachine', { machine: machine.label }),
+      group: context.t('palette.groupMachines'),
+      keywords: [machine.id],
+      run: () => onSelect({ kind: 'machine', machineId: machine.id }),
+    }));
+    unregisterPalette = context.registerCommands(paletteEntries);
   }
 
   let ancestryButton: HTMLButtonElement | null = null;
@@ -73,8 +157,8 @@ export function mountNavRail(
 
   function otherEntries(): NavEntry[] {
     const list: NavEntry[] = [];
-    if (ancestryButton) list.push({ screen: { kind: 'provenance-tree' }, button: ancestryButton });
-    if (settingsButton) list.push({ screen: { kind: 'settings' }, button: settingsButton });
+    if (ancestryButton) list.push({ screen: { kind: 'provenance-tree' }, button: ancestryButton, li: null, label: '' });
+    if (settingsButton) list.push({ screen: { kind: 'settings' }, button: settingsButton, li: null, label: '' });
     return list;
   }
 
@@ -106,6 +190,8 @@ export function mountNavRail(
   function applyCopy(): void {
     heading.textContent = context.t('shell.nav.title');
     nav.setAttribute('aria-label', context.t('shell.nav.title'));
+    searchLabel.textContent = context.t('shell.nav.search.label');
+    searchInput.setAttribute('placeholder', context.t('shell.nav.search.placeholder'));
     buildStaticButtons();
     buildMachineButtons(context.snapshot());
   }
@@ -115,6 +201,11 @@ export function mountNavRail(
     if (!knownMachineIds || knownMachineIds.length !== ids.length) return true;
     return !knownMachineIds.every((id, index) => id === ids[index]);
   }
+
+  searchInput.addEventListener('input', () => {
+    filterQuery = searchInput.value;
+    applyFilter();
+  });
 
   const unsubscribeSnapshot = context.subscribe((snapshot) => {
     if (machineIdsChanged(snapshot)) {
@@ -135,6 +226,7 @@ export function mountNavRail(
     dispose: () => {
       unsubscribeSnapshot();
       unsubscribePreferences();
+      unregisterPalette?.();
       nav.remove();
     },
   };

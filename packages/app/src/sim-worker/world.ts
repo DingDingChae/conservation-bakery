@@ -6,10 +6,11 @@
  * - `FirstChainScenario` (see `packages/sim/src/scenario/firstChain.ts`), the
  *   proven sunlight-to-shipped-cake chain, advanced one of its own steps per
  *   world tick, in the background — never skipped, never fast-forwarded.
- * - Two real, player-controllable `Machine`s (see `machines.ts`) that an
- *   operator actually drives: a mixing bowl and a deck oven, fed by
- *   `callSupplier` deliveries and moving material only through
- *   `moveElementalMassUpTo`.
+ * - The real, player-controllable `Plant` (see `plant.ts`): a flour mill, a
+ *   creamery, a sugar refinery, a batter mixer, three differently-mechanised
+ *   ovens, a cooling tunnel, a flow wrapper, a QA lab and a sales office,
+ *   fed by `callSupplier` deliveries and moving material only through real
+ *   `plant/`/`bake/`-exported physics or `moveElementalMassUpTo`.
  *
  * `SimWorld` is deliberately the only class in this package that mutates
  * anything — `worker.ts` is a thin message adapter around it, and `save.ts`
@@ -25,7 +26,6 @@ import type {
   RunRecord,
 } from '@conservation-bakery/sim';
 import {
-  ENERGY,
   FirstChainScenario,
   Journal,
   Rng,
@@ -35,8 +35,6 @@ import {
   digest as computeDigest,
   elementCommodity,
   isSpeed,
-  joules,
-  roundHalfEven,
 } from '@conservation-bakery/sim';
 
 import type {
@@ -59,7 +57,6 @@ import type {
 } from './difficulty.js';
 import {
   DIFFICULTY_PRESETS,
-  breakdownHazardMultiplier,
   presetSettings,
   startingCashMinor,
   supplierCallsPermitted,
@@ -68,17 +65,14 @@ import {
   withKnobs,
 } from './difficulty.js';
 import type { MachineRig, SimCommandResult } from './machines.js';
-import { createMixerRig, createOvenRig, moveElementalMassUpTo } from './machines.js';
+import { Plant, deliveryAccountFor } from './plant.js';
 
 export type { DifficultyChangeRecord };
 
 // ---------------------------------------------------------------------------
-// The plant's own accounts and constants. Everything here is a deliberate
-// simplification of real oven/mixer physics (see the module doc comment on
-// `machines.ts`) chosen so the control loop is genuinely real — modes,
-// setpoints and alarms that do something, backed by a real balanced
-// `Posting` for every conserved quantity that moves — without reproducing
-// `bake/` and `plant/`'s full chemistry a second time.
+// The plant's own top-level accounts. The equipment itself — mill, creamery,
+// refinery, mixer, ovens, cooler, wrapper, QA lab, sales office — and every
+// account it needs beyond these is built and opened by `Plant` (`plant.ts`).
 // ---------------------------------------------------------------------------
 
 const CASH_CURRENCY = 'USD';
@@ -86,27 +80,17 @@ export const PLANT_CASH_COMMODITY = cashCommodity(CASH_CURRENCY);
 /** This module's own account ids, exported so tests (and any future save
  * inspector) can name them without duplicating the literal strings. */
 export const PLANT_CASH: AccountId = 'plant.cash';
+/** The generic receiving dock: any substance a `callSupplier` delivery names
+ * that `plant.ts`'s `deliveryAccountFor` does not route to a dedicated
+ * staging account (e.g. flour bought directly rather than milled on site, as
+ * `world.spec.ts` still does) lands here, exactly as before this module grew
+ * the bigger plant. */
 export const PLANT_RECEIVING: AccountId = 'plant.receiving';
-export const PLANT_BATTER: AccountId = 'plant.batter';
-export const PLANT_OUTPUT: AccountId = 'plant.output';
 /** The plant's own operating line of credit — an external counterparty this
  * world opens for itself, exactly the way `WORLD_ACCOUNTS.marketSuppliers`
  * and friends already do: real, sourced, and free to go negative because it
  * is the auditable record of outside capital, not an escape hatch. */
 export const MARKET_BANK: AccountId = 'market.bank';
-
-const MIXER_MAX_RATE_G_PER_TICK = 80;
-const OVEN_MAX_RATE_G_PER_TICK = 50;
-const OVEN_BAKE_TOLERANCE_C = 5;
-const OVEN_OVER_TEMP_MARGIN_C = 40;
-const AMBIENT_TEMP_C = 20;
-/** A deliberately simplified thermal mass: how much real energy (never
- * created, always drawn from `market.utilities` and dissipated to `space`,
- * exactly as `plant/creamery.ts`'s `pasteurize` already does) it costs the
- * oven to move its measured temperature by one degree. Not a real oven's
- * heat-transfer model — see `bake/oven.ts` for that — just enough to make
- * "the setpoint costs real energy" true. */
-const ENERGY_PER_DEGREE_C = joules(20_000);
 
 const PROVENANCE_MAX_DEPTH = 500;
 const PROVENANCE_MAX_NODES = 5_000;
@@ -131,23 +115,13 @@ function refusedIpc(reason: string): CommandResult {
   return { accepted: false, reason };
 }
 
-/** Every element commodity currently held by `account`, summed. */
-function accountElementalMass(ledger: Ledger, account: AccountId): bigint {
-  let total = 0n;
-  for (const [commodity, amount] of ledger.balances(account)) {
-    if (commodity.startsWith('el:')) total += amount;
-  }
-  return total;
-}
-
 export class SimWorld {
   readonly seed: number;
   readonly startInstantMs: number;
 
   readonly #scenario: FirstChainScenario;
   readonly #registry = defaultSubstanceRegistry();
-  readonly #mixer: MachineRig;
-  readonly #oven: MachineRig;
+  readonly #plant: Plant;
   readonly #cashCommodity = cashCommodity(CASH_CURRENCY);
   readonly #journal: Journal;
   readonly #initialDifficulty: DifficultySettings;
@@ -157,6 +131,22 @@ export class SimWorld {
   #speed: SpeedMultiplier = 1;
   #tick = 0;
   #pendingDeliveries: PendingDelivery[] = [];
+  /**
+   * A single monotonic counter shared by every accepted command and every
+   * difficulty change, so `save.ts`'s `replay()` can recover the *real*
+   * relative order two of them happened in when they land on the same tick
+   * — without it, a command whose behaviour reads the current difficulty
+   * (`callSupplier`'s price and lead time) would replay against whichever
+   * knobs a same-tick difficulty change left behind, regardless of which one
+   * actually happened first live. See `DifficultyChangeRecord.seq` and
+   * `#commandSeqs` below.
+   */
+  #eventSeq = 0;
+  /** `#commandSeqs[i]` is the `#eventSeq` value the *i*-th accepted command
+   * in `#journal` was recorded at — a parallel array rather than a field on
+   * the journal entry itself because `Journal`/`Command` are `packages/sim`'s
+   * own types, not owned by this task. */
+  #commandSeqs: number[] = [];
 
   constructor(options: SimWorldOptions) {
     this.seed = options.seed;
@@ -171,8 +161,6 @@ export class SimWorld {
     for (const [id, kind] of [
       [PLANT_CASH, 'stock'],
       [PLANT_RECEIVING, 'stock'],
-      [PLANT_BATTER, 'stock'],
-      [PLANT_OUTPUT, 'stock'],
       [MARKET_BANK, 'external'],
     ] as const) {
       ledger.openAccount({ id, kind, label: id });
@@ -189,11 +177,15 @@ export class SimWorld {
       });
     }
 
+    // Every rig's wear stream draws from the same seeded sequence
+    // (`rng.nextUint32()`), exactly as the two-machine plant this replaced
+    // already did — deterministic and replay-safe, never `Math.random`. The
+    // sales office's order arrivals get their own, independently seeded
+    // stream so a difficulty or plant change cannot shift which orders
+    // arrive by consuming a different number of wear seeds first.
     const rng = Rng.fromSeed(options.seed);
-    this.#mixer = createMixerRig(rng.nextUint32());
-    this.#oven = createOvenRig(rng.nextUint32());
-    this.#mixer.machine.commission();
-    this.#oven.machine.commission();
+    const orderRng = Rng.fromSeed(rng.nextUint32());
+    this.#plant = new Plant(ledger, { next: () => rng.nextUint32() }, orderRng);
 
     // This *is* the scenario's own first step (see firstChain.ts: nothing
     // yields until after `seedWorld` has opened and sealed every planetary
@@ -232,17 +224,23 @@ export class SimWorld {
     return this.#journal.toRecord();
   }
 
+  /** `save.ts`'s own parallel sequence array — see `#commandSeqs`'s doc
+   * comment. Indices line up 1:1 with `journalRecord().commands`. */
+  commandSequenceNumbers(): readonly number[] {
+    return this.#commandSeqs;
+  }
+
   /**
-   * Difficulty may change mid-run (see `difficulty.ts`). There is, as yet, no
-   * `Command` in `shared/ipc.ts` that reaches this from the renderer — that
-   * is a gap in the shared contract, not in this method — but the world
-   * itself already supports it, is replay-safe (`save.ts` records every
-   * change by tick) and can never let a knob move mass, energy or money on
-   * its own; only the numbers `applyCommand` later multiplies by.
+   * Difficulty may change mid-run (see `difficulty.ts`), via the
+   * `setDifficulty` `Command` (see `#dispatch` below) or, for a test or an
+   * internal caller, directly. Replay-safe (`save.ts` records every change
+   * by tick and by `#eventSeq`) and can never let a knob move mass, energy
+   * or money on its own; only the numbers `applyCommand` later multiplies by.
    */
   setDifficulty(patch: Partial<DifficultyKnobs>): DifficultySettings {
     this.#difficulty = withKnobs(this.#difficulty, patch);
-    this.#difficultyChanges.push({ tick: this.#tick, knobs: this.#difficulty.knobs });
+    this.#difficultyChanges.push({ tick: this.#tick, knobs: this.#difficulty.knobs, seq: this.#eventSeq });
+    this.#eventSeq += 1;
     return this.#difficulty;
   }
 
@@ -260,8 +258,7 @@ export class SimWorld {
     if (!this.#scenario.done) this.#scenario.tick();
 
     this.#releaseDeliveries();
-    this.#advanceMixer();
-    this.#advanceOven();
+    this.#plant.advance(ledger, this.#tick, this.#difficulty.knobs);
 
     // A conservation failure is not recoverable — see CONTRACT.md rule 1 and
     // `simulationHost.ts`'s fault contract. This throws, and `worker.ts`
@@ -274,6 +271,8 @@ export class SimWorld {
     const result = this.#dispatch(command);
     if (result.accepted) {
       this.#journal.append({ type: command.kind, tick: this.#tick, payload: command } as SimJournalCommand);
+      this.#commandSeqs.push(this.#eventSeq);
+      this.#eventSeq += 1;
     }
     return result;
   }
@@ -284,7 +283,7 @@ export class SimWorld {
       tick: this.#tick,
       simulatedTime: new Date(this.startInstantMs + this.#tick * 1000).toISOString(),
       speed: this.#speed,
-      machines: [this.#machineSnapshot(this.#mixer), this.#machineSnapshot(this.#oven)],
+      machines: this.#plant.allRigs().map((rig) => this.#machineSnapshot(rig)),
       balance: this.#balanceRows(ledger),
       balanceOk: ledger.audit().ok,
       digest: this.digest(),
@@ -312,7 +311,7 @@ export class SimWorld {
       accounts.set(accountId, perCommodity);
     }
 
-    const machines: Digestible = [this.#mixer, this.#oven].map((rig) => ({
+    const machines: Digestible = this.#plant.allRigs().map((rig) => ({
       id: rig.id,
       mode: rig.machine.mode,
       runHours: rig.machine.runHours,
@@ -327,12 +326,18 @@ export class SimWorld {
       dueAtTick: delivery.dueAtTick,
     }));
 
+    // `Plant`'s own state that is not already reachable by walking the
+    // ledger's own accounts (moisture budgets mid-bake, the last QA reading,
+    // the order queue) — see `plant.ts`'s `digestParts()`.
+    const plant: Digestible = this.#plant.digestParts();
+
     return computeDigest({
       tick: this.#tick,
       speed: this.#speed,
       accounts,
       machines,
       deliveries,
+      plant,
       postingCount: ledger.postingCount,
     });
   }
@@ -404,9 +409,7 @@ export class SimWorld {
   }
 
   #rig(machineId: string): MachineRig | undefined {
-    if (machineId === this.#mixer.id) return this.#mixer;
-    if (machineId === this.#oven.id) return this.#oven;
-    return undefined;
+    return this.#plant.rig(machineId);
   }
 
   #callSupplier(substanceId: string, massUgExact: string): CommandResult {
@@ -465,71 +468,17 @@ export class SimWorld {
     const ledger = this.#scenario.ledger;
     for (const delivery of due) {
       const composition = this.#registry.getComposition(delivery.substanceId, delivery.massUg);
+      const destination = deliveryAccountFor(delivery.substanceId, PLANT_RECEIVING);
       const entries: Entry[] = [];
       for (const [element, amount] of composition) {
         if (amount === 0n) continue;
-        entries.push({ account: PLANT_RECEIVING, commodity: elementCommodity(element), delta: amount });
+        entries.push({ account: destination, commodity: elementCommodity(element), delta: amount });
         entries.push({ account: WORLD_ACCOUNTS.marketSuppliers, commodity: elementCommodity(element), delta: -amount });
       }
       if (entries.length > 0) {
         ledger.post({ process: `market:call-supplier:deliver:${delivery.substanceId}`, entries });
       }
     }
-  }
-
-  #advanceMixer(): void {
-    const ledger = this.#scenario.ledger;
-    const running = this.#mixer.machine.running;
-
-    if (running) {
-      const rpm = this.#mixer.machine.getTag('mix-speed-rpm');
-      const maxMassUg = BigInt(Math.round((rpm / 200) * MIXER_MAX_RATE_G_PER_TICK * 1_000_000));
-      moveElementalMassUpTo(ledger, PLANT_RECEIVING, PLANT_BATTER, maxMassUg, 'plant:mixer:transfer');
-    }
-
-    const batterMassUg = accountElementalMass(ledger, PLANT_BATTER);
-    this.#mixer.machine.setTag('batch-mass-kg', Number(batterMassUg) / 1_000_000_000);
-
-    const hopperEmpty = accountElementalMass(ledger, PLANT_RECEIVING) <= 0n;
-    const hazard = breakdownHazardMultiplier(this.#difficulty.knobs);
-    this.#mixer.advance(this.#tick, 1 / 3600, hazard, new Map([['hopper-low', running && hopperEmpty]]));
-  }
-
-  #advanceOven(): void {
-    const ledger = this.#scenario.ledger;
-    const running = this.#oven.machine.running;
-    const setpoint = this.#oven.machine.getTag('bake-temp-setpoint-c');
-    let temp = this.#oven.machine.getTag('bake-temp-c');
-
-    if (running) {
-      const nextTemp = temp + (setpoint - temp) * 0.05;
-      const deltaC = Math.abs(nextTemp - temp);
-      if (deltaC > 0) {
-        const energyUj = roundHalfEven(deltaC * Number(ENERGY_PER_DEGREE_C));
-        if (energyUj > 0n) {
-          ledger.post({
-            process: 'plant:oven:heat',
-            entries: [
-              { account: WORLD_ACCOUNTS.marketUtilities, commodity: ENERGY, delta: -energyUj },
-              { account: WORLD_ACCOUNTS.space, commodity: ENERGY, delta: energyUj },
-            ],
-          });
-        }
-      }
-      temp = nextTemp;
-
-      if (temp >= setpoint - OVEN_BAKE_TOLERANCE_C) {
-        const maxMassUg = BigInt(OVEN_MAX_RATE_G_PER_TICK * 1_000_000);
-        moveElementalMassUpTo(ledger, PLANT_BATTER, PLANT_OUTPUT, maxMassUg, 'plant:oven:bake');
-      }
-    } else {
-      temp += (AMBIENT_TEMP_C - temp) * 0.02;
-    }
-    this.#oven.machine.setTag('bake-temp-c', temp);
-
-    const overTemp = temp > setpoint + OVEN_OVER_TEMP_MARGIN_C;
-    const hazard = breakdownHazardMultiplier(this.#difficulty.knobs);
-    this.#oven.advance(this.#tick, 1 / 3600, hazard, new Map([['over-temp', overTemp]]));
   }
 
   // -------------------------------------------------------------------

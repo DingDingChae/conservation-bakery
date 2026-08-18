@@ -43,10 +43,17 @@ export interface DifficultySettings {
 
 /** One difficulty change, stamped with the world tick it took effect on —
  * `save.ts` records these alongside the command journal so a mid-run knob
- * change replays exactly, the same way a command does. */
+ * change replays exactly, the same way a command does. `seq` is this
+ * change's position in the single real order every command and difficulty
+ * change was actually issued in (see `world.ts`'s `#eventSeq`) — without it,
+ * a difficulty change and a command recorded on the *same* tick have no way
+ * to recover which happened first, and a command whose behaviour depends on
+ * the current knobs (`callSupplier`'s price and lead time, most notably)
+ * would replay against the wrong ones. */
 export interface DifficultyChangeRecord {
   readonly tick: number;
   readonly knobs: DifficultyKnobs;
+  readonly seq: number;
 }
 
 const KNOB_NAMES: readonly (keyof DifficultyKnobs)[] = [
@@ -164,10 +171,14 @@ export function startingCashMinor(knobs: DifficultyKnobs): bigint {
 
 const BASE_PRICE_MINOR_PER_KG: Readonly<Record<string, number>> = {
   'wheat-flour-white': 120,
+  'wheat-grain': 35,
   butter: 650,
   sucrose: 90,
   'sodium-bicarbonate': 300,
+  'cream-of-tartar': 900,
+  'sodium-chloride': 60,
   'hen-egg-whole': 400,
+  'cow-milk-whole': 90,
   'water-liquid': 1,
   cardboard: 80,
   'polypropylene-film': 200,
@@ -203,6 +214,18 @@ export function supplierLeadTimeTicks(knobs: DifficultyKnobs): number {
  * `assistance` is generous enough, refused with a clear reason otherwise. */
 export function supplierCallsPermitted(knobs: DifficultyKnobs): boolean {
   return knobs.assistance >= 0.5;
+}
+
+/** A representative wholesale price for a kilogram of wrapped, QA-passed
+ * finished cake — the plant's own revenue side, exactly the same "real
+ * per-kilogram price, rounded once at the boundary" shape as
+ * `supplierPriceMinor`. Economic pressure raises it a little (a tighter
+ * economy sells at a firmer price) rather than lowering it, so a harder
+ * preset is not simply strictly worse on both ends of every transaction. */
+const BASE_SALE_PRICE_MINOR_PER_KG = 1_400;
+
+export function salePriceMinorPerKg(knobs: DifficultyKnobs): number {
+  return BASE_SALE_PRICE_MINOR_PER_KG * (1 + knobs.economyPressure * 0.5);
 }
 
 /** How much difficulty accelerates equipment wear, applied to the *hours*

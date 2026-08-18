@@ -7,6 +7,8 @@ import { SimWorld } from './world.js';
 function playThrough(): { world: SimWorld; digestAtTick10: string } {
   const world = new SimWorld({ seed: 99, startInstantMs: 1_767_593_600_000, difficulty: presetSettings('easy') });
   world.applyCommand({ kind: 'setMode', machineId: 'mixer-1', mode: 'MANUAL' });
+  world.applyCommand({ kind: 'setMode', machineId: 'mill-1', mode: 'MANUAL' });
+  world.applyCommand({ kind: 'setMode', machineId: 'creamery-1', mode: 'MANUAL' });
 
   for (let i = 0; i < 10; i += 1) world.step();
   const digestAtTick10 = world.digest();
@@ -18,8 +20,16 @@ function playThrough(): { world: SimWorld; digestAtTick10: string } {
   // `digestAtTick10` was captured before any such command existed.
   world.step();
 
-  world.applyCommand({ kind: 'setMode', machineId: 'oven-1', mode: 'AUTO' });
+  // Exercise more of the bigger plant than just the mixer — a real oven, a
+  // real supplier call for one of the new milled/churned/refined-ingredient
+  // substances, and a mid-run difficulty change — so this save/rewind/load
+  // round trip is genuinely a round trip through the larger plant, not just
+  // the two machines the placeholder plant used to have.
+  world.applyCommand({ kind: 'setMode', machineId: 'oven-deck-1', mode: 'AUTO' });
+  world.applyCommand({ kind: 'setMode', machineId: 'refinery-1', mode: 'MANUAL' });
   world.applyCommand({ kind: 'callSupplier', substanceId: 'sucrose', massUg: '500000' });
+  world.applyCommand({ kind: 'callSupplier', substanceId: 'wheat-grain', massUg: '2000000000' });
+  world.applyCommand({ kind: 'callSupplier', substanceId: 'sugar-beet', massUg: '2000000000' });
   world.setDifficulty({ economyPressure: 0.9 });
 
   for (let i = 0; i < 15; i += 1) world.step();

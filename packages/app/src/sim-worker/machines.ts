@@ -103,7 +103,21 @@ const TAG_LABELS: Readonly<Record<string, string>> = {
 export interface MachineRigOptions {
   readonly id: string;
   readonly label: string;
-  readonly definition: MachineDefinition;
+  /** Build a fresh `Machine` from this definition. Exactly one of `definition`
+   * or `existingMachine` must be given. */
+  readonly definition?: MachineDefinition;
+  /**
+   * Wrap an already-built `Machine` instead of constructing a new one — used
+   * for the `plant/*` unit operations (`createMill`, `createCreamery`,
+   * `createRefinery`), each of which already builds its own `Machine` from its
+   * own `MachineDefinition` internally and exposes it as `ProcessUnit.machine`.
+   * Wrapping that same instance (rather than building a second one) means
+   * `MachineRig.advance`'s wear/alarm bookkeeping and the unit's own batch
+   * operations (`millGrain`, `separateMilk`, ...) are always looking at the
+   * identical machine state — there is only ever one `Machine` per real piece
+   * of equipment, never two views that could drift apart.
+   */
+  readonly existingMachine?: Machine;
   readonly alarmDefinitions: readonly AlarmDefinition[];
   /** The one alarm in `alarmDefinitions` (if any) that a condemned wear
    * component trips, and that `resetAlarm` also performs maintenance against. */
@@ -126,7 +140,14 @@ export class MachineRig {
   constructor(options: MachineRigOptions) {
     this.id = options.id;
     this.label = options.label;
-    this.machine = new Machine(options.id, options.label, options.definition);
+    if (options.existingMachine) {
+      this.machine = options.existingMachine;
+    } else {
+      if (!options.definition) {
+        throw new Error(`MachineRig "${options.id}" needs either a "definition" or an "existingMachine"`);
+      }
+      this.machine = new Machine(options.id, options.label, options.definition);
+    }
     this.#alarmGroup = new AlarmGroup(options.alarmDefinitions.map((definition) => new Alarm(definition)));
     this.#wearRng = createSeededRng(options.wearSeed);
     this.#maintenanceAlarmId = options.maintenanceAlarmId;

@@ -8,6 +8,10 @@
 appId: uk.conservationbakery.app
 productName: Conservation Bakery
 copyright: Apache-2.0
+# The root package.json pins electron as a devDependency range ("^43.4.0"), which
+# electron-builder cannot resolve to a concrete downloadable release on its own from a
+# workspace layout. Pin the exact installed version here instead of loosening the range.
+electronVersion: 43.4.0
 
 directories:
   output: ../../release
@@ -16,9 +20,25 @@ directories:
 # The renderer loads token and component stylesheets from @conservation-bakery/design at
 # runtime by relative path, so those files must be inside the package, not just the
 # built JavaScript.
+#
+# packages/sim also reads substance and cake data from @conservation-bakery/data at run
+# time — packages/sim/src/substance/registry.ts and packages/sim/src/bake/catalog.ts
+# both resolve it as `../../../data` from their own compiled location, which lands on
+# `node_modules/@conservation-bakery/data` once @conservation-bakery/sim is packaged
+# (electron-builder's own dependency walk never finds this package, because nothing
+# `import`s it — the sim package reaches it by an assumed monorepo directory layout, not
+# a package specifier — so it must be listed explicitly here, or the packaged app starts,
+# then faults the instant the simulation worker tries to load a substance: this was
+# caught only by actually launching the packaged build, not by the build succeeding).
 files:
   - dist/**/*
   - package.json
+  - from: ../data
+    to: node_modules/@conservation-bakery/data
+    filter:
+      - package.json
+      - substances/**/*
+      - cakes/**/*
 
 extraResources:
   - from: ../design/tokens
